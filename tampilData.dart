@@ -7,18 +7,21 @@ class TampilData extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Welcome to Flutter',
+      debugShowCheckedModeBanner: false,
+      title: 'Welcome to Monitoring Driver App',
       home: Scaffold(
+        backgroundColor: Colors.greenAccent,
         appBar: AppBar(
-          title: const Text('Welcome to Flutter'),
+          elevation: 0.0,
+          backgroundColor: Colors.green,
+          centerTitle: true,
+          title: Text('Welcome to PT PLN UIKL Monitoring Driver'),
         ),
         body: Center(
             child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-              ],
-            )
-        ),
+          mainAxisSize: MainAxisSize.min,
+          children: [],
+        )),
       ),
     );
   }
