@@ -45,17 +45,30 @@ Button(text, buttonAction)
 parameter :
 text = Text pada tombol
 buttonAction = Kode yang berjalan saat tombol ditekan
+leftPad = padding kiri
+topPad = padding atas
+rightPad = padding kanan
+bottomPad = padding bawah
 
  */
 class Button extends StatelessWidget {
   final String text;
   final void Function() buttonAction;
+  final double leftPad;
+  final double topPad;
+  final double rightPad;
+  final double bottomPad;
 
-  const Button({Key? key, required this.text, required this.buttonAction})
+  const Button({Key? key, required this.buttonAction, this.text = '', this.leftPad = 5, this.topPad = 5, this.rightPad = 5, this.bottomPad = 5})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return TextButton(
+    return Container(
+      padding: EdgeInsets.fromLTRB(leftPad, topPad, rightPad, bottomPad),
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.black)
+      ),
+      child: TextButton(
         style: ButtonStyle(
           //        primary: ,
           backgroundColor: MaterialStateProperty.all<Color>(
@@ -73,6 +86,7 @@ class Button extends StatelessWidget {
         ),
         onPressed: buttonAction,
         child: Text(text));
+    )
   }
 }
 
