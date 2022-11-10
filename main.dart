@@ -59,40 +59,42 @@ class Button extends StatelessWidget {
   final double rightPad;
   final double bottomPad;
 
-//padding button
-  const Button(
-      {Key? key,
-      required this.buttonAction,
-      this.text = '',
-      this.leftPad = 5,
-      this.topPad = 5,
-      this.rightPad = 5,
-      this.bottomPad = 5})
-      : super(key: key);
-
+  const Button({Key? key,
+    required this.buttonAction,
+    this.text = '',
+    this.leftPad = 5,
+    this.topPad = 5,
+    this.rightPad = 5,
+    this.bottomPad = 5
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Container(
-        padding: EdgeInsets.fromLTRB(leftPad, topPad, rightPad, bottomPad),
-        decoration: BoxDecoration(border: Border.all(color: Colors.black)),
-        child: TextButton(
+    return Padding(
+        padding:EdgeInsets.fromLTRB(leftPad, topPad, rightPad, bottomPad),
+        child: Container(
+          padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
+          decoration: BoxDecoration(
+              border: Border.all(color: Colors.black)
+          ),
+          child: TextButton(
             style: ButtonStyle(
               //        primary: ,
-              backgroundColor: MaterialStateProperty.all<Color>(
-                  Color.fromARGB(255, 62, 118, 163)),
-              foregroundColor: MaterialStateProperty.all<Color>(
-                  Color.fromARGB(255, 1, 1, 1)),
+              foregroundColor: MaterialStateProperty.all<Color>(Colors.black),
               overlayColor: MaterialStateProperty.resolveWith<Color?>(
-                  (Set<MaterialState> states) {
-                if (states.contains(MaterialState.hovered))
-                  return Colors.blue.withOpacity(0.50);
-                if (states.contains(MaterialState.focused))
-                  return Colors.blue.withOpacity(0.75);
-                return null;
-              }),
+                      (Set<MaterialState> states) {
+                    if (states.contains(MaterialState.hovered))
+                      return Colors.blue.withOpacity(0.50);
+                    if (states.contains(MaterialState.focused))
+                      return Colors.blue.withOpacity(0.75);
+                    return null;
+                  }
+              ),
             ),
             onPressed: buttonAction,
-            child: Text(text)));
+            child: Text(text),
+          ),
+        )
+    );
   }
 }
 
