@@ -11,9 +11,8 @@ class EditMobil extends StatefulWidget {
 }
 
 class _EditMobilState extends State<EditMobil> {
-
   @override
-  Widget build (BuildContext context) {
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.greenAccent,
       appBar: AppBar(
@@ -24,66 +23,62 @@ class _EditMobilState extends State<EditMobil> {
       ),
       body: FutureBuilder(
         future: ReadJson(),
-        builder: (context, data){
-          if (data.hasError){
+        builder: (context, data) {
+          if (data.hasError) {
             return Center(child: Text('${data.error}'));
-          }
-          else if(data.hasData) {
+          } else if (data.hasData) {
             var dataMobil = data.data as List<DataMobil>;
-            return Column(
-              children:[
-                Expanded(
-                  child: ListView.builder(
-                      itemCount: dataMobil == null ? 0 : dataMobil.length,
-                      itemBuilder: (context, index) {
-                        return Card(
-                          elevation: 5,
-                          margin: EdgeInsets.fromLTRB(5, 5, 5, 5),
-                          child: Container(
-                            padding: EdgeInsets.only(bottom: 8),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.only(left: 8),
-                                  child:
-                                  Text(
-                                    dataMobil[index].merek.toString(),
-                                    style: TextStyle(
-                                        fontSize: 15
-                                    ),
-                                  ),
+            return Column(children: [
+              Expanded(
+                child: ListView.builder(
+                    itemCount: dataMobil == null ? 0 : dataMobil.length,
+                    itemBuilder: (context, index) {
+                      return Card(
+                        elevation: 5,
+                        margin: EdgeInsets.fromLTRB(5, 5, 5, 5),
+                        child: Container(
+                          padding: EdgeInsets.only(bottom: 8),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(left: 8),
+                                child: Text(
+                                  dataMobil[index].merek.toString(),
+                                  style: TextStyle(
+                                      fontFamily: 'poppins', fontSize: 15),
                                 ),
-                                Padding(
-                                  padding: EdgeInsets.only(left: 8),
-                                  child: Text(dataMobil[index].platmobil.toString()),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(left: 8),
+                                child: Text(
+                                  dataMobil[index].platmobil.toString(),
+                                  style: TextStyle(
+                                      fontFamily: 'rubiksemi', fontSize: 17),
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
-                        );
-                      }
-                    ),
-                ),
-                ButtonIcon(
-                    buttonAction: (){},
-                    imgDirectory: 'assets/icons/addIcon.jpg',
-                    iconSize: 50,
-                )
-              ]
-            );
-          }
-          else{
-            return Center(
-              child: CircularProgressIndicator()
-            );
+                        ),
+                      );
+                    }),
+              ),
+              ButtonIcon(
+                buttonAction: () {},
+                imgDirectory: 'assets/icons/addIcon.jpg',
+                iconSize: 50,
+              )
+            ]);
+          } else {
+            return Center(child: CircularProgressIndicator());
           }
         },
       ),
     );
   }
-  Future <List<DataMobil>>ReadJson() async{
+
+  Future<List<DataMobil>> ReadJson() async {
     final data = await rootBundle.loadString('assets/mobil.json');
     final list = json.decode(data) as List<dynamic>;
 
@@ -91,16 +86,13 @@ class _EditMobilState extends State<EditMobil> {
   }
 }
 
-class DataMobil{
+class DataMobil {
   String? merek;
   String? platmobil;
 
-  DataMobil({
-    this.merek,
-    this.platmobil
-  });
+  DataMobil({this.merek, this.platmobil});
 
-  DataMobil.fromJson(Map<String,dynamic> json){
+  DataMobil.fromJson(Map<String, dynamic> json) {
     merek = json['merek'];
     platmobil = json['platmobil'];
   }

@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-          backgroundColor: Colors.greenAccent,
+          backgroundColor: Color.fromARGB(255, 173, 234, 180),
           appBar: AppBar(
             elevation: 0.0,
             backgroundColor: Colors.green,
@@ -33,8 +33,8 @@ class MyApp extends StatelessWidget {
                   20,
                 ),
                 child: Image(
-                    height: 100,
-                    width: 70,
+                    height: 80,
+                    width: 50,
                     fit: BoxFit.fitWidth,
                     image: AssetImage('assets/images/pln.png')),
               ),
