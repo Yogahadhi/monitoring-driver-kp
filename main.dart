@@ -101,9 +101,9 @@ class Button extends StatelessWidget {
               overlayColor: MaterialStateProperty.resolveWith<Color?>(
                   (Set<MaterialState> states) {
                 if (states.contains(MaterialState.hovered))
-                  return Colors.blue.withOpacity(0.50);
+                  return Color.fromARGB(255, 2, 19, 34).withOpacity(0.50);
                 if (states.contains(MaterialState.focused))
-                  return Colors.blue.withOpacity(0.75);
+                  return Color.fromARGB(255, 10, 61, 104).withOpacity(0.75);
                 return null;
               }),
             ),

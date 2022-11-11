@@ -1,5 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:monitoringdivermobilpln/editDriver.dart';
+import 'package:monitoringdivermobilpln/tampilData.dart';
 import 'main.dart';
 import 'package:flutter/services.dart';
 
@@ -20,6 +22,78 @@ class _EditMobilState extends State<EditMobil> {
         backgroundColor: Colors.green,
         centerTitle: true,
         title: Text('Welcome to PT PLN UIKL Monitoring Driver'),
+      ),
+      drawer: Drawer(
+        child: Column(children: [
+          Container(
+            padding: EdgeInsets.all(20),
+            width: double.infinity,
+            height: 100,
+            color: Colors.blue,
+            alignment: Alignment.bottomLeft,
+            child: Text(
+              "Menu Pilihan",
+              style: TextStyle(
+                  fontFamily: 'rubiksemi',
+                  fontSize: 20,
+                  color: Color.fromARGB(255, 223, 239, 212)),
+            ),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          ListTile(
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const MyApp()));
+            },
+            leading: Icon(
+              Icons.home,
+              size: 33,
+            ),
+            title: Text(
+              'Menu Utama',
+              style: TextStyle(
+                  fontFamily: 'rubiksemi',
+                  fontSize: 17,
+                  color: Color.fromARGB(255, 16, 16, 15)),
+            ),
+          ),
+          ListTile(
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const EditDriver()));
+            },
+            leading: Icon(
+              Icons.person,
+              size: 33,
+            ),
+            title: Text(
+              'Edit Driver',
+              style: TextStyle(
+                  fontFamily: 'rubiksemi',
+                  fontSize: 17,
+                  color: Color.fromARGB(255, 16, 16, 15)),
+            ),
+          ),
+          ListTile(
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const TampilData()));
+            },
+            leading: Icon(
+              Icons.article,
+              size: 33,
+            ),
+            title: Text(
+              'Tampil Data',
+              style: TextStyle(
+                  fontFamily: 'rubiksemi',
+                  fontSize: 17,
+                  color: Color.fromARGB(255, 16, 16, 15)),
+            ),
+          ),
+        ]),
       ),
       body: FutureBuilder(
         future: ReadJson(),
@@ -47,7 +121,7 @@ class _EditMobilState extends State<EditMobil> {
                                 child: Text(
                                   dataMobil[index].merek.toString(),
                                   style: TextStyle(
-                                      fontFamily: 'poppins', fontSize: 15),
+                                      fontFamily: 'rubiksemi', fontSize: 16),
                                 ),
                               ),
                               Padding(
@@ -55,7 +129,7 @@ class _EditMobilState extends State<EditMobil> {
                                 child: Text(
                                   dataMobil[index].platmobil.toString(),
                                   style: TextStyle(
-                                      fontFamily: 'rubiksemi', fontSize: 17),
+                                      fontFamily: 'rubikr', fontSize: 16),
                                 ),
                               ),
                             ],
