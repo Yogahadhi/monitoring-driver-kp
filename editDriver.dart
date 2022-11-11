@@ -16,7 +16,7 @@ class EditDriver extends StatelessWidget {
           elevation: 0.0,
           backgroundColor: Colors.green,
           centerTitle: true,
-          title: Text('Welcome to PT PLN UIKL Monitoring Driver'),
+          title: Text('Menu Edit Driver'),
         ),
         drawer: Drawer(
           child: Column(children: [
