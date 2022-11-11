@@ -13,8 +13,11 @@ class EditMobil extends StatefulWidget {
 }
 
 class _EditMobilState extends State<EditMobil> {
+  final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
+    final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
     return Scaffold(
       backgroundColor: Colors.greenAccent,
       appBar: AppBar(
@@ -55,7 +58,7 @@ class _EditMobilState extends State<EditMobil> {
               'Menu Utama',
               style: TextStyle(
                   fontFamily: 'rubiksemi',
-                  fontSize: 17,
+                  fontSize: 15,
                   color: Color.fromARGB(255, 16, 16, 15)),
             ),
           ),
@@ -72,7 +75,7 @@ class _EditMobilState extends State<EditMobil> {
               'Edit Driver',
               style: TextStyle(
                   fontFamily: 'rubiksemi',
-                  fontSize: 17,
+                  fontSize: 15,
                   color: Color.fromARGB(255, 16, 16, 15)),
             ),
           ),
@@ -89,7 +92,7 @@ class _EditMobilState extends State<EditMobil> {
               'Tampil Data',
               style: TextStyle(
                   fontFamily: 'rubiksemi',
-                  fontSize: 17,
+                  fontSize: 15,
                   color: Color.fromARGB(255, 16, 16, 15)),
             ),
           ),
@@ -139,7 +142,71 @@ class _EditMobilState extends State<EditMobil> {
                     }),
               ),
               ButtonIcon(
-                buttonAction: () {},
+                buttonAction: () {
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          content: Stack(
+                            children: [
+                              Form(
+                                  key: _formKey,
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsets.all(8.0),
+                                        child: Text('Merek Mobil*'),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.all(8.0),
+                                        child: TextFormField(
+                                          validator: (text) {
+                                            if (text == null || text.isEmpty) {
+                                              return 'Text is empty';
+                                            } else {
+                                              return null;
+                                            }
+                                          },
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.all(8.0),
+                                        child: Text('Plat Mobil*'),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.all(8.0),
+                                        child: TextFormField(
+                                          validator: (text) {
+                                            if (text == null || text.isEmpty) {
+                                              return 'Text is empty';
+                                            } else {
+                                              return null;
+                                            }
+                                          },
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.all(8.0),
+                                        child: Button(
+                                          text: 'Submit',
+                                          buttonAction: () {
+                                            if (_formKey.currentState!
+                                                .validate()) {
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(SnackBar(
+                                                      content: Text('aman')));
+                                            }
+                                          },
+                                        ),
+                                      ),
+                                    ],
+                                  ))
+                            ],
+                          ),
+                        );
+                      });
+                },
                 imgDirectory: 'assets/icons/addIcon.jpg',
                 iconSize: 50,
               )

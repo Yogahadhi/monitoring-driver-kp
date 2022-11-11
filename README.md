@@ -17,3 +17,28 @@ Aplikasi ini dikerjakan oleh :
 Tentu saja dengan bantuan pembimbing kp, penanggung-jawab kp, dan pegawai PT PLN UIKL SULAWESI
 
 **UIKL SULAWESI**
+
+**warning**
+
+jangan lupa untuk mengedit file pubspec.yaml sesuai dengan asset yang telah ditambahkan
+
+ ```
+   assets:
+    - assets/
+    - assets/icons/addIcon.jpg
+    - assets/images/pln.png
+  fonts:
+    - family: rubik
+      fonts:
+        - asset: assets/fonts/Rubik-Black.ttf
+    - family: poppins
+      fonts:
+        - asset: assets/fonts/Poppins-Black.ttf
+    - family: rubikr
+      fonts:
+        - asset: assets/fonts/Rubik-Regular.ttf
+    - family: rubiksemi
+      fonts:
+        - asset: assets/fonts/Rubik-SemiBold.ttf
+          weight: 700
+  ```
