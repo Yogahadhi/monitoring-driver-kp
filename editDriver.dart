@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:monitoringdivermobilpln/editMobil.dart';
-import 'package:monitoringdivermobilpln/tampilData.dart';
+import 'editMobil.dart';
+import 'tampilData.dart';
 import 'main.dart';
 
 class EditDriver extends StatelessWidget {

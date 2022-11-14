@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:monitoringdivermobilpln/editDriver.dart';
-import 'package:monitoringdivermobilpln/tampilData.dart';
+import 'editDriver.dart';
+import 'tampilData.dart';
 import 'main.dart';
 import 'package:flutter/services.dart';
 
@@ -14,6 +14,8 @@ class EditMobil extends StatefulWidget {
 
 class _EditMobilState extends State<EditMobil> {
   final _formKey = GlobalKey<FormState>();
+  final _merekController = TextEditingController();
+  final _platMobilController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -161,6 +163,7 @@ class _EditMobilState extends State<EditMobil> {
                                       Padding(
                                         padding: EdgeInsets.all(8.0),
                                         child: TextFormField(
+                                          controller: _merekController,
                                           validator: (text) {
                                             if (text == null || text.isEmpty) {
                                               return 'Text is empty';
@@ -177,6 +180,7 @@ class _EditMobilState extends State<EditMobil> {
                                       Padding(
                                         padding: EdgeInsets.all(8.0),
                                         child: TextFormField(
+                                          controller: _platMobilController,
                                           validator: (text) {
                                             if (text == null || text.isEmpty) {
                                               return 'Text is empty';
@@ -195,7 +199,7 @@ class _EditMobilState extends State<EditMobil> {
                                                 .validate()) {
                                               ScaffoldMessenger.of(context)
                                                   .showSnackBar(SnackBar(
-                                                      content: Text('aman')));
+                                                      content: Text('value { merek = ' + _merekController.text + ' ,platmobil = ' + _platMobilController.text + ' }')));
                                             }
                                           },
                                         ),

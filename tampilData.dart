@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:monitoringdivermobilpln/editMobil.dart';
-import 'package:monitoringdivermobilpln/editDriver.dart';
+import 'editMobil.dart';
+import 'editDriver.dart';
 import 'main.dart';
 
 class TampilData extends StatelessWidget {
