@@ -17,7 +17,7 @@ class _EditMobilState extends State<EditMobil> {
 
   @override
   Widget build(BuildContext context) {
-    final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+    final GlobalKey<ScaffoldState> _ = GlobalKey<ScaffoldState>();
     return Scaffold(
       backgroundColor: Colors.greenAccent,
       appBar: AppBar(
@@ -207,8 +207,8 @@ class _EditMobilState extends State<EditMobil> {
                         );
                       });
                 },
-                imgDirectory: 'assets/icons/addIcon.jpg',
-                iconSize: 50,
+                imgDirectory: 'assets/images/addbuttonblack.png',
+                iconSize: 55,
               )
             ]);
           } else {

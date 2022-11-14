@@ -155,7 +155,6 @@ class ButtonIcon extends StatelessWidget {
     return Padding(
         padding: EdgeInsets.fromLTRB(leftPad, topPad, rightPad, bottomPad),
         child: Container(
-          decoration: BoxDecoration(border: Border.all(color: Colors.black)),
           child: IconButton(
             icon: Image.asset(imgDirectory),
             iconSize: iconSize,

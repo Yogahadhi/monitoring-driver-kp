@@ -16,17 +16,17 @@ class EditDriver extends StatelessWidget {
           elevation: 0.0,
           backgroundColor: Colors.green,
           centerTitle: true,
-          title: Text('Menu Edit Driver'),
+          title: const Text('Menu Edit Driver'),
         ),
         drawer: Drawer(
           child: Column(children: [
             Container(
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
               width: double.infinity,
               height: 100,
               color: Colors.blue,
               alignment: Alignment.bottomLeft,
-              child: Text(
+              child: const Text(
                 "Menu Pilihan",
                 style: TextStyle(
                     fontFamily: 'rubiksemi',
@@ -34,7 +34,7 @@ class EditDriver extends StatelessWidget {
                     color: Color.fromARGB(255, 223, 239, 212)),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             ListTile(
@@ -42,11 +42,11 @@ class EditDriver extends StatelessWidget {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => const MyApp()));
               },
-              leading: Icon(
+              leading: const Icon(
                 Icons.home,
                 size: 33,
               ),
-              title: Text(
+              title: const Text(
                 'Menu Utama',
                 style: TextStyle(
                     fontFamily: 'rubiksemi',
@@ -59,11 +59,11 @@ class EditDriver extends StatelessWidget {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => const EditMobil()));
               },
-              leading: Icon(
+              leading: const Icon(
                 Icons.person,
                 size: 33,
               ),
-              title: Text(
+              title: const Text(
                 'Edit Mobil',
                 style: TextStyle(
                     fontFamily: 'rubiksemi',
@@ -78,11 +78,11 @@ class EditDriver extends StatelessWidget {
                     MaterialPageRoute(
                         builder: (context) => const TampilData()));
               },
-              leading: Icon(
+              leading: const Icon(
                 Icons.article,
                 size: 33,
               ),
-              title: Text(
+              title: const Text(
                 'Tampil Data',
                 style: TextStyle(
                     fontFamily: 'rubiksemi',
@@ -92,7 +92,7 @@ class EditDriver extends StatelessWidget {
             ),
           ]),
         ),
-        body: AppNav(),
+        body: const AppNav(),
       ),
     );
   }
@@ -110,7 +110,7 @@ class _AppNavState extends State<AppNav> {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-          padding: EdgeInsets.only(left: 15, top: 20, right: 15),
+          padding: const EdgeInsets.only(left: 15, top: 20, right: 15),
           child: ListView(
             children: [
               Container(
@@ -122,7 +122,7 @@ class _AppNavState extends State<AppNav> {
                       BoxShadow(
                           spreadRadius: 2,
                           blurRadius: 10,
-                          color: Color.fromARGB(255, 217, 208, 208)
+                          color: const Color.fromARGB(255, 217, 208, 208)
                               .withOpacity(0.6))
                     ]),
               ),
