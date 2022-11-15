@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'editMobil.dart';
-import 'tampilData.dart';
-import 'main.dart';
+import '../../main.dart';
+import '../editMobil/editMobil.dart';
+import '../tampilData/tampilData.dart';
 
 class EditDriver extends StatelessWidget {
   const EditDriver({super.key});

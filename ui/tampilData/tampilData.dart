@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'editMobil.dart';
-import 'editDriver.dart';
-import 'main.dart';
+import '../../main.dart';
+import '../editDriver/editDriver.dart';
+import '../editMobil/editMobil.dart';
 
 class TampilData extends StatelessWidget {
   const TampilData({super.key});
@@ -17,17 +17,17 @@ class TampilData extends StatelessWidget {
           elevation: 0.0,
           backgroundColor: Colors.green,
           centerTitle: true,
-          title: Text('Menu Menampilkan Data'),
+          title: const Text('Menu Menampilkan Data'),
         ),
         drawer: Drawer(
           child: Column(children: [
             Container(
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
               width: double.infinity,
               height: 100,
               color: Colors.blue,
               alignment: Alignment.bottomLeft,
-              child: Text(
+              child: const Text(
                 "Menu Pilihan",
                 style: TextStyle(
                     fontFamily: 'rubiksemi',
@@ -35,7 +35,7 @@ class TampilData extends StatelessWidget {
                     color: Color.fromARGB(255, 223, 239, 212)),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             ListTile(
@@ -43,11 +43,11 @@ class TampilData extends StatelessWidget {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => const MyApp()));
               },
-              leading: Icon(
+              leading: const Icon(
                 Icons.home,
                 size: 33,
               ),
-              title: Text(
+              title: const Text(
                 'Menu Utama',
                 style: TextStyle(
                     fontFamily: 'rubiksemi',
@@ -60,11 +60,11 @@ class TampilData extends StatelessWidget {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => const EditMobil()));
               },
-              leading: Icon(
+              leading: const Icon(
                 Icons.person,
                 size: 33,
               ),
-              title: Text(
+              title: const Text(
                 'Edit Mobil',
                 style: TextStyle(
                     fontFamily: 'rubiksemi',
@@ -79,11 +79,11 @@ class TampilData extends StatelessWidget {
                     MaterialPageRoute(
                         builder: (context) => const EditDriver()));
               },
-              leading: Icon(
+              leading: const Icon(
                 Icons.article,
                 size: 33,
               ),
-              title: Text(
+              title: const Text(
                 'Edit Driver',
                 style: TextStyle(
                     fontFamily: 'rubiksemi',
@@ -95,9 +95,8 @@ class TampilData extends StatelessWidget {
         ),
         body: Center(
             child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [],
-        )),
+              mainAxisSize: MainAxisSize.min,
+            )),
       ),
     );
   }
