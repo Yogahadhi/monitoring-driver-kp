@@ -40,40 +40,55 @@ class _ListMobilState extends State<ListMobil> {
         child: ListView.builder(
             itemCount: dataMobil.length,
             itemBuilder: (context, index) {
+              final String id = dataMobil[index].id.toString();
               return Card(
                 elevation: 5,
                 margin: const EdgeInsets.fromLTRB(5, 5, 5, 5),
                 child: Container(
                   padding: const EdgeInsets.only(bottom: 8),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 8),
-                        child: Text(
-                          dataMobil[index].merek.toString(),
-                          style: const TextStyle(
-                              fontFamily: 'rubiksemi', fontSize: 16),
-                        ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 8),
+                            child: Text(
+                              dataMobil[index].merek.toString(),
+                              style: const TextStyle(
+                                  fontFamily: 'rubiksemi', fontSize: 16),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 8),
+                            child: Text(
+                              dataMobil[index].platmobil.toString(),
+                              style: const TextStyle(
+                                  fontFamily: 'rubikr', fontSize: 16),
+                            ),
+                          ),
+                        ],
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 8),
-                        child: Text(
-                          dataMobil[index].platmobil.toString(),
-                          style: const TextStyle(
-                              fontFamily: 'rubikr', fontSize: 16),
-                        ),
-                      ),
+                      IconButton(
+                          onPressed: (){
+                            setState(() {
+                              dataMobil.removeWhere((element) => element.id.toString() == id);
+                            });
+                            writeToFile(dataMobil);
+                          },
+                          icon:const Icon(Icons.delete)
+                      )
                     ],
-                  ),
+                  )
                 ),
               );
             }),
       ),
 
-      //TOMBOL UNTUK TAMBAH DAATA
-      ButtonIcon(
+      //TOMBOL UNTUK TAMBAH DATA
+      ButtonImage(
         buttonAction: () {
           showDialog(
               context: context,
@@ -136,9 +151,6 @@ class _ListMobilState extends State<ListMobil> {
                                         dataMobil.add(newMobil);
                                       });
                                       writeToFile(dataMobil);
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(SnackBar(
-                                          content: Text('value { merek = ${_merekController.text} ,platmobil = ${_platMobilController.text} }')));
                                     }
                                   },
                                 ),

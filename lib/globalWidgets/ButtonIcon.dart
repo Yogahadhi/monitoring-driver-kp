@@ -17,7 +17,7 @@ bottomPad = padding bawah
 
  */
 
-class ButtonIcon extends StatelessWidget {
+class ButtonImage extends StatelessWidget {
   final void Function() buttonAction;
   final String imgDirectory;
   final double leftPad;
@@ -26,7 +26,7 @@ class ButtonIcon extends StatelessWidget {
   final double bottomPad;
   final double iconSize;
 
-  const ButtonIcon(
+  const ButtonImage(
       {Key? key,
         required this.buttonAction,
         required this.imgDirectory,
