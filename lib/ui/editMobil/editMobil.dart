@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:testflutter3/ui/editMobil/widgets/listMobil.dart';
+import '../../ui/editMobil/widgets/listMobil.dart';
 import '../editDriver/editDriver.dart';
 import '../../model/dataMobil.dart';
 import '../tampilData/tampilData.dart';
@@ -16,6 +16,14 @@ class EditMobil extends StatefulWidget {
 }
 
 class _EditMobilState extends State<EditMobil> {
+
+  @override
+  Future<List<DataMobil>> readJson() async {
+    final data = await rootBundle.loadString('assets/mobil.json');
+    final list = json.decode(data) as List<dynamic>;
+
+    return list.map((e) => DataMobil.fromJson(e)).toList();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -100,7 +108,7 @@ class _EditMobilState extends State<EditMobil> {
         ]),
       ),
       body: FutureBuilder(
-        future: ReadJson(),
+        future: readJson(),
         builder: (context, data) {
           if (data.hasError) {
             return Center(child: Text('${data.error}'));
@@ -113,12 +121,5 @@ class _EditMobilState extends State<EditMobil> {
         },
       ),
     );
-  }
-
-  Future<List<DataMobil>> ReadJson() async {
-    final data = await rootBundle.loadString('assets/mobil.json');
-    final list = json.decode(data) as List<dynamic>;
-
-    return list.map((e) => DataMobil.fromJson(e)).toList();
   }
 }

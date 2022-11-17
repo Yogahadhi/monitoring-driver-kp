@@ -40,6 +40,8 @@ class _ListMobilState extends State<ListMobil> {
         child: ListView.builder(
             itemCount: dataMobil.length,
             itemBuilder: (context, index) {
+              final merekUpdateController = TextEditingController(text: dataMobil[index].merek.toString());
+              final platMobilUpdateController = TextEditingController(text: dataMobil[index].platmobil.toString());
               final String id = dataMobil[index].id.toString();
               return Card(
                 elevation: 5,
@@ -71,14 +73,97 @@ class _ListMobilState extends State<ListMobil> {
                           ),
                         ],
                       ),
-                      IconButton(
-                          onPressed: (){
-                            setState(() {
-                              dataMobil.removeWhere((element) => element.id.toString() == id);
-                            });
-                            writeToFile(dataMobil);
-                          },
-                          icon:const Icon(Icons.delete)
+                      Row(
+                        children: [
+                          IconButton(
+                              onPressed: (){
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context){
+                                      return AlertDialog(
+                                        content: Stack(
+                                          children: [
+                                            Form(
+                                                key: _formKey,
+                                                child: Column(
+                                                  mainAxisSize: MainAxisSize.min,
+                                                  children: [
+                                                    const Padding(
+                                                      padding: EdgeInsets.all(8.0),
+                                                      child: Text('Merek Mobil*'),
+                                                    ),
+                                                    Padding(
+                                                      padding: const EdgeInsets.all(8.0),
+                                                      child: TextFormField(
+                                                        controller: merekUpdateController,
+                                                        validator: (text) {
+                                                          if (text == null || text.isEmpty) {
+                                                            return 'Text is empty';
+                                                          } else {
+                                                            return null;
+                                                          }
+                                                        },
+                                                      ),
+                                                    ),
+                                                    const Padding(
+                                                      padding: EdgeInsets.all(8.0),
+                                                      child: Text('Plat Mobil*'),
+                                                    ),
+                                                    Padding(
+                                                      padding: const EdgeInsets.all(8.0),
+                                                      child: TextFormField(
+                                                        controller: platMobilUpdateController,
+                                                        validator: (text) {
+                                                          if (text == null || text.isEmpty) {
+                                                            return 'Text is empty';
+                                                          }
+                                                          else{
+                                                            return null;
+                                                          }
+                                                        },
+                                                      ),
+                                                    ),
+                                                    Padding(
+                                                      padding: const EdgeInsets.all(8.0),
+                                                      child: Button(
+                                                        text: 'Update',
+                                                        buttonAction: () {
+                                                          if (_formKey.currentState!.validate()) {
+                                                            var updateMobil = DataMobil(
+                                                                merek: merekUpdateController.text,
+                                                                platmobil: platMobilUpdateController.text,
+                                                                id: dataMobil[index].id,
+                                                            );
+                                                            setState(() {
+                                                              dataMobil[index].merek = updateMobil.merek;
+                                                              dataMobil[index].platmobil = updateMobil.platmobil;
+                                                            });
+                                                            writeToFile(dataMobil);
+                                                          }
+                                                        },
+                                                      ),
+                                                    ),
+                                                  ],
+                                                )
+                                            )
+                                          ],
+                                        ),
+                                      );
+                                    }
+                                );
+                              },
+                              icon:const Icon(Icons.edit)
+                          ),
+                          IconButton(
+                              onPressed: (){
+                                setState(() {
+                                  dataMobil.removeWhere((element) => element.id.toString() == id);
+                                });
+                                writeToFile(dataMobil);
+                              },
+                              icon:const Icon(Icons.delete)
+                          )
+                        ],
                       )
                     ],
                   )
@@ -156,7 +241,8 @@ class _ListMobilState extends State<ListMobil> {
                                 ),
                               ),
                             ],
-                          ))
+                          )
+                      )
                     ],
                   ),
                 );
