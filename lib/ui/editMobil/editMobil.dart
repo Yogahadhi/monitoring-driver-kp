@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import '../../ui/editMobil/widgets/listMobil.dart';
 import '../editDriver/editDriver.dart';
@@ -18,12 +19,14 @@ class EditMobil extends StatefulWidget {
 class _EditMobilState extends State<EditMobil> {
 
   @override
+
   Future<List<DataMobil>> readJson() async {
     final data = await rootBundle.loadString('assets/mobil.json');
     final list = json.decode(data) as List<dynamic>;
 
     return list.map((e) => DataMobil.fromJson(e)).toList();
   }
+
 
   @override
   Widget build(BuildContext context) {

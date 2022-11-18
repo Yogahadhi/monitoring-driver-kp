@@ -13,7 +13,7 @@ class ListMobil extends StatefulWidget {
   State<ListMobil> createState() => _ListMobilState();
 }
 
-class _ListMobilState extends State<ListMobil> {
+class _ListMobilState extends State<ListMobil>{
   final _formKey = GlobalKey<FormState>();
   final _merekController = TextEditingController();
   final _platMobilController = TextEditingController();
@@ -25,7 +25,16 @@ class _ListMobilState extends State<ListMobil> {
     super.initState();
   }
 
-  void writeToFile(List<DataMobil> content){
+
+  List readJsonSync(String filename){
+    final File file = File(filename);
+    final list = json.decode(file.readAsStringSync());
+
+    return list.map((e) => DataMobil.fromJson(e)).toList();
+  }
+
+
+  void writeToFileSync(List<dynamic> content){
     final File file = File('assets/mobil.json');
     content.map(
           (DataMobil) => DataMobil.toJson(),
@@ -35,14 +44,20 @@ class _ListMobilState extends State<ListMobil> {
 
   @override
   Widget build(BuildContext context) {
+
+    List dataJson = readJsonSync('assets/mobil.json');
+    print(dataJson.length);
+    print(dataJson[0].merek.toString());
+    print(dataJson[1].platmobil.toString());
+
     return Column(children: [
       Expanded(
         child: ListView.builder(
-            itemCount: dataMobil.length,
+            itemCount: dataJson.length,
             itemBuilder: (context, index) {
-              final merekUpdateController = TextEditingController(text: dataMobil[index].merek.toString());
-              final platMobilUpdateController = TextEditingController(text: dataMobil[index].platmobil.toString());
-              final String id = dataMobil[index].id.toString();
+              final merekUpdateController = TextEditingController(text: dataJson[index].merek.toString());
+              final platMobilUpdateController = TextEditingController(text: dataJson[index].platmobil.toString());
+              final String id = dataJson[index].id.toString();
               return Card(
                 elevation: 5,
                 margin: const EdgeInsets.fromLTRB(5, 5, 5, 5),
@@ -58,7 +73,7 @@ class _ListMobilState extends State<ListMobil> {
                           Padding(
                             padding: const EdgeInsets.only(left: 8),
                             child: Text(
-                              dataMobil[index].merek.toString(),
+                              dataJson[index].merek.toString(),
                               style: const TextStyle(
                                   fontFamily: 'rubiksemi', fontSize: 16),
                             ),
@@ -66,7 +81,7 @@ class _ListMobilState extends State<ListMobil> {
                           Padding(
                             padding: const EdgeInsets.only(left: 8),
                             child: Text(
-                              dataMobil[index].platmobil.toString(),
+                              dataJson[index].platmobil.toString(),
                               style: const TextStyle(
                                   fontFamily: 'rubikr', fontSize: 16),
                             ),
@@ -132,13 +147,13 @@ class _ListMobilState extends State<ListMobil> {
                                                             var updateMobil = DataMobil(
                                                                 merek: merekUpdateController.text,
                                                                 platmobil: platMobilUpdateController.text,
-                                                                id: dataMobil[index].id,
+                                                                id: dataJson[index].id,
                                                             );
                                                             setState(() {
-                                                              dataMobil[index].merek = updateMobil.merek;
-                                                              dataMobil[index].platmobil = updateMobil.platmobil;
+                                                              dataJson[index].merek = updateMobil.merek;
+                                                              dataJson[index].platmobil = updateMobil.platmobil;
                                                             });
-                                                            writeToFile(dataMobil);
+                                                            writeToFileSync(dataJson);
                                                           }
                                                         },
                                                       ),
@@ -159,7 +174,7 @@ class _ListMobilState extends State<ListMobil> {
                                 setState(() {
                                   dataMobil.removeWhere((element) => element.id.toString() == id);
                                 });
-                                writeToFile(dataMobil);
+                                writeToFileSync(dataMobil);
                               },
                               icon:const Icon(Icons.delete)
                           )
@@ -235,7 +250,7 @@ class _ListMobilState extends State<ListMobil> {
                                       setState(() {
                                         dataMobil.add(newMobil);
                                       });
-                                      writeToFile(dataMobil);
+                                      writeToFileSync(dataMobil);
                                     }
                                   },
                                 ),

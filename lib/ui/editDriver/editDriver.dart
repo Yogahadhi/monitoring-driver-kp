@@ -90,44 +90,11 @@ class EditDriver extends StatelessWidget {
                     color: Color.fromARGB(255, 16, 16, 15)),
               ),
             ),
-          ]),
+          ]
+          ),
         ),
-        body: const AppNav(),
+        body: Text('cool')
       ),
-    );
-  }
-}
-
-class AppNav extends StatefulWidget {
-  const AppNav({super.key});
-
-  @override
-  State<AppNav> createState() => _AppNavState();
-}
-
-class _AppNavState extends State<AppNav> {
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-          padding: const EdgeInsets.only(left: 15, top: 20, right: 15),
-          child: ListView(
-            children: [
-              Container(
-                width: 130,
-                height: 130,
-                decoration: BoxDecoration(
-                    border: Border.all(width: 4, color: Colors.white),
-                    boxShadow: [
-                      BoxShadow(
-                          spreadRadius: 2,
-                          blurRadius: 10,
-                          color: const Color.fromARGB(255, 217, 208, 208)
-                              .withOpacity(0.6))
-                    ]),
-              ),
-            ],
-          )),
     );
   }
 }
