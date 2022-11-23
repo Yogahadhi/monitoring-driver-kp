@@ -15,14 +15,29 @@ class ListMobil extends StatefulWidget {
 
 class _ListMobilState extends State<ListMobil>{
   final _formKey = GlobalKey<FormState>();
-  final _merekController = TextEditingController();
-  final _platMobilController = TextEditingController();
   late List<DataMobil> dataMobil;
+  late final TextEditingController _merekController;
+  late final TextEditingController _platMobilController;
+  late final TextEditingController _merekUpdateController;
+  late final TextEditingController _platMobilUpdateController;
 
   @override
   void initState() {
     dataMobil = widget.data;
     super.initState();
+    _merekController = TextEditingController();
+    _platMobilController = TextEditingController();
+    _merekUpdateController = TextEditingController();
+    _platMobilUpdateController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _merekController.dispose();
+    _platMobilController.dispose();
+    _merekUpdateController.dispose();
+    _platMobilUpdateController.dispose();
+    super.dispose();
   }
 
 
@@ -46,17 +61,14 @@ class _ListMobilState extends State<ListMobil>{
   Widget build(BuildContext context) {
 
     List dataJson = readJsonSync('assets/mobil.json');
-    print(dataJson.length);
-    print(dataJson[0].merek.toString());
-    print(dataJson[1].platmobil.toString());
 
     return Column(children: [
       Expanded(
         child: ListView.builder(
             itemCount: dataJson.length,
             itemBuilder: (context, index) {
-              final merekUpdateController = TextEditingController(text: dataJson[index].merek.toString());
-              final platMobilUpdateController = TextEditingController(text: dataJson[index].platmobil.toString());
+              _merekUpdateController.text = dataJson[index].merek.toString();
+              _platMobilUpdateController.text = dataJson[index].platmobil.toString();
               final String id = dataJson[index].id.toString();
               return Card(
                 elevation: 5,
@@ -110,7 +122,7 @@ class _ListMobilState extends State<ListMobil>{
                                                     Padding(
                                                       padding: const EdgeInsets.all(8.0),
                                                       child: TextFormField(
-                                                        controller: merekUpdateController,
+                                                        controller: _merekUpdateController,
                                                         validator: (text) {
                                                           if (text == null || text.isEmpty) {
                                                             return 'Text is empty';
@@ -127,7 +139,7 @@ class _ListMobilState extends State<ListMobil>{
                                                     Padding(
                                                       padding: const EdgeInsets.all(8.0),
                                                       child: TextFormField(
-                                                        controller: platMobilUpdateController,
+                                                        controller: _platMobilUpdateController,
                                                         validator: (text) {
                                                           if (text == null || text.isEmpty) {
                                                             return 'Text is empty';
@@ -145,8 +157,8 @@ class _ListMobilState extends State<ListMobil>{
                                                         buttonAction: () {
                                                           if (_formKey.currentState!.validate()) {
                                                             var updateMobil = DataMobil(
-                                                                merek: merekUpdateController.text,
-                                                                platmobil: platMobilUpdateController.text,
+                                                                merek: _merekUpdateController.text,
+                                                                platmobil: _platMobilUpdateController.text,
                                                                 id: dataJson[index].id,
                                                             );
                                                             setState(() {
@@ -251,6 +263,8 @@ class _ListMobilState extends State<ListMobil>{
                                         dataMobil.add(newMobil);
                                       });
                                       writeToFileSync(dataMobil);
+                                      _merekController.text = '';
+                                      _platMobilController.text = '';
                                     }
                                   },
                                 ),
