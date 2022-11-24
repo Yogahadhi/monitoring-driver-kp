@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../main.dart';
 import '../editMobil/editMobil.dart';
 import '../tampilData/tampilData.dart';
+import 'widgets/listDriver.dart';
 
 class EditDriver extends StatelessWidget {
   const EditDriver({super.key});
@@ -93,7 +94,7 @@ class EditDriver extends StatelessWidget {
           ]
           ),
         ),
-        body: Text('cool')
+        body: ListDriver()
       ),
     );
   }
