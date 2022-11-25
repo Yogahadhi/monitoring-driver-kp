@@ -23,10 +23,16 @@ Tentu saja dengan bantuan pembimbing kp, penanggung-jawab kp, dan pegawai PT PLN
 jangan lupa untuk mengedit file pubspec.yaml sesuai dengan asset yang telah ditambahkan
 
  ```
+ dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.2
+  file_selector:
+
+flutter:
    assets:
-    - assets/
-    - assets/icons/addIcon.jpg
-    - assets/images/pln.png
+    - assets/data/
+    - assets/images/
   fonts:
     - family: rubik
       fonts:
