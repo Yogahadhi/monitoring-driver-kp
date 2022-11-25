@@ -50,7 +50,7 @@ class _ListMobilState extends State<ListMobil>{
 
 
   void writeToFileSync(List<dynamic> content){
-    final File file = File('assets/mobil.json');
+    final File file = File('assets/data/mobil.json');
     content.map(
           (DataMobil) => DataMobil.toJson(),
     );
@@ -59,9 +59,7 @@ class _ListMobilState extends State<ListMobil>{
 
   @override
   Widget build(BuildContext context) {
-
-    List dataJson = readJsonSync('assets/mobil.json');
-
+    List dataJson = readJsonSync('assets/data/mobil.json');
     return Column(children: [
       Expanded(
         child: ListView.builder(

@@ -20,7 +20,7 @@ class _EditMobilState extends State<EditMobil> {
   @override
 
   Future<List<DataMobil>> readJson() async {
-    final data = await rootBundle.loadString('assets/mobil.json');
+    final data = await rootBundle.loadString('assets/data/mobil.json');
     final list = json.decode(data) as List<dynamic>;
 
     return list.map((e) => DataMobil.fromJson(e)).toList();
