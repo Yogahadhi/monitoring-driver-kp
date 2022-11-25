@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-          backgroundColor: Colors.greenAccent,
+          backgroundColor: Color.fromARGB(255, 199, 244, 222),
           appBar: AppBar(
             elevation: 0.0,
             backgroundColor: Colors.green,
@@ -25,21 +25,18 @@ class MyApp extends StatelessWidget {
           ),
           body: Center(
               child: Column(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
-                    child: const Image(
-                        height: 100,
-                        width: 70,
-                        fit: BoxFit.fitWidth,
-                        image: AssetImage('assets/images/pln.png')
-                    ),
-                  ),
-                  const AppNav(),
-                ],
-              )
-          )
-      ),
+            children: [
+              Container(
+                padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
+                child: const Image(
+                    height: 100,
+                    width: 70,
+                    fit: BoxFit.fitWidth,
+                    image: AssetImage('assets/images/pln.png')),
+              ),
+              const AppNav(),
+            ],
+          ))),
     );
   }
 }
