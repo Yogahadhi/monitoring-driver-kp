@@ -28,6 +28,7 @@ jangan lupa untuk mengedit file pubspec.yaml sesuai dengan asset yang telah dita
     sdk: flutter
   cupertino_icons: ^1.0.2
   file_selector:
+  intl:
 
 flutter:
    assets:

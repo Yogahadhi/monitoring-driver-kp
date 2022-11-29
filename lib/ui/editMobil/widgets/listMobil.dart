@@ -7,6 +7,7 @@ import '../../../model/dataMobil.dart';
 
 class ListMobil extends StatefulWidget {
   final List<DataMobil> data;
+
   const ListMobil(this.data, {Key? key}) : super(key: key);
 
   @override
