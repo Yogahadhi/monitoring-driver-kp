@@ -22,6 +22,10 @@ class _ListDriverState extends State<ListDriver> {
   late final TextEditingController _namaController;
   late final TextEditingController _tanggalController;
   late final TextEditingController _filenameController;
+  late final TextEditingController _namaUpdateController;
+  late final TextEditingController _tujuanUpdateController;
+  late final TextEditingController _tanggalUpdateController;
+  late final TextEditingController _filenameUpdateController;
 
   @override
   void initState() {
@@ -30,12 +34,20 @@ class _ListDriverState extends State<ListDriver> {
     _namaController = TextEditingController();
     _tanggalController = TextEditingController();
     _filenameController = TextEditingController();
+    _namaUpdateController = TextEditingController();
+    _tujuanUpdateController = TextEditingController();
+    _tanggalUpdateController = TextEditingController();
+    _filenameUpdateController = TextEditingController();
   }
 
   @override
   void dispose() {
     _namaController.dispose();
     _tanggalController.dispose();
+    _filenameController.dispose();
+    _namaUpdateController.dispose();
+    _tujuanUpdateController.dispose();
+    _tanggalUpdateController.dispose();
     _filenameController.dispose();
     super.dispose();
   }
@@ -50,19 +62,19 @@ class _ListDriverState extends State<ListDriver> {
   void writeToFileSync(List<dynamic> content) {
     final File file = File('assets/data/driver.json');
     content.map(
-      (DataDriver) => DataDriver.toJson(),
+          (DataDriver) => DataDriver.toJson(),
     );
     file.writeAsStringSync(json.encode(content));
   }
 
-  void _openImage(
-      TextEditingController textEditingController, List tempList) async {
+  void _openImage(TextEditingController textEditingController,
+      List tempList) async {
     const XTypeGroup typeGroup = XTypeGroup(
       label: 'images',
       extensions: <String>['jpg', 'png', 'jpeg'],
     );
     final XFile? file =
-        await openFile(acceptedTypeGroups: <XTypeGroup>[typeGroup]);
+    await openFile(acceptedTypeGroups: <XTypeGroup>[typeGroup]);
     if (file == null) {
       return;
     }
@@ -84,6 +96,7 @@ class _ListDriverState extends State<ListDriver> {
                 itemBuilder: (context, index) {
                   final String id = dataJson[index].id.toString();
                   final String filename = dataJson[index].photodir.toString();
+                  List tempUpdateFileNames = [];
                   return Card(
                     elevation: 5,
                     margin: const EdgeInsets.fromLTRB(10, 10, 10, 10),
@@ -95,11 +108,16 @@ class _ListDriverState extends State<ListDriver> {
                             Padding(
                                 padding: const EdgeInsets.only(
                                     top: 15, left: 15, right: 10),
-                                child: Image.file(File(
-                                    'assets/images/${dataJson[index].photodir.toString()}'))),
+                                child: Image.file(
+                                  File(
+                                      'assets/images/${dataJson[index].photodir
+                                          .toString()}'),
+                                  width: 150,
+                                  height: 200,
+                                )),
                             Padding(
                               padding:
-                                  const EdgeInsets.only(top: 8, bottom: 10),
+                              const EdgeInsets.only(top: 8, bottom: 10),
                               child: Text(
                                 dataJson[index].nama.toString(),
                                 style: const TextStyle(
@@ -135,8 +153,7 @@ class _ListDriverState extends State<ListDriver> {
                             Row(
                               children: [
                                 const Padding(
-                                  padding:
-                                      EdgeInsets.only(left: 30, top: 10),
+                                  padding: EdgeInsets.only(left: 30, top: 10),
                                   child: Text(
                                       style: TextStyle(
                                           fontFamily: 'poppins', fontSize: 15),
@@ -144,7 +161,7 @@ class _ListDriverState extends State<ListDriver> {
                                 ),
                                 Padding(
                                   padding:
-                                      const EdgeInsets.only(left: 8, top: 10),
+                                  const EdgeInsets.only(left: 8, top: 10),
                                   child: Text(
                                     dataJson[index].tanggal.toString(),
                                     style: const TextStyle(
@@ -156,8 +173,7 @@ class _ListDriverState extends State<ListDriver> {
                             Row(
                               children: [
                                 const Padding(
-                                  padding:
-                                      EdgeInsets.only(left: 30, top: 10),
+                                  padding: EdgeInsets.only(left: 30, top: 10),
                                   child: Text(
                                       style: TextStyle(
                                           fontFamily: 'poppins', fontSize: 15),
@@ -165,7 +181,7 @@ class _ListDriverState extends State<ListDriver> {
                                 ),
                                 Padding(
                                   padding:
-                                      const EdgeInsets.only(left: 8, top: 10),
+                                  const EdgeInsets.only(left: 8, top: 10),
                                   child: Text(
                                     dataJson[index].mobil.toString(),
                                     style: const TextStyle(
@@ -176,18 +192,222 @@ class _ListDriverState extends State<ListDriver> {
                             ),
                           ],
                         ),
-                        IconButton(
-                            onPressed: () {
-                              setState(() {
-                                dataDriver.removeWhere(
-                                    (element) => element.id.toString() == id);
-                              });
-                              final dir =
-                                  Directory('assets/images/$filename');
-                              dir.deleteSync(recursive: true);
-                              writeToFileSync(dataDriver);
-                            },
-                            icon: const Icon(Icons.delete))
+                        Row(
+                          children: [
+                            IconButton(
+                                onPressed: () {
+                                  showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          content: Stack(
+                                            children: [
+                                              Form(
+                                                  key: _formKey,
+                                                  child: Column(
+                                                    mainAxisSize:
+                                                    MainAxisSize.min,
+                                                    children: [
+                                                      const Padding(
+                                                        padding: EdgeInsets.all(
+                                                            8.0),
+                                                        child: Text(
+                                                            'Nama'),
+                                                      ),
+                                                      Padding(
+                                                        padding: const EdgeInsets
+                                                            .all(8.0),
+                                                        child: TextFormField(
+                                                          controller: _namaUpdateController,
+                                                          validator: (text) {
+                                                            if (text == null ||
+                                                                text.isEmpty) {
+                                                              return 'Text is empty';
+                                                            } else {
+                                                              return null;
+                                                            }
+                                                          },
+                                                        ),
+                                                      ),
+                                                      const Padding(
+                                                        padding:
+                                                        EdgeInsets.all(8.0),
+                                                        child:
+                                                        Text('Tujuan'),
+                                                      ),
+                                                      Padding(
+                                                        padding: const EdgeInsets
+                                                            .all(8.0),
+                                                        child: TextFormField(
+                                                          controller: _tujuanUpdateController,
+                                                          validator: (text) {
+                                                            if (text == null ||
+                                                                text.isEmpty) {
+                                                              return 'Text is empty';
+                                                            } else {
+                                                              return null;
+                                                            }
+                                                          },
+                                                        ),
+                                                      ),
+                                                      const Padding(
+                                                        padding: EdgeInsets.all(
+                                                            8.0),
+                                                        child: Text('Tanggal'),
+                                                      ),
+                                                      Padding(
+                                                        padding: const EdgeInsets
+                                                            .all(8.0),
+                                                        child: TextFormField(
+                                                          enabled: false,
+                                                          controller: _tanggalUpdateController,
+                                                          validator: (text) {
+                                                            if (text == null ||
+                                                                text.isEmpty) {
+                                                              return 'Text is empty';
+                                                            } else {
+                                                              return null;
+                                                            }
+                                                          },
+                                                        ),
+                                                      ),
+                                                      Button(
+                                                        buttonAction: () async {
+                                                          DateTime? newDate = await showDatePicker(
+                                                              context: context,
+                                                              initialDate: DateTime
+                                                                  .now(),
+                                                              firstDate: DateTime(
+                                                                  1899),
+                                                              lastDate: DateTime(
+                                                                  2099));
+                                                          if (newDate == null) {
+                                                            return;
+                                                          } else {
+                                                            String formattedDate =
+                                                            DateFormat(
+                                                                'yyyy-MM-dd')
+                                                                .format(
+                                                                newDate);
+                                                            _tanggalUpdateController
+                                                                .text =
+                                                                formattedDate;
+                                                          }
+                                                        },
+                                                        text: 'select date',
+                                                      ),
+                                                      const Padding(
+                                                        padding: EdgeInsets.all(
+                                                            8.0),
+                                                        child: Text('Foto'),
+                                                      ),
+                                                      Padding(
+                                                        padding: const EdgeInsets
+                                                            .all(8.0),
+                                                        child: TextField(
+                                                          enabled: false,
+                                                          controller: _filenameUpdateController,
+                                                        ),
+                                                      ),
+                                                      Button(buttonAction: () {
+                                                        _openImage(
+                                                            _filenameUpdateController,
+                                                            tempUpdateFileNames);
+                                                      }),
+                                                      Padding(
+                                                        padding:
+                                                        const EdgeInsets.all(
+                                                            8.0),
+                                                        child: Button(
+                                                          text: 'Update',
+                                                          buttonAction: () {
+                                                            if (_formKey
+                                                                .currentState!
+                                                                .validate()) {
+                                                              Directory(
+                                                                  'assets/images/${dataJson[index]
+                                                                      .photodir
+                                                                      .toString()}')
+                                                                  .deleteSync(
+                                                                  recursive: true);
+                                                              var updateDriver =
+                                                              DataDriver(
+                                                                nama: _namaUpdateController
+                                                                    .text,
+                                                                tujuan: _tujuanUpdateController
+                                                                    .text,
+                                                                tanggal: _tanggalUpdateController
+                                                                    .text,
+                                                                photodir: _filenameUpdateController
+                                                                    .text,
+                                                                id: dataJson[index]
+                                                                    .id,
+                                                              );
+                                                              setState(() {
+                                                                dataJson[index]
+                                                                    .nama =
+                                                                    updateDriver
+                                                                        .nama;
+                                                                dataJson[index]
+                                                                    .tujuan =
+                                                                    updateDriver
+                                                                        .tujuan;
+                                                                dataJson[index]
+                                                                    .tanngal =
+                                                                    updateDriver
+                                                                        .tanggal;
+                                                                dataJson[index]
+                                                                    .photodir =
+                                                                    updateDriver
+                                                                        .photodir;
+                                                              });
+                                                              writeToFileSync(
+                                                                  dataJson);
+                                                              tempUpdateFileNames
+                                                                  .remove(
+                                                                  _filenameUpdateController
+                                                                      .text);
+                                                              for (var element in tempUpdateFileNames) {
+                                                                final dir = Directory(
+                                                                    'assets/images/$element');
+                                                                dir.deleteSync(
+                                                                    recursive: true);
+                                                              }
+                                                              tempUpdateFileNames =
+                                                              [];
+                                                              _namaUpdateController
+                                                                  .text = '';
+                                                              _tujuanUpdateController
+                                                                  .text = '';
+                                                              _tanggalUpdateController
+                                                                  .text = '';
+                                                              _filenameUpdateController
+                                                                  .text = '';
+                                                            }
+                                                          },
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ))
+                                            ],
+                                          ),
+                                        );
+                                      });
+                                },
+                                icon: const Icon(Icons.edit)),
+                            IconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    dataDriver.removeWhere((element) =>
+                                    element.id.toString() == id);
+                                  });
+                                  Directory('assets/images/$filename')
+                                      .deleteSync(recursive: true);
+                                  writeToFileSync(dataDriver);
+                                },
+                                icon: const Icon(Icons.delete))
+                          ],
+                        )
                       ],
                     ),
                   );
@@ -253,8 +473,8 @@ class _ListDriverState extends State<ListDriver> {
                                       return;
                                     } else {
                                       String formattedDate =
-                                          DateFormat('yyyy-MM-dd')
-                                              .format(newDate);
+                                      DateFormat('yyyy-MM-dd')
+                                          .format(newDate);
                                       _tanggalController.text = formattedDate;
                                     }
                                   },
@@ -287,11 +507,13 @@ class _ListDriverState extends State<ListDriver> {
                                               tujuan: '',
                                               tanggal: _tanggalController.text,
                                               mobil: 'placeholder',
-                                              id: DateTime.now()
+                                              id: DateTime
+                                                  .now()
                                                   .millisecondsSinceEpoch
                                                   .toString(),
                                               photodir:
-                                                  _filenameController.text);
+                                              _filenameController.text,
+                                              status: 'standby');
                                           dataDriver.add(newDriver);
                                           writeToFileSync(dataDriver);
                                           tempFileNames
