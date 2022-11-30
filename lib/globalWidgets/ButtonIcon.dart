@@ -40,26 +40,24 @@ class ButtonImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
         padding: EdgeInsets.fromLTRB(leftPad, topPad, rightPad, bottomPad),
-        child: Container(
-          child: IconButton(
-            icon: Image.asset(imgDirectory),
-            iconSize: iconSize,
-            style: ButtonStyle(
-              //        primary: ,
-              foregroundColor: MaterialStateProperty.all<Color>(Colors.black),
-              overlayColor: MaterialStateProperty.resolveWith<Color?>(
-                      (Set<MaterialState> states) {
-                    if (states.contains(MaterialState.hovered)) {
-                      return Colors.blue.withOpacity(0.50);
-                    }
-                    if (states.contains(MaterialState.focused)) {
-                      return Colors.blue.withOpacity(0.75);
-                    }
-                    return null;
-                  }),
-            ),
-            onPressed: buttonAction,
+        child: IconButton(
+          icon: Image.asset(imgDirectory),
+          iconSize: iconSize,
+          style: ButtonStyle(
+            //        primary: ,
+            foregroundColor: MaterialStateProperty.all<Color>(Colors.black),
+            overlayColor: MaterialStateProperty.resolveWith<Color?>(
+                    (Set<MaterialState> states) {
+                  if (states.contains(MaterialState.hovered)) {
+                    return Colors.blue.withOpacity(0.50);
+                  }
+                  if (states.contains(MaterialState.focused)) {
+                    return Colors.blue.withOpacity(0.75);
+                  }
+                  return null;
+                }),
           ),
+          onPressed: buttonAction,
         ));
   }
 }

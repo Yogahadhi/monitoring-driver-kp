@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../main.dart';
@@ -16,7 +15,6 @@ class EditDriver extends StatefulWidget {
 }
 
 class _EditDriverState extends State<EditDriver> {
-  @override
   Future<List<DataDriver>> readJson() async {
     final data = await rootBundle.loadString('assets/data/driver.json');
     final list = json.decode(data) as List<dynamic>;

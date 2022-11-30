@@ -55,7 +55,8 @@ class _ListDriverState extends State<ListDriver> {
     file.writeAsStringSync(json.encode(content));
   }
 
-  void _openImage(TextEditingController textEditingController, List tempList) async {
+  void _openImage(
+      TextEditingController textEditingController, List tempList) async {
     const XTypeGroup typeGroup = XTypeGroup(
       label: 'images',
       extensions: <String>['jpg', 'png', 'jpeg'],
@@ -68,7 +69,7 @@ class _ListDriverState extends State<ListDriver> {
     final regexp = RegExp(r'[^\\]*$');
     final filename = regexp.stringMatch(file.path);
     textEditingController.text = filename ?? '';
-    file.saveTo('assets/images/${filename}');
+    file.saveTo('assets/images/$filename');
     tempList.add(filename);
   }
 
@@ -81,6 +82,8 @@ class _ListDriverState extends State<ListDriver> {
             child: ListView.builder(
                 itemCount: dataJson.length,
                 itemBuilder: (context, index) {
+                  final String id = dataJson[index].id.toString();
+                  final String filename = dataJson[index].photodir.toString();
                   return Card(
                     elevation: 5,
                     margin: const EdgeInsets.fromLTRB(10, 10, 10, 10),
@@ -90,14 +93,10 @@ class _ListDriverState extends State<ListDriver> {
                         Column(
                           children: [
                             Padding(
-                              padding: const EdgeInsets.only(
-                                  top: 15, left: 15, right: 10),
-                              child: FadeInImage(
-                                  placeholder:
-                                      AssetImage('assets/images/default.jpg'),
-                                  image: AssetImage('assets/images/${dataJson[index].photodir.toString()}')
-                              ),
-                            ),
+                                padding: const EdgeInsets.only(
+                                    top: 15, left: 15, right: 10),
+                                child: Image.file(File(
+                                    'assets/images/${dataJson[index].photodir.toString()}'))),
                             Padding(
                               padding:
                                   const EdgeInsets.only(top: 8, bottom: 10),
@@ -116,10 +115,10 @@ class _ListDriverState extends State<ListDriver> {
                           children: [
                             Row(
                               children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 30),
+                                const Padding(
+                                  padding: EdgeInsets.only(left: 30),
                                   child: Text(
-                                      style: const TextStyle(
+                                      style: TextStyle(
                                           fontFamily: 'poppins', fontSize: 15),
                                       'Tujuan : '),
                                 ),
@@ -135,11 +134,11 @@ class _ListDriverState extends State<ListDriver> {
                             ),
                             Row(
                               children: [
-                                Padding(
+                                const Padding(
                                   padding:
-                                      const EdgeInsets.only(left: 30, top: 10),
+                                      EdgeInsets.only(left: 30, top: 10),
                                   child: Text(
-                                      style: const TextStyle(
+                                      style: TextStyle(
                                           fontFamily: 'poppins', fontSize: 15),
                                       'Tanggal : '),
                                 ),
@@ -156,11 +155,11 @@ class _ListDriverState extends State<ListDriver> {
                             ),
                             Row(
                               children: [
-                                Padding(
+                                const Padding(
                                   padding:
-                                      const EdgeInsets.only(left: 30, top: 10),
+                                      EdgeInsets.only(left: 30, top: 10),
                                   child: Text(
-                                      style: const TextStyle(
+                                      style: TextStyle(
                                           fontFamily: 'poppins', fontSize: 15),
                                       'Merek Mobil : '),
                                 ),
@@ -176,7 +175,19 @@ class _ListDriverState extends State<ListDriver> {
                               ],
                             ),
                           ],
-                        )
+                        ),
+                        IconButton(
+                            onPressed: () {
+                              setState(() {
+                                dataDriver.removeWhere(
+                                    (element) => element.id.toString() == id);
+                              });
+                              final dir =
+                                  Directory('assets/images/$filename');
+                              dir.deleteSync(recursive: true);
+                              writeToFileSync(dataDriver);
+                            },
+                            icon: const Icon(Icons.delete))
                       ],
                     ),
                   );
@@ -245,8 +256,6 @@ class _ListDriverState extends State<ListDriver> {
                                           DateFormat('yyyy-MM-dd')
                                               .format(newDate);
                                       _tanggalController.text = formattedDate;
-                                      print(formattedDate);
-                                      print(formattedDate.runtimeType);
                                     }
                                   },
                                   text: 'select date',
@@ -256,48 +265,47 @@ class _ListDriverState extends State<ListDriver> {
                                   child: Text('Foto'),
                                 ),
                                 Padding(
-                                  padding: EdgeInsets.all(8.0),
+                                  padding: const EdgeInsets.all(8.0),
                                   child: TextField(
                                     enabled: false,
                                     controller: _filenameController,
                                   ),
                                 ),
-                                Button(
-                                  buttonAction: () {
-                                    _openImage(_filenameController , tempFileNames);
-                                  }
-                                ),
+                                Button(buttonAction: () {
+                                  _openImage(
+                                      _filenameController, tempFileNames);
+                                }),
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Button(
                                     text: 'Submit',
                                     buttonAction: () {
                                       if (_formKey.currentState!.validate()) {
-                                        var newDriver = DataDriver(
-                                            nama: _namaController.text,
-                                            tujuan: '',
-                                            tanggal: _tanggalController.text,
-                                            mobil: 'placeholder',
-                                            id: DateTime.now().millisecondsSinceEpoch.toString(),
-                                            photodir: _filenameController.text
-                                        );
                                         setState(() {
+                                          var newDriver = DataDriver(
+                                              nama: _namaController.text,
+                                              tujuan: '',
+                                              tanggal: _tanggalController.text,
+                                              mobil: 'placeholder',
+                                              id: DateTime.now()
+                                                  .millisecondsSinceEpoch
+                                                  .toString(),
+                                              photodir:
+                                                  _filenameController.text);
                                           dataDriver.add(newDriver);
+                                          writeToFileSync(dataDriver);
+                                          tempFileNames
+                                              .remove(_filenameController.text);
+                                          for (var element in tempFileNames) {
+                                            final dir = Directory(
+                                                'assets/images/$element');
+                                            dir.deleteSync(recursive: true);
+                                          }
+                                          tempFileNames = [];
+                                          _namaController.text = '';
+                                          _tanggalController.text = '';
+                                          _filenameController.text = '';
                                         });
-                                        writeToFileSync(dataDriver);
-                                        _namaController.text = '';
-                                        _tanggalController.text = '';
-                                        _filenameController.text = '';
-                                        /*
-                                        tempFileNames.remove(_filenameController);
-                                        tempFileNames.forEach((element) {
-                                          print(element);
-                                          final dir = Directory('assets/images/${element}');
-                                          dir.deleteSync();
-                                        });
-                                        tempFileNames = [];
-
-                                        */
                                       }
                                     },
                                   ),
