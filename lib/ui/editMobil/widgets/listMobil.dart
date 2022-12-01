@@ -281,7 +281,7 @@ class _ListMobilState extends State<ListMobil> {
                                           merek: _merekController.text,
                                           platmobil: _platMobilController.text,
                                           id: DateTime.now()
-                                              .millisecondsSinceEpoch);
+                                              .millisecondsSinceEpoch.toString());
                                       setState(() {
                                         dataMobil.add(newMobil);
                                       });
