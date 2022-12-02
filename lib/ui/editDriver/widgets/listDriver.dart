@@ -108,6 +108,8 @@ class _ListDriverState extends State<ListDriver> {
                   List tempUpdateFileNames = [];
                   var dropdownUpdateValue;
                   var selectedUpdateValue;
+                  List<bool> _selectedButton = List.generate(3, (_) => false);
+                  var toggleButtonValue;
                   return Card(
                     elevation: 5,
                     margin: const EdgeInsets.fromLTRB(10, 10, 10, 10),
@@ -291,6 +293,51 @@ class _ListDriverState extends State<ListDriver> {
                                                         children: [
                                                           const Padding(
                                                             padding:
+                                                            EdgeInsets.all(
+                                                                8.0),
+                                                            child: Text(
+                                                                'Status :'),
+                                                          ),
+                                                          SizedBox(
+                                                            width:300,
+                                                            child: Padding(
+                                                              padding: const EdgeInsets.all(8.0),
+                                                              child: ToggleButtons(
+                                                                children: [
+                                                                  Text("Standby"),
+                                                                  Text("Terpakai"),
+                                                                  Text("Izin/Sakit")
+                                                                ],
+                                                                isSelected: _selectedButton,
+                                                                onPressed: (int index){
+                                                                  setState(() {
+                                                                    _selectedButton[index] = !_selectedButton[index];
+
+                                                                    if(index == 0){
+                                                                      toggleButtonValue = 'Standby';
+                                                                      print(toggleButtonValue);
+                                                                    }
+                                                                    else if(index == 1){
+                                                                      toggleButtonValue = 'Terpakai';
+                                                                      print(toggleButtonValue);
+                                                                    }
+                                                                    else if(index == 2){
+                                                                      toggleButtonValue = 'Izin/Sakit';
+                                                                      print(toggleButtonValue);
+                                                                    }
+                                                                  });
+                                                                },
+                                                                borderRadius: BorderRadius.circular(10),
+                                                                fillColor: Colors.blue,
+                                                              ),
+                                                            ),
+                                                          )
+                                                        ],
+                                                      ),
+                                                      Row(
+                                                        children: [
+                                                          const Padding(
+                                                            padding:
                                                                 EdgeInsets.all(
                                                                     8.0),
                                                             child: Text(
@@ -458,14 +505,10 @@ class _ListDriverState extends State<ListDriver> {
                                                                   .deleteSync(
                                                                       recursive:
                                                                           true);
-                                                              var updateDriver =
-                                                                  DataDriver(
-                                                                nama:
-                                                                    _namaUpdateController
-                                                                        .text,
-                                                                tujuan:
-                                                                    _tujuanUpdateController
-                                                                        .text,
+                                                              var updateDriver = DataDriver(
+                                                                nama: _namaUpdateController.text,
+                                                                tujuan: _tujuanUpdateController.text,
+                                                                status: selectedUpdateValue,
                                                                 tanggal:
                                                                     _tanggalUpdateController
                                                                         .text,
@@ -477,6 +520,7 @@ class _ListDriverState extends State<ListDriver> {
                                                                 id: dataJson[
                                                                         index]
                                                                     .id,
+
                                                               );
                                                               setState(() {
                                                                 dataJson[index]
@@ -487,6 +531,7 @@ class _ListDriverState extends State<ListDriver> {
                                                                         .tujuan =
                                                                     updateDriver
                                                                         .tujuan;
+                                                                dataJson[index].status = updateDriver.status;
                                                                 dataJson[index]
                                                                         .tanggal =
                                                                     updateDriver
