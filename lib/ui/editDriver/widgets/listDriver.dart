@@ -20,6 +20,7 @@ class ListDriver extends StatefulWidget {
 class _ListDriverState extends State<ListDriver> {
   final _formKey = GlobalKey<FormState>();
   late List<DataDriver> dataDriver;
+  List<bool> selectedButton = [false, false, false];
   late final TextEditingController _namaController;
   late final TextEditingController _tanggalController;
   late final TextEditingController _filenameController;
@@ -108,7 +109,6 @@ class _ListDriverState extends State<ListDriver> {
                   List tempUpdateFileNames = [];
                   var dropdownUpdateValue;
                   var selectedUpdateValue;
-                  List<bool> _selectedButton = List.generate(3, (_) => false);
                   var toggleButtonValue;
                   return Card(
                     elevation: 5,
@@ -303,32 +303,45 @@ class _ListDriverState extends State<ListDriver> {
                                                             child: Padding(
                                                               padding: const EdgeInsets.all(8.0),
                                                               child: ToggleButtons(
-                                                                children: [
-                                                                  Text("Standby"),
-                                                                  Text("Terpakai"),
-                                                                  Text("Izin/Sakit")
-                                                                ],
-                                                                isSelected: _selectedButton,
+                                                                isSelected: selectedButton,
+                                                                borderRadius: BorderRadius.circular(10),
+                                                                color: Colors.blue,
+                                                                selectedColor: Colors.white,
+                                                                fillColor: Colors.lightBlue.shade900,
                                                                 onPressed: (int index){
                                                                   setState(() {
-                                                                    _selectedButton[index] = !_selectedButton[index];
-
+                                                                    //selectedButton[index] = !selectedButton[index];
                                                                     if(index == 0){
                                                                       toggleButtonValue = 'Standby';
                                                                       print(toggleButtonValue);
+                                                                      selectedButton = [true, false, false];
                                                                     }
                                                                     else if(index == 1){
                                                                       toggleButtonValue = 'Terpakai';
                                                                       print(toggleButtonValue);
+                                                                      selectedButton = [false, true, false];
                                                                     }
                                                                     else if(index == 2){
                                                                       toggleButtonValue = 'Izin/Sakit';
                                                                       print(toggleButtonValue);
+                                                                      selectedButton = [false, false, true];
                                                                     }
                                                                   });
                                                                 },
-                                                                borderRadius: BorderRadius.circular(10),
-                                                                fillColor: Colors.blue,
+                                                                children: [
+                                                                  Padding(
+                                                                    padding: EdgeInsets.symmetric(horizontal: 12),
+                                                                    child: Text("Standby"),
+                                                                  ),
+                                                                  Padding(
+                                                                    padding: EdgeInsets.symmetric(horizontal: 12),
+                                                                    child: Text("Terpakai"),
+                                                                  ),
+                                                                  Padding(
+                                                                    padding: EdgeInsets.symmetric(horizontal: 12),
+                                                                    child: Text("Izin/Sakit"),
+                                                                  )
+                                                                ],
                                                               ),
                                                             ),
                                                           )
@@ -358,10 +371,10 @@ class _ListDriverState extends State<ListDriver> {
                                                                           i < dataDropdown.length;
                                                                           i++)
                                                                         DropdownMenuItem(
-                                                                          child:
-                                                                              Text("${dataDropdown[i].merek.toString()}(${dataDropdown[i].platmobil.toString()}),"),
                                                                           value:
                                                                               "${dataDropdown[i].merek.toString()}(${dataDropdown[i].platmobil.toString()}),",
+                                                                          child:
+                                                                              Text("${dataDropdown[i].merek.toString()}(${dataDropdown[i].platmobil.toString()}),"),
                                                                         )
                                                                     ],
                                                                         value:
@@ -659,10 +672,10 @@ class _ListDriverState extends State<ListDriver> {
                                                     i < dataDropdown.length;
                                                     i++)
                                                   DropdownMenuItem(
-                                                    child: Text(
-                                                        "${dataDropdown[i].merek.toString()}(${dataDropdown[i].platmobil.toString()}),"),
                                                     value:
                                                         "${dataDropdown[i].merek.toString()}(${dataDropdown[i].platmobil.toString()}),",
+                                                    child: Text(
+                                                        "${dataDropdown[i].merek.toString()}(${dataDropdown[i].platmobil.toString()}),"),
                                                   )
                                               ],
                                               value: dropdownValue,

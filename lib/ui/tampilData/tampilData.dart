@@ -1,10 +1,25 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../../main.dart';
 import '../editDriver/editDriver.dart';
 import '../editMobil/editMobil.dart';
+import '../../model/dataDriver.dart';
+import 'widgets/listTampilData.dart';
 
-class TampilData extends StatelessWidget {
+class TampilData extends StatefulWidget {
   const TampilData({super.key});
+
+  @override
+  _TampilDataState createState() => _TampilDataState();
+}
+class _TampilDataState extends State<TampilData> {
+  Future<List<DataDriver>> readJson() async {
+    final data = await rootBundle.loadString('assets/data/driver.json');
+    final list = json.decode(data) as List<dynamic>;
+
+    return list.map((e) => DataDriver.fromJson(e)).toList();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -93,7 +108,19 @@ class TampilData extends StatelessWidget {
             ),
           ]),
         ),
-        body: Container(),
+        body: FutureBuilder(
+          future: readJson(),
+          builder: (context, data) {
+            if (data.hasError) {
+              return Center(child: Text('${data.error}'));
+            } else if (data.hasData) {
+              var dataDriver = data.data as List<DataDriver>;
+              return ListTampilData(dataDriver);
+            } else {
+              return const Center(child: CircularProgressIndicator());
+            }
+          },
+        ),
       ),
     );
   }
