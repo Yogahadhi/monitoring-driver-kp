@@ -6,6 +6,8 @@ import '../editDriver/editDriver.dart';
 import '../editMobil/editMobil.dart';
 import '../../model/dataDriver.dart';
 import 'widgets/listTampilData.dart';
+import 'package:fullscreen_window/fullscreen_window.dart';
+
 
 class TampilData extends StatefulWidget {
   const TampilData({super.key});
@@ -21,6 +23,15 @@ class _TampilDataState extends State<TampilData> {
     return list.map((e) => DataDriver.fromJson(e)).toList();
   }
 
+  void setFullscreen(bool isFullScreen){
+    FullScreenWindow.setFullScreen(isFullScreen);
+  }
+
+  void initState(){
+    setFullscreen(true);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -28,6 +39,7 @@ class _TampilDataState extends State<TampilData> {
       title: 'Welcome to Monitoring Driver App',
       home: Scaffold(
         backgroundColor: Colors.greenAccent,
+        /*
         appBar: AppBar(
           elevation: 0.0,
           backgroundColor: Colors.green,
@@ -108,6 +120,7 @@ class _TampilDataState extends State<TampilData> {
             ),
           ]),
         ),
+        */
         body: FutureBuilder(
           future: readJson(),
           builder: (context, data) {

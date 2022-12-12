@@ -134,10 +134,10 @@ class _ListDriverState extends State<ListDriver> {
                                 dataJson[index].nama.toString(),
                                 style: const TextStyle(
                                     fontFamily: 'rubiksemi', fontSize: 16),
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
+                            ],
+                          ),
                         //Other data column
                         Column(
                           mainAxisAlignment: MainAxisAlignment.center,
