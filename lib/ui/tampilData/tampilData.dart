@@ -33,13 +33,22 @@ class _TampilDataState extends State<TampilData> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Welcome to Monitoring Driver App',
-      home: Scaffold(
-        backgroundColor: Colors.greenAccent,
-        /*
+  Widget build(BuildContext context) => RawKeyboardListener(
+      autofocus: true,
+      focusNode: FocusNode(),
+      onKey: (event){
+        if (event.isKeyPressed(LogicalKeyboardKey.escape)) {
+          setFullscreen(false);
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => const MyApp()));
+        }
+      },
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Welcome to Monitoring Driver App',
+        home: Scaffold(
+          backgroundColor: Colors.greenAccent,
+          /*
         appBar: AppBar(
           elevation: 0.0,
           backgroundColor: Colors.green,
@@ -121,20 +130,20 @@ class _TampilDataState extends State<TampilData> {
           ]),
         ),
         */
-        body: FutureBuilder(
-          future: readJson(),
-          builder: (context, data) {
-            if (data.hasError) {
-              return Center(child: Text('${data.error}'));
-            } else if (data.hasData) {
-              var dataDriver = data.data as List<DataDriver>;
-              return ListTampilData(dataDriver);
-            } else {
-              return const Center(child: CircularProgressIndicator());
-            }
-          },
+          body: FutureBuilder(
+            future: readJson(),
+            builder: (context, data) {
+              if (data.hasError) {
+                return Center(child: Text('${data.error}'));
+              } else if (data.hasData) {
+                var dataDriver = data.data as List<DataDriver>;
+                return ListTampilData(dataDriver);
+              } else {
+                return const Center(child: CircularProgressIndicator());
+              }
+            },
+          ),
         ),
       ),
     );
-  }
 }
