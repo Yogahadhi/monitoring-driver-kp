@@ -25,7 +25,7 @@ class _ListDriverState extends State<ListDriver> {
   late final TextEditingController _tanggalController;
   late final TextEditingController _filenameController;
   late final TextEditingController _namaUpdateController;
-  late final TextEditingController _tujuanUpdateController;
+  late final TextEditingController _catatanUpdateController;
   late final TextEditingController _tanggalUpdateController;
   late final TextEditingController _filenameUpdateController;
 
@@ -37,7 +37,7 @@ class _ListDriverState extends State<ListDriver> {
     _tanggalController = TextEditingController();
     _filenameController = TextEditingController();
     _namaUpdateController = TextEditingController();
-    _tujuanUpdateController = TextEditingController();
+    _catatanUpdateController = TextEditingController();
     _tanggalUpdateController = TextEditingController();
     _filenameUpdateController = TextEditingController();
   }
@@ -48,7 +48,7 @@ class _ListDriverState extends State<ListDriver> {
     _tanggalController.dispose();
     _filenameController.dispose();
     _namaUpdateController.dispose();
-    _tujuanUpdateController.dispose();
+    _catatanUpdateController.dispose();
     _tanggalUpdateController.dispose();
     _filenameController.dispose();
     super.dispose();
@@ -74,6 +74,15 @@ class _ListDriverState extends State<ListDriver> {
       (DataDriver) => DataDriver.toJson(),
     );
     file.writeAsStringSync(json.encode(content));
+  }
+
+  Widget statusWidget(String status){
+    if(status == 'standby'){
+      return Text('gaming');
+    }
+    else{
+      return Text('turu');
+    }
   }
 
   void _openImage(
@@ -146,25 +155,6 @@ class _ListDriverState extends State<ListDriver> {
                             Row(
                               children: [
                                 const Padding(
-                                  padding: EdgeInsets.only(left: 30),
-                                  child: Text(
-                                      style: TextStyle(
-                                          fontFamily: 'poppins', fontSize: 15),
-                                      'Tujuan : '),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 8),
-                                  child: Text(
-                                    dataJson[index].tujuan.toString(),
-                                    style: const TextStyle(
-                                        fontFamily: 'rubiksemi', fontSize: 16),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                const Padding(
                                   padding: EdgeInsets.only(left: 30, top: 10),
                                   child: Text(
                                       style: TextStyle(
@@ -202,6 +192,37 @@ class _ListDriverState extends State<ListDriver> {
                                 ),
                               ],
                             ),
+                            Row(
+                              children: [
+                                const Padding(
+                                  padding: EdgeInsets.only(left: 30),
+                                  child: Text(
+                                      style: TextStyle(
+                                          fontFamily: 'poppins', fontSize: 15),
+                                      'Status : '),
+                                ),
+                                statusWidget(dataJson[index].status.toString())
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                const Padding(
+                                  padding: EdgeInsets.only(left: 30),
+                                  child: Text(
+                                      style: TextStyle(
+                                          fontFamily: 'poppins', fontSize: 15),
+                                      'Catatan : '),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 8),
+                                  child: Text(
+                                    dataJson[index].catatan.toString(),
+                                    style: const TextStyle(
+                                        fontFamily: 'rubiksemi', fontSize: 16),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ],
                         ),
                         Row(
@@ -212,183 +233,243 @@ class _ListDriverState extends State<ListDriver> {
                                   showDialog(
                                       context: context,
                                       builder: (BuildContext context) {
-                                        return AlertDialog(
-                                          content: Stack(
-                                            children: [
-                                              Form(
-                                                  key: _formKey,
-                                                  child: Column(
-                                                    mainAxisSize:
+                                        return StatefulBuilder(
+                                          builder: (context, setState) {
+                                            return AlertDialog(
+                                              content: Stack(
+                                                children: [
+                                                  Form(
+                                                      key: _formKey,
+                                                      child: Column(
+                                                        mainAxisSize:
                                                         MainAxisSize.min,
-                                                    children: [
-                                                      Row(
                                                         children: [
-                                                          const Padding(
-                                                            padding:
-                                                                EdgeInsets.all(
-                                                                    8.0),
-                                                            child:
-                                                                Text('Nama :'),
-                                                          ),
-                                                          SizedBox(
-                                                            width: 300,
-                                                            child: Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                      .all(8.0),
-                                                              child:
-                                                                  TextFormField(
-                                                                controller:
-                                                                    _namaUpdateController,
-                                                                validator:
-                                                                    (text) {
-                                                                  if (text ==
-                                                                          null ||
-                                                                      text.isEmpty) {
-                                                                    return 'Text is empty';
-                                                                  } else {
-                                                                    return null;
-                                                                  }
-                                                                },
-                                                              ),
-                                                            ),
-                                                          )
-                                                        ],
-                                                      ),
-                                                      Row(
-                                                        children: [
-                                                          const Padding(
-                                                            padding:
-                                                                EdgeInsets.all(
-                                                                    8.0),
-                                                            child:
-                                                                Text('Tujuan'),
-                                                          ),
-                                                          SizedBox(
-                                                            width: 300,
-                                                            child: Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                      .all(8.0),
-                                                              child:
-                                                                  TextFormField(
-                                                                controller:
-                                                                    _tujuanUpdateController,
-                                                                validator:
-                                                                    (text) {
-                                                                  if (text ==
-                                                                          null ||
-                                                                      text.isEmpty) {
-                                                                    return 'Text is empty';
-                                                                  } else {
-                                                                    return null;
-                                                                  }
-                                                                },
-                                                              ),
-                                                            ),
-                                                          )
-                                                        ],
-                                                      ),
-                                                      Row(
-                                                        children: [
-                                                          const Padding(
-                                                            padding:
-                                                            EdgeInsets.all(
-                                                                8.0),
-                                                            child: Text(
-                                                                'Status :'),
-                                                          ),
-                                                          SizedBox(
-                                                            width:300,
-                                                            child: Padding(
-                                                              padding: const EdgeInsets.all(8.0),
-                                                              child: ToggleButtons(
-                                                                isSelected: selectedButton,
-                                                                borderRadius: BorderRadius.circular(10),
-                                                                color: Colors.blue,
-                                                                selectedColor: Colors.white,
-                                                                fillColor: Colors.lightBlue.shade900,
-                                                                onPressed: (int index){
-                                                                  setState(() {
-                                                                    //selectedButton[index] = !selectedButton[index];
-                                                                    if(index == 0){
-                                                                      toggleButtonValue = 'Standby';
-                                                                      print(toggleButtonValue);
-                                                                      selectedButton = [true, false, false];
-                                                                    }
-                                                                    else if(index == 1){
-                                                                      toggleButtonValue = 'Terpakai';
-                                                                      print(toggleButtonValue);
-                                                                      selectedButton = [false, true, false];
-                                                                    }
-                                                                    else if(index == 2){
-                                                                      toggleButtonValue = 'Izin/Sakit';
-                                                                      print(toggleButtonValue);
-                                                                      selectedButton = [false, false, true];
-                                                                    }
-                                                                  });
-                                                                },
-                                                                children: [
-                                                                  Padding(
-                                                                    padding: EdgeInsets.symmetric(horizontal: 12),
-                                                                    child: Text("Standby"),
-                                                                  ),
-                                                                  Padding(
-                                                                    padding: EdgeInsets.symmetric(horizontal: 12),
-                                                                    child: Text("Terpakai"),
-                                                                  ),
-                                                                  Padding(
-                                                                    padding: EdgeInsets.symmetric(horizontal: 12),
-                                                                    child: Text("Izin/Sakit"),
-                                                                  )
-                                                                ],
-                                                              ),
-                                                            ),
-                                                          )
-                                                        ],
-                                                      ),
-                                                      Row(
-                                                        children: [
-                                                          const Padding(
-                                                            padding:
-                                                                EdgeInsets.all(
-                                                                    8.0),
-                                                            child: Text(
-                                                                'Mobil* :'),
-                                                          ),
-                                                          SizedBox(
-                                                            width: 300,
-                                                            child: Padding(
+                                                          Row(
+                                                            children: [
+                                                              const Padding(
                                                                 padding:
-                                                                    const EdgeInsets
-                                                                            .all(
-                                                                        8.0),
+                                                                EdgeInsets.all(
+                                                                    8.0),
                                                                 child:
+                                                                Text('Nama :'),
+                                                              ),
+                                                              SizedBox(
+                                                                width: 300,
+                                                                child: Padding(
+                                                                  padding:
+                                                                  const EdgeInsets
+                                                                      .all(8.0),
+                                                                  child:
+                                                                  TextFormField(
+                                                                    controller:
+                                                                    _namaUpdateController,
+                                                                    validator:
+                                                                        (text) {
+                                                                      if (text ==
+                                                                          null ||
+                                                                          text
+                                                                              .isEmpty) {
+                                                                        return 'Text is empty';
+                                                                      } else {
+                                                                        return null;
+                                                                      }
+                                                                    },
+                                                                  ),
+                                                                ),
+                                                              )
+                                                            ],
+                                                          ),
+                                                          Row(
+                                                            children: [
+                                                              const Padding(
+                                                                padding:
+                                                                EdgeInsets.all(
+                                                                    8.0),
+                                                                child:
+                                                                Text('catatan'),
+                                                              ),
+                                                              SizedBox(
+                                                                width: 300,
+                                                                child: Padding(
+                                                                  padding:
+                                                                  const EdgeInsets
+                                                                      .all(8.0),
+                                                                  child:
+                                                                  TextFormField(
+                                                                    controller:
+                                                                    _catatanUpdateController,
+                                                                    validator:
+                                                                        (text) {
+                                                                      if (text ==
+                                                                          null ||
+                                                                          text
+                                                                              .isEmpty) {
+                                                                        return 'Text is empty';
+                                                                      } else {
+                                                                        return null;
+                                                                      }
+                                                                    },
+                                                                  ),
+                                                                ),
+                                                              )
+                                                            ],
+                                                          ),
+                                                          Row(
+                                                            children: [
+                                                              const Padding(
+                                                                padding:
+                                                                EdgeInsets.all(
+                                                                    8.0),
+                                                                child: Text(
+                                                                    'Status :'),
+                                                              ),
+                                                              SizedBox(
+                                                                width: 300,
+                                                                child: Padding(
+                                                                  padding: const EdgeInsets
+                                                                      .all(8.0),
+                                                                  child: ToggleButtons(
+                                                                    isSelected: selectedButton,
+                                                                    borderRadius: BorderRadius
+                                                                        .circular(
+                                                                        10),
+                                                                    color: Colors
+                                                                        .blue,
+                                                                    selectedColor: Colors
+                                                                        .white,
+                                                                    fillColor: Colors
+                                                                        .lightBlue
+                                                                        .shade900,
+                                                                    onPressed: (
+                                                                        int index) {
+                                                                      setState(() {
+                                                                        //selectedButton[index] = !selectedButton[index];
+                                                                        if (index ==
+                                                                            0) {
+                                                                          toggleButtonValue =
+                                                                          'Standby';
+                                                                          print(
+                                                                              toggleButtonValue);
+                                                                          selectedButton =
+                                                                          [
+                                                                            true,
+                                                                            false,
+                                                                            false
+                                                                          ];
+                                                                        }
+                                                                        else
+                                                                        if (index ==
+                                                                            1) {
+                                                                          toggleButtonValue =
+                                                                          'Terpakai';
+                                                                          print(
+                                                                              toggleButtonValue);
+                                                                          selectedButton =
+                                                                          [
+                                                                            false,
+                                                                            true,
+                                                                            false
+                                                                          ];
+                                                                        }
+                                                                        else
+                                                                        if (index ==
+                                                                            2) {
+                                                                          toggleButtonValue =
+                                                                          'Izin/Sakit';
+                                                                          print(
+                                                                              toggleButtonValue);
+                                                                          selectedButton =
+                                                                          [
+                                                                            false,
+                                                                            false,
+                                                                            true
+                                                                          ];
+                                                                        }
+                                                                      });
+                                                                    },
+                                                                    children: [
+                                                                      Padding(
+                                                                        padding: EdgeInsets
+                                                                            .symmetric(
+                                                                            horizontal: 12),
+                                                                        child: Text(
+                                                                            "Standby"),
+                                                                      ),
+                                                                      Padding(
+                                                                        padding: EdgeInsets
+                                                                            .symmetric(
+                                                                            horizontal: 12),
+                                                                        child: Text(
+                                                                            "Terpakai"),
+                                                                      ),
+                                                                      Padding(
+                                                                        padding: EdgeInsets
+                                                                            .symmetric(
+                                                                            horizontal: 12),
+                                                                        child: Text(
+                                                                            "Izin/Sakit"),
+                                                                      )
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              )
+                                                            ],
+                                                          ),
+                                                          Row(
+                                                            children: [
+                                                              const Padding(
+                                                                padding:
+                                                                EdgeInsets.all(
+                                                                    8.0),
+                                                                child: Text(
+                                                                    'Mobil* :'),
+                                                              ),
+                                                              SizedBox(
+                                                                width: 300,
+                                                                child: Padding(
+                                                                    padding:
+                                                                    const EdgeInsets
+                                                                        .all(
+                                                                        8.0),
+                                                                    child:
                                                                     DropdownButtonFormField(
                                                                         items: [
-                                                                      for (var i =
-                                                                              0;
-                                                                          i < dataDropdown.length;
+                                                                          for (var i =
+                                                                          0;
+                                                                          i <
+                                                                              dataDropdown
+                                                                                  .length;
                                                                           i++)
-                                                                        DropdownMenuItem(
-                                                                          value:
-                                                                              "${dataDropdown[i].merek.toString()}(${dataDropdown[i].platmobil.toString()}),",
-                                                                          child:
-                                                                              Text("${dataDropdown[i].merek.toString()}(${dataDropdown[i].platmobil.toString()}),"),
-                                                                        )
-                                                                    ],
+                                                                            DropdownMenuItem(
+                                                                              value:
+                                                                              "${dataDropdown[i]
+                                                                                  .merek
+                                                                                  .toString()}(${dataDropdown[i]
+                                                                                  .platmobil
+                                                                                  .toString()}),",
+                                                                              child:
+                                                                              Text(
+                                                                                  "${dataDropdown[i]
+                                                                                      .merek
+                                                                                      .toString()}(${dataDropdown[i]
+                                                                                      .platmobil
+                                                                                      .toString()}),"),
+                                                                            )
+                                                                        ],
                                                                         value:
-                                                                            dropdownUpdateValue,
+                                                                        dropdownUpdateValue,
                                                                         onChanged:
-                                                                            (dropdownUpdateValue) {
+                                                                            (
+                                                                            dropdownUpdateValue) {
                                                                           setState(
-                                                                              () {
-                                                                            selectedUpdateValue =
-                                                                                dropdownUpdateValue;
-                                                                          });
+                                                                                  () {
+                                                                                selectedUpdateValue =
+                                                                                    dropdownUpdateValue;
+                                                                              });
                                                                         },
                                                                         validator:
-                                                                            (dropdownUpdateValue) {
+                                                                            (
+                                                                            dropdownUpdateValue) {
                                                                           if (dropdownUpdateValue ==
                                                                               null) {
                                                                             return 'Select an item';
@@ -396,203 +477,221 @@ class _ListDriverState extends State<ListDriver> {
                                                                             return null;
                                                                           }
                                                                         })),
-                                                          )
-                                                        ],
-                                                      ),
-                                                      Row(
-                                                        children: [
-                                                          const Padding(
-                                                            padding:
+                                                              )
+                                                            ],
+                                                          ),
+                                                          Row(
+                                                            children: [
+                                                              const Padding(
+                                                                padding:
                                                                 EdgeInsets.all(
                                                                     8.0),
-                                                            child:
-                                                                Text('Tanggal'),
-                                                          ),
-                                                          SizedBox(
-                                                            width: 150,
-                                                            child: Padding(
-                                                              padding:
+                                                                child:
+                                                                Text('Tanggal:'),
+                                                              ),
+                                                              SizedBox(
+                                                                width: 150,
+                                                                child: Padding(
+                                                                  padding:
                                                                   const EdgeInsets
                                                                       .all(8.0),
-                                                              child:
+                                                                  child:
                                                                   TextFormField(
-                                                                enabled: false,
-                                                                controller:
+                                                                    enabled: false,
+                                                                    controller:
                                                                     _tanggalUpdateController,
-                                                                validator:
-                                                                    (text) {
-                                                                  if (text ==
+                                                                    validator:
+                                                                        (text) {
+                                                                      if (text ==
                                                                           null ||
-                                                                      text.isEmpty) {
-                                                                    return 'Text is empty';
-                                                                  } else {
-                                                                    return null;
-                                                                  }
-                                                                },
+                                                                          text
+                                                                              .isEmpty) {
+                                                                        return 'Text is empty';
+                                                                      } else {
+                                                                        return null;
+                                                                      }
+                                                                    },
+                                                                  ),
+                                                                ),
                                                               ),
-                                                            ),
-                                                          ),
-                                                          SizedBox(
-                                                            width: 150,
-                                                            child: Button(
-                                                              buttonAction:
-                                                                  () async {
-                                                                DateTime? newDate = await showDatePicker(
-                                                                    context:
+                                                              SizedBox(
+                                                                width: 150,
+                                                                child: Button(
+                                                                  buttonAction:
+                                                                      () async {
+                                                                    DateTime? newDate = await showDatePicker(
+                                                                        context:
                                                                         context,
-                                                                    initialDate:
+                                                                        initialDate:
                                                                         DateTime
                                                                             .now(),
-                                                                    firstDate:
+                                                                        firstDate:
                                                                         DateTime(
                                                                             1899),
-                                                                    lastDate:
+                                                                        lastDate:
                                                                         DateTime(
                                                                             2099));
-                                                                if (newDate ==
-                                                                    null) {
-                                                                  return;
-                                                                } else {
-                                                                  String
+                                                                    if (newDate ==
+                                                                        null) {
+                                                                      return;
+                                                                    } else {
+                                                                      String
                                                                       formattedDate =
                                                                       DateFormat(
-                                                                              'yyyy-MM-dd')
+                                                                          'yyyy-MM-dd')
                                                                           .format(
-                                                                              newDate);
-                                                                  _tanggalUpdateController
+                                                                          newDate);
+                                                                      _tanggalUpdateController
                                                                           .text =
-                                                                      formattedDate;
-                                                                }
-                                                              },
-                                                              text:
-                                                                  'select date',
-                                                            ),
+                                                                          formattedDate;
+                                                                    }
+                                                                  },
+                                                                  text:
+                                                                  'Select date',
+                                                                ),
+                                                              ),
+                                                            ],
                                                           ),
-                                                        ],
-                                                      ),
-                                                      Row(
-                                                        children: [
-                                                          const Padding(
-                                                            padding:
+                                                          Row(
+                                                            children: [
+                                                              const Padding(
+                                                                padding:
                                                                 EdgeInsets.all(
                                                                     8.0),
-                                                            child: Text('Foto'),
-                                                          ),
-                                                          SizedBox(
-                                                            width: 150,
-                                                            child: Padding(
-                                                              padding:
+                                                                child: Text(
+                                                                    'Foto:'),
+                                                              ),
+                                                              SizedBox(
+                                                                width: 150,
+                                                                child: Padding(
+                                                                  padding:
                                                                   const EdgeInsets
                                                                       .all(8.0),
-                                                              child: TextField(
-                                                                enabled: false,
-                                                                controller:
+                                                                  child: TextField(
+                                                                    enabled: false,
+                                                                    controller:
                                                                     _filenameUpdateController,
+                                                                  ),
+                                                                ),
                                                               ),
-                                                            ),
+                                                              SizedBox(
+                                                                width: 150,
+                                                                child: Button(
+                                                                    buttonAction:
+                                                                        () {
+                                                                      _openImage(
+                                                                          _filenameUpdateController,
+                                                                          tempUpdateFileNames);
+                                                                    },
+                                                                text: "Pilih foto"
+                                                                ),
+                                                              ),
+                                                            ],
                                                           ),
-                                                          SizedBox(
-                                                            width: 150,
-                                                            child: Button(
-                                                                buttonAction:
-                                                                    () {
-                                                              _openImage(
-                                                                  _filenameUpdateController,
-                                                                  tempUpdateFileNames);
-                                                            }),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      Padding(
-                                                        padding:
+                                                          Padding(
+                                                            padding:
                                                             const EdgeInsets
                                                                 .all(8.0),
-                                                        child: Button(
-                                                          text: 'Update',
-                                                          buttonAction: () {
-                                                            if (_formKey
-                                                                .currentState!
-                                                                .validate()) {
-                                                              Directory(
-                                                                      'assets/images/${dataJson[index].photodir.toString()}')
-                                                                  .deleteSync(
+                                                            child: Button(
+                                                              text: 'Update',
+                                                              buttonAction: () {
+                                                                if (_formKey
+                                                                    .currentState!
+                                                                    .validate()) {
+                                                                  Directory(
+                                                                      'assets/images/${dataJson[index]
+                                                                          .photodir
+                                                                          .toString()}')
+                                                                      .deleteSync(
                                                                       recursive:
-                                                                          true);
-                                                              var updateDriver = DataDriver(
-                                                                nama: _namaUpdateController.text,
-                                                                tujuan: _tujuanUpdateController.text,
-                                                                status: selectedUpdateValue,
-                                                                tanggal:
+                                                                      true);
+                                                                  var updateDriver = DataDriver(
+                                                                    nama: _namaUpdateController
+                                                                        .text,
+                                                                    catatan: _catatanUpdateController
+                                                                        .text,
+                                                                    status: selectedUpdateValue,
+                                                                    tanggal:
                                                                     _tanggalUpdateController
                                                                         .text,
-                                                                mobil:
+                                                                    mobil:
                                                                     selectedUpdateValue,
-                                                                photodir:
+                                                                    photodir:
                                                                     _filenameUpdateController
                                                                         .text,
-                                                                id: dataJson[
-                                                                        index]
-                                                                    .id,
+                                                                    id: dataJson[
+                                                                    index]
+                                                                        .id,
 
-                                                              );
-                                                              setState(() {
-                                                                dataJson[index]
+                                                                  );
+                                                                  setState(() {
+                                                                    dataJson[index]
                                                                         .nama =
-                                                                    updateDriver
-                                                                        .nama;
-                                                                dataJson[index]
-                                                                        .tujuan =
-                                                                    updateDriver
-                                                                        .tujuan;
-                                                                dataJson[index].status = updateDriver.status;
-                                                                dataJson[index]
+                                                                        updateDriver
+                                                                            .nama;
+                                                                    dataJson[index]
+                                                                        .catatan =
+                                                                        updateDriver
+                                                                            .catatan;
+                                                                    dataJson[index]
+                                                                        .status =
+                                                                        updateDriver
+                                                                            .status;
+                                                                    dataJson[index]
                                                                         .tanggal =
-                                                                    updateDriver
-                                                                        .tanggal;
-                                                                dataJson[index]
+                                                                        updateDriver
+                                                                            .tanggal;
+                                                                    dataJson[index]
                                                                         .mobil =
-                                                                    updateDriver
-                                                                        .mobil;
-                                                                dataJson[index]
+                                                                        updateDriver
+                                                                            .mobil;
+                                                                    dataJson[index]
                                                                         .photodir =
-                                                                    updateDriver
-                                                                        .photodir;
-                                                              });
-                                                              writeToFileSync(
-                                                                  dataJson);
-                                                              tempUpdateFileNames
-                                                                  .remove(
+                                                                        updateDriver
+                                                                            .photodir;
+                                                                  });
+                                                                  writeToFileSync(
+                                                                      dataJson);
+                                                                  tempUpdateFileNames
+                                                                      .remove(
                                                                       _filenameUpdateController
                                                                           .text);
-                                                              for (var element
+                                                                  for (var element
                                                                   in tempUpdateFileNames) {
-                                                                final dir =
+                                                                    final dir =
                                                                     Directory(
                                                                         'assets/images/$element');
-                                                                dir.deleteSync(
-                                                                    recursive:
+                                                                    dir
+                                                                        .deleteSync(
+                                                                        recursive:
                                                                         true);
-                                                              }
-                                                              tempUpdateFileNames =
+                                                                  }
+                                                                  tempUpdateFileNames =
                                                                   [];
-                                                              selectedUpdateValue =
+                                                                  selectedUpdateValue =
                                                                   null;
-                                                              _namaUpdateController
-                                                                  .text = '';
-                                                              _tujuanUpdateController
-                                                                  .text = '';
-                                                              _tanggalUpdateController
-                                                                  .text = '';
-                                                              _filenameUpdateController
-                                                                  .text = '';
-                                                            }
-                                                          },
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ))
-                                            ],
-                                          ),
+                                                                  _namaUpdateController
+                                                                      .text =
+                                                                  '';
+                                                                  _catatanUpdateController
+                                                                      .text =
+                                                                  '';
+                                                                  _tanggalUpdateController
+                                                                      .text =
+                                                                  '';
+                                                                  _filenameUpdateController
+                                                                      .text =
+                                                                  '';
+                                                                }
+                                                              },
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ))
+                                                ],
+                                              ),
+                                            );
+                                          }
                                         );
                                       });
                                 },
@@ -776,7 +875,7 @@ class _ListDriverState extends State<ListDriver> {
                                         setState(() {
                                           var newDriver = DataDriver(
                                               nama: _namaController.text,
-                                              tujuan: '',
+                                              catatan: '',
                                               tanggal: _tanggalController.text,
                                               mobil: selectedValue,
                                               id: DateTime.now()

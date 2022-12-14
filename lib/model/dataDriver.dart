@@ -1,6 +1,6 @@
 class DataDriver {
   String? nama;
-  String? tujuan;
+  String? catatan;
   String? tanggal;
   String? mobil;
   String? id;
@@ -9,7 +9,7 @@ class DataDriver {
 
   DataDriver({
     this.nama,
-    this.tujuan,
+    this.catatan,
     this.tanggal,
     this.mobil,
     required this.id,
@@ -19,7 +19,7 @@ class DataDriver {
 
   DataDriver.fromJson(Map<String, dynamic> json) {
     nama = json['nama'];
-    tujuan = json['tujuan'];
+    catatan = json['catatan'];
     tanggal = json['tanggal'];
     mobil = json['mobil'];
     id = json['id'];
@@ -29,7 +29,7 @@ class DataDriver {
 
   Map<String, dynamic> toJson() => {
     'nama' : nama,
-    'tujuan' : tujuan,
+    'catatan' : catatan,
     'tanggal' : tanggal,
     'mobil' : mobil,
     'id' : id,

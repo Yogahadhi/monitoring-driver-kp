@@ -34,14 +34,12 @@ class _ListTampilDataState extends State<ListTampilData> {
     List dataJson = readJsonSync('assets/data/driver.json');
     return GridView.builder(
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          childAspectRatio: 2,
           crossAxisCount: 2,
-          crossAxisSpacing: 5,
-          mainAxisSpacing: 5,
         ),
         itemCount: dataJson.length,
         itemBuilder: (context, index){
           return Container(
-            constraints: BoxConstraints(maxHeight: 300),
             decoration: BoxDecoration(
               color: Colors.white,
               border: Border.all(
@@ -56,16 +54,16 @@ class _ListTampilDataState extends State<ListTampilData> {
                   children: [
                     Padding(
                         padding: const EdgeInsets.only(
-                            top: 15, right: 10),
+                            left: 15, top: 15, right: 10),
                         child: Image.file(
                           File(
                               'assets/images/${dataJson[index].photodir.toString()}'),
-                          width: 120,
-                          height: 160,
+                          width: 270,
+                          height: 360,
                         )),
                     Padding(
                       padding: const EdgeInsets.only(
-                          top: 5, bottom: 5),
+                          left: 15, top: 5, bottom: 5),
                       child: Text(
                         dataJson[index].nama.toString(),
                         style: const TextStyle(
@@ -74,69 +72,72 @@ class _ListTampilDataState extends State<ListTampilData> {
                     ),
                   ],
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        const Padding(
-                          padding: EdgeInsets.only(left: 10),
-                          child: Text(
-                              style: TextStyle(
-                                  fontFamily: 'poppins', fontSize: 15),
-                              'Tujuan : '),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 5),
-                          child: Text(
-                            dataJson[index].tujuan.toString(),
-                            style: const TextStyle(
-                                fontFamily: 'rubiksemi', fontSize: 16),
+                Padding(
+                  padding: const EdgeInsets.only(top: 100),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.only(left: 10),
+                            child: Text(
+                                style: TextStyle(
+                                    fontFamily: 'poppins', fontSize: 15),
+                                'Tujuan : '),
                           ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        const Padding(
-                          padding: EdgeInsets.only(left: 10, top: 10),
-                          child: Text(
-                              style: TextStyle(
-                                  fontFamily: 'poppins', fontSize: 15),
-                              'Tanggal : '),
-                        ),
-                        Padding(
-                          padding:
-                          const EdgeInsets.only(left: 5),
-                          child: Text(
-                            dataJson[index].tanggal.toString(),
-                            style: const TextStyle(
-                                fontFamily: 'rubiksemi', fontSize: 16),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 5),
+                            child: Text(
+                              dataJson[index].tujuan.toString(),
+                              style: const TextStyle(
+                                  fontFamily: 'rubiksemi', fontSize: 16),
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        const Padding(
-                          padding: EdgeInsets.only(left: 10, top: 5),
-                          child: Text(
-                              style: TextStyle(
-                                  fontFamily: 'poppins', fontSize: 15),
-                              'Merek Mobil : '),
-                        ),
-                        Padding(
-                          padding:
-                          const EdgeInsets.only(left: 5),
-                          child: Text(
-                            dataJson[index].mobil.toString(),
-                            style: const TextStyle(
-                                fontFamily: 'rubiksemi', fontSize: 16),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.only(left: 10, top: 10),
+                            child: Text(
+                                style: TextStyle(
+                                    fontFamily: 'poppins', fontSize: 15),
+                                'Tanggal : '),
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
+                          Padding(
+                            padding:
+                            const EdgeInsets.only(left: 5),
+                            child: Text(
+                              dataJson[index].tanggal.toString(),
+                              style: const TextStyle(
+                                  fontFamily: 'rubiksemi', fontSize: 16),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.only(left: 10, top: 5),
+                            child: Text(
+                                style: TextStyle(
+                                    fontFamily: 'poppins', fontSize: 15),
+                                'Merek Mobil : '),
+                          ),
+                          Padding(
+                            padding:
+                            const EdgeInsets.only(left: 5),
+                            child: Text(
+                              dataJson[index].mobil.toString(),
+                              style: const TextStyle(
+                                  fontFamily: 'rubiksemi', fontSize: 16),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 )
               ],
             ),
