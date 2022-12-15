@@ -64,9 +64,6 @@ class _ListMobilState extends State<ListMobil> {
         child: ListView.builder(
             itemCount: dataJson.length,
             itemBuilder: (context, index) {
-              _merekUpdateController.text = dataJson[index].merek.toString();
-              _platMobilUpdateController.text =
-                  dataJson[index].platmobil.toString();
               final String id = dataJson[index].id.toString();
               return Card(
                 elevation: 5,
@@ -105,6 +102,9 @@ class _ListMobilState extends State<ListMobil> {
                                   showDialog(
                                       context: context,
                                       builder: (BuildContext context) {
+                                        _merekUpdateController.text = dataJson[index].merek.toString();
+                                        _platMobilUpdateController.text =
+                                            dataJson[index].platmobil.toString();
                                         return AlertDialog(
                                           content: Stack(
                                             children: [

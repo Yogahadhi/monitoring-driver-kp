@@ -76,13 +76,44 @@ class _ListDriverState extends State<ListDriver> {
     file.writeAsStringSync(json.encode(content));
   }
 
-  Widget statusWidget(String status){
-    if(status == 'standby'){
-      return Text('gaming');
+  File profilePicture(String filename){
+    if(File(filename).existsSync()){
+      return File(filename);
     }
     else{
-      return Text('turu');
+      return File('assets/images/default.jpg');
     }
+  }
+
+  Widget statusWidget(String status){
+    MaterialColor containerColor;
+    switch(status){
+      case 'standby':
+        containerColor = Colors.green;
+        break;
+      case 'Terpakai':
+        containerColor = Colors.yellow;
+        break;
+      case 'Izin/Sakit':
+        containerColor = Colors.red;
+        break;
+      default:
+        containerColor = Colors.grey;
+        break;
+    }
+    return Container(
+      height: 35,
+      width: 70,
+        child: Card(
+          color: containerColor,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(status),
+            ],
+          ),
+        ),
+    );
   }
 
   void _openImage(
@@ -131,8 +162,7 @@ class _ListDriverState extends State<ListDriver> {
                                 padding: const EdgeInsets.only(
                                     top: 15, left: 50, right: 10),
                                 child: Image.file(
-                                  File(
-                                      'assets/images/${dataJson[index].photodir.toString()}'),
+                                  profilePicture('assets/images/${dataJson[index].photodir.toString()}'),
                                   width: 150,
                                   height: 200,
                                 )),
@@ -233,6 +263,24 @@ class _ListDriverState extends State<ListDriver> {
                                   showDialog(
                                       context: context,
                                       builder: (BuildContext context) {
+                                        _namaUpdateController.text = dataJson[index].nama.toString();
+                                        _catatanUpdateController.text = dataJson[index].catatan.toString();
+                                        _tanggalUpdateController.text = dataJson[index].tanggal.toString();
+                                        _filenameUpdateController.text = dataJson[index].photodir.toString();
+                                        switch(dataJson[index].status.toString()){
+                                          case 'standby':
+                                            selectedButton=[true, false, false];
+                                            break;
+                                          case 'Terpakai':
+                                            selectedButton=[false, true, false];
+                                            break;
+                                          case 'Izin/Sakit':
+                                            selectedButton=[false, false, true];
+                                            break;
+                                          default:
+                                            selectedButton=[false, false, false];
+                                            break;
+                                        }
                                         return StatefulBuilder(
                                           builder: (context, setState) {
                                             return AlertDialog(
@@ -343,7 +391,6 @@ class _ListDriverState extends State<ListDriver> {
                                                                     onPressed: (
                                                                         int index) {
                                                                       setState(() {
-                                                                        //selectedButton[index] = !selectedButton[index];
                                                                         if (index ==
                                                                             0) {
                                                                           toggleButtonValue =
@@ -387,7 +434,7 @@ class _ListDriverState extends State<ListDriver> {
                                                                         }
                                                                       });
                                                                     },
-                                                                    children: [
+                                                                    children: const [
                                                                       Padding(
                                                                         padding: EdgeInsets
                                                                             .symmetric(
