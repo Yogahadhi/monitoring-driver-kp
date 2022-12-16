@@ -85,6 +85,34 @@ class _ListDriverState extends State<ListDriver> {
     }
   }
 
+  Widget dropDownMenu(List dataDropdown, String dropdownUpdateValue, String selectedUpdateValue){
+    List<DropdownMenuItem> menuItems = [];
+    for (var i = 0; i < dataDropdown.length; i++){
+      if("${dataDropdown[i].merek.toString()}(${dataDropdown[i].platmobil.toString()})," != dropdownUpdateValue){
+        menuItems.add(DropdownMenuItem(
+          value:
+            "${dataDropdown[i].merek.toString()}(${dataDropdown[i].platmobil.toString()}),",
+          child:
+            Text("${dataDropdown[i].merek.toString()}(${dataDropdown[i].platmobil.toString()}),"),
+        ));
+      }
+    }
+    menuItems.add(DropdownMenuItem(
+        value: dropdownUpdateValue,
+        child: Text(dropdownUpdateValue)
+      )
+    );
+    return DropdownButtonFormField(
+        items: menuItems,
+        value: dropdownUpdateValue,
+        onChanged: (dropdownUpdateValue) {
+            setState(() {
+                selectedUpdateValue = dropdownUpdateValue;
+            });
+          }
+        );
+  }
+
   Widget statusWidget(String status){
     MaterialColor containerColor;
     switch(status){
@@ -130,7 +158,7 @@ class _ListDriverState extends State<ListDriver> {
     final regexp = RegExp(r'[^\\]*$');
     final filename = regexp.stringMatch(file.path);
     textEditingController.text = filename ?? '';
-    file.saveTo('assets/images/$filename');
+    file.saveTo('assets/profile/$filename');
     tempList.add(filename);
   }
 
@@ -147,8 +175,8 @@ class _ListDriverState extends State<ListDriver> {
                   final String id = dataJson[index].id.toString();
                   final String filename = dataJson[index].photodir.toString();
                   List tempUpdateFileNames = [];
-                  var dropdownUpdateValue;
-                  var selectedUpdateValue;
+                  String dropdownUpdateValue = "${dataDropdown[index].merek.toString()}(${dataDropdown[index].platmobil.toString()}),";
+                  String selectedUpdateValue = '';
                   var toggleButtonValue;
                   return Card(
                     elevation: 5,
@@ -162,7 +190,7 @@ class _ListDriverState extends State<ListDriver> {
                                 padding: const EdgeInsets.only(
                                     top: 15, left: 50, right: 10),
                                 child: Image.file(
-                                  profilePicture('assets/images/${dataJson[index].photodir.toString()}'),
+                                  profilePicture('assets/profile/${dataJson[index].photodir.toString()}'),
                                   width: 150,
                                   height: 200,
                                 )),
@@ -334,7 +362,7 @@ class _ListDriverState extends State<ListDriver> {
                                                                 EdgeInsets.all(
                                                                     8.0),
                                                                 child:
-                                                                Text('catatan'),
+                                                                Text('Catatan : '),
                                                               ),
                                                               SizedBox(
                                                                 width: 300,
@@ -346,16 +374,8 @@ class _ListDriverState extends State<ListDriver> {
                                                                   TextFormField(
                                                                     controller:
                                                                     _catatanUpdateController,
-                                                                    validator:
-                                                                        (text) {
-                                                                      if (text ==
-                                                                          null ||
-                                                                          text
-                                                                              .isEmpty) {
-                                                                        return 'Text is empty';
-                                                                      } else {
-                                                                        return null;
-                                                                      }
+                                                                    validator: (text) {
+
                                                                     },
                                                                   ),
                                                                 ),
@@ -478,52 +498,8 @@ class _ListDriverState extends State<ListDriver> {
                                                                     const EdgeInsets
                                                                         .all(
                                                                         8.0),
-                                                                    child:
-                                                                    DropdownButtonFormField(
-                                                                        items: [
-                                                                          for (var i =
-                                                                          0;
-                                                                          i <
-                                                                              dataDropdown
-                                                                                  .length;
-                                                                          i++)
-                                                                            DropdownMenuItem(
-                                                                              value:
-                                                                              "${dataDropdown[i]
-                                                                                  .merek
-                                                                                  .toString()}(${dataDropdown[i]
-                                                                                  .platmobil
-                                                                                  .toString()}),",
-                                                                              child:
-                                                                              Text(
-                                                                                  "${dataDropdown[i]
-                                                                                      .merek
-                                                                                      .toString()}(${dataDropdown[i]
-                                                                                      .platmobil
-                                                                                      .toString()}),"),
-                                                                            )
-                                                                        ],
-                                                                        value:
-                                                                        dropdownUpdateValue,
-                                                                        onChanged:
-                                                                            (
-                                                                            dropdownUpdateValue) {
-                                                                          setState(
-                                                                                  () {
-                                                                                selectedUpdateValue =
-                                                                                    dropdownUpdateValue;
-                                                                              });
-                                                                        },
-                                                                        validator:
-                                                                            (
-                                                                            dropdownUpdateValue) {
-                                                                          if (dropdownUpdateValue ==
-                                                                              null) {
-                                                                            return 'Select an item';
-                                                                          } else {
-                                                                            return null;
-                                                                          }
-                                                                        })),
+                                                                    child: dropDownMenu(dataDropdown, dropdownUpdateValue, selectedUpdateValue)
+                                                                    ),
                                                               )
                                                             ],
                                                           ),
@@ -645,30 +621,17 @@ class _ListDriverState extends State<ListDriver> {
                                                                 if (_formKey
                                                                     .currentState!
                                                                     .validate()) {
-                                                                  Directory(
-                                                                      'assets/images/${dataJson[index]
-                                                                          .photodir
-                                                                          .toString()}')
-                                                                      .deleteSync(
-                                                                      recursive:
-                                                                      true);
+                                                                  if(dataJson[index].photoDir.toString() != _filenameUpdateController.text){
+                                                                    Directory('assets/profile/${dataJson[index].photodir.toString()}').deleteSync(recursive: true);
+                                                                  }
                                                                   var updateDriver = DataDriver(
-                                                                    nama: _namaUpdateController
-                                                                        .text,
-                                                                    catatan: _catatanUpdateController
-                                                                        .text,
-                                                                    status: selectedUpdateValue,
-                                                                    tanggal:
-                                                                    _tanggalUpdateController
-                                                                        .text,
-                                                                    mobil:
-                                                                    selectedUpdateValue,
-                                                                    photodir:
-                                                                    _filenameUpdateController
-                                                                        .text,
-                                                                    id: dataJson[
-                                                                    index]
-                                                                        .id,
+                                                                    nama: _namaUpdateController.text,
+                                                                    catatan: _catatanUpdateController.text,
+                                                                    status: toggleButtonValue,
+                                                                    tanggal: _tanggalUpdateController.text,
+                                                                    mobil: selectedUpdateValue,
+                                                                    photodir: _filenameUpdateController.text,
+                                                                    id: dataJson[index].id,
 
                                                                   );
                                                                   setState(() {
@@ -703,20 +666,15 @@ class _ListDriverState extends State<ListDriver> {
                                                                       .remove(
                                                                       _filenameUpdateController
                                                                           .text);
-                                                                  for (var element
-                                                                  in tempUpdateFileNames) {
+                                                                  for (var element in tempUpdateFileNames) {
                                                                     final dir =
-                                                                    Directory(
-                                                                        'assets/images/$element');
-                                                                    dir
-                                                                        .deleteSync(
-                                                                        recursive:
-                                                                        true);
+                                                                    Directory('assets/profile/$element');
+                                                                    dir.deleteSync(recursive: true);
                                                                   }
                                                                   tempUpdateFileNames =
                                                                   [];
                                                                   selectedUpdateValue =
-                                                                  null;
+                                                                  '';
                                                                   _namaUpdateController
                                                                       .text =
                                                                   '';
@@ -750,7 +708,7 @@ class _ListDriverState extends State<ListDriver> {
                                     dataDriver.removeWhere((element) =>
                                         element.id.toString() == id);
                                   });
-                                  Directory('assets/images/$filename')
+                                  Directory('assets/profile/$filename')
                                       .deleteSync(recursive: true);
                                   writeToFileSync(dataDriver);
                                 },
@@ -937,7 +895,7 @@ class _ListDriverState extends State<ListDriver> {
                                               .remove(_filenameController.text);
                                           for (var element in tempFileNames) {
                                             final dir = Directory(
-                                                'assets/images/$element');
+                                                'assets/profile/$element');
                                             dir.deleteSync(recursive: true);
                                           }
                                           tempFileNames = [];

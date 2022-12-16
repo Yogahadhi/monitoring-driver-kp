@@ -35,6 +35,7 @@ flutter:
    assets:
     - assets/data/
     - assets/images/
+    - assets/profile
   fonts:
     - family: rubik
       fonts:
