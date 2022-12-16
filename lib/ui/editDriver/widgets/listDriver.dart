@@ -182,102 +182,105 @@ class _ListDriverState extends State<ListDriver> {
                     elevation: 5,
                     margin: const EdgeInsets.fromLTRB(10, 10, 10, 10),
                     child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        //Image/name column
-                        Column(
+                        Row(
                           children: [
-                            Padding(
-                                padding: const EdgeInsets.only(
-                                    top: 15, left: 50, right: 10),
-                                child: Image.file(
-                                  profilePicture('assets/profile/${dataJson[index].photodir.toString()}'),
-                                  width: 150,
-                                  height: 200,
-                                )),
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  top: 5, left: 35, bottom: 5),
-                              child: Text(
-                                dataJson[index].nama.toString(),
-                                style: const TextStyle(
-                                    fontFamily: 'rubiksemi', fontSize: 16),
-                                ),
-                              ),
-                            ],
-                          ),
-                        //Other data column
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
+                            Column(
                               children: [
-                                const Padding(
-                                  padding: EdgeInsets.only(left: 30, top: 10),
-                                  child: Text(
-                                      style: TextStyle(
-                                          fontFamily: 'poppins', fontSize: 15),
-                                      'Tanggal : '),
-                                ),
                                 Padding(
-                                  padding:
+                                    padding: const EdgeInsets.only(
+                                        top: 15, left: 50, right: 10),
+                                    child: Image.file(
+                                      profilePicture('assets/profile/${dataJson[index].photodir.toString()}'),
+                                      width: 150,
+                                      height: 200,
+                                    )),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      top: 5, left: 35, bottom: 5),
+                                  child: Text(
+                                    dataJson[index].nama.toString(),
+                                    style: const TextStyle(
+                                        fontFamily: 'rubiksemi', fontSize: 16),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    const Padding(
+                                      padding: EdgeInsets.only(left: 30, top: 10),
+                                      child: Text(
+                                          style: TextStyle(
+                                              fontFamily: 'poppins', fontSize: 15),
+                                          'Tanggal : '),
+                                    ),
+                                    Padding(
+                                      padding:
                                       const EdgeInsets.only(left: 8, top: 10),
-                                  child: Text(
-                                    dataJson[index].tanggal.toString(),
-                                    style: const TextStyle(
-                                        fontFamily: 'rubiksemi', fontSize: 16),
-                                  ),
+                                      child: Text(
+                                        dataJson[index].tanggal.toString(),
+                                        style: const TextStyle(
+                                            fontFamily: 'rubiksemi', fontSize: 16),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                const Padding(
-                                  padding: EdgeInsets.only(left: 30, top: 10),
-                                  child: Text(
-                                      style: TextStyle(
-                                          fontFamily: 'poppins', fontSize: 15),
-                                      'Merek Mobil : '),
-                                ),
-                                Padding(
-                                  padding:
+                                Row(
+                                  children: [
+                                    const Padding(
+                                      padding: EdgeInsets.only(left: 30, top: 10),
+                                      child: Text(
+                                          style: TextStyle(
+                                              fontFamily: 'poppins', fontSize: 15),
+                                          'Merek Mobil : '),
+                                    ),
+                                    Padding(
+                                      padding:
                                       const EdgeInsets.only(left: 8, top: 10),
-                                  child: Text(
-                                    dataJson[index].mobil.toString(),
-                                    style: const TextStyle(
-                                        fontFamily: 'rubiksemi', fontSize: 16),
-                                  ),
+                                      child: Text(
+                                        dataJson[index].mobil.toString(),
+                                        style: const TextStyle(
+                                            fontFamily: 'rubiksemi', fontSize: 16),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                const Padding(
-                                  padding: EdgeInsets.only(left: 30),
-                                  child: Text(
-                                      style: TextStyle(
-                                          fontFamily: 'poppins', fontSize: 15),
-                                      'Status : '),
+                                Row(
+                                  children: [
+                                    const Padding(
+                                      padding: EdgeInsets.only(left: 30),
+                                      child: Text(
+                                          style: TextStyle(
+                                              fontFamily: 'poppins', fontSize: 15),
+                                          'Status : '),
+                                    ),
+                                    statusWidget(dataJson[index].status.toString())
+                                  ],
                                 ),
-                                statusWidget(dataJson[index].status.toString())
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                const Padding(
-                                  padding: EdgeInsets.only(left: 30),
-                                  child: Text(
-                                      style: TextStyle(
-                                          fontFamily: 'poppins', fontSize: 15),
-                                      'Catatan : '),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 8),
-                                  child: Text(
-                                    dataJson[index].catatan.toString(),
-                                    style: const TextStyle(
-                                        fontFamily: 'rubiksemi', fontSize: 16),
-                                  ),
+                                Row(
+                                  children: [
+                                    const Padding(
+                                      padding: EdgeInsets.only(left: 30),
+                                      child: Text(
+                                          style: TextStyle(
+                                              fontFamily: 'poppins', fontSize: 15),
+                                          'Catatan : '),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 8),
+                                      child: Text(
+                                        dataJson[index].catatan.toString(),
+                                        style: const TextStyle(
+                                            fontFamily: 'rubiksemi', fontSize: 16),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
@@ -286,7 +289,6 @@ class _ListDriverState extends State<ListDriver> {
                         Row(
                           children: [
                             IconButton(
-                                padding: const EdgeInsets.only(left: 700),
                                 onPressed: () {
                                   showDialog(
                                       context: context,
@@ -708,7 +710,7 @@ class _ListDriverState extends State<ListDriver> {
                                     dataDriver.removeWhere((element) =>
                                         element.id.toString() == id);
                                   });
-                                  Directory('assets/profile/$filename')
+                                  File('assets/profile/$filename')
                                       .deleteSync(recursive: true);
                                   writeToFileSync(dataDriver);
                                 },
