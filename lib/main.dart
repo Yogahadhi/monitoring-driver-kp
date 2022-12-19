@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'ui/editDriver/editDriver.dart';
 import 'globalWidgets/button.dart';
@@ -13,6 +14,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if(!File('assets/data/mobil.json').existsSync()){
+      File('assets/data/mobil.json').createSync();
+      File('assets/data/mobil.json').writeAsStringSync('[]');
+    }
+    if(!File('assets/data/driver.json').existsSync()){
+      File('assets/data/driver.json').createSync();
+      File('assets/data/driver.json').writeAsStringSync('[]');
+    }
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(

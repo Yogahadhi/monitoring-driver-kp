@@ -624,7 +624,7 @@ class _ListDriverState extends State<ListDriver> {
                                                                     .currentState!
                                                                     .validate()) {
                                                                   if(dataJson[index].photoDir.toString() != _filenameUpdateController.text){
-                                                                    Directory('assets/profile/${dataJson[index].photodir.toString()}').deleteSync(recursive: true);
+                                                                    File('assets/profile/${dataJson[index].photodir.toString()}').deleteSync(recursive: true);
                                                                   }
                                                                   var updateDriver = DataDriver(
                                                                     nama: _namaUpdateController.text,
@@ -670,7 +670,7 @@ class _ListDriverState extends State<ListDriver> {
                                                                           .text);
                                                                   for (var element in tempUpdateFileNames) {
                                                                     final dir =
-                                                                    Directory('assets/profile/$element');
+                                                                    File('assets/profile/$element');
                                                                     dir.deleteSync(recursive: true);
                                                                   }
                                                                   tempUpdateFileNames =
@@ -896,7 +896,7 @@ class _ListDriverState extends State<ListDriver> {
                                           tempFileNames
                                               .remove(_filenameController.text);
                                           for (var element in tempFileNames) {
-                                            final dir = Directory(
+                                            final dir = File(
                                                 'assets/profile/$element');
                                             dir.deleteSync(recursive: true);
                                           }
