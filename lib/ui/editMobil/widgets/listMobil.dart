@@ -64,9 +64,6 @@ class _ListMobilState extends State<ListMobil> {
         child: ListView.builder(
             itemCount: dataJson.length,
             itemBuilder: (context, index) {
-              _merekUpdateController.text = dataJson[index].merek.toString();
-              _platMobilUpdateController.text =
-                  dataJson[index].platmobil.toString();
               final String id = dataJson[index].id.toString();
               return Card(
                 elevation: 5,
@@ -105,6 +102,9 @@ class _ListMobilState extends State<ListMobil> {
                                   showDialog(
                                       context: context,
                                       builder: (BuildContext context) {
+                                        _merekUpdateController.text = dataJson[index].merek.toString();
+                                        _platMobilUpdateController.text =
+                                            dataJson[index].platmobil.toString();
                                         return AlertDialog(
                                           content: Stack(
                                             children: [
@@ -167,33 +167,19 @@ class _ListMobilState extends State<ListMobil> {
                                                         child: Button(
                                                           text: 'Update',
                                                           buttonAction: () {
-                                                            if (_formKey
-                                                                .currentState!
-                                                                .validate()) {
-                                                              var updateMobil =
-                                                                  DataMobil(
-                                                                merek:
-                                                                    _merekUpdateController
-                                                                        .text,
-                                                                platmobil:
-                                                                    _platMobilUpdateController
-                                                                        .text,
-                                                                id: dataJson[
-                                                                        index]
-                                                                    .id,
+                                                            if (_formKey.currentState!.validate()) {
+                                                              var updateMobil = DataMobil(
+                                                                merek: _merekUpdateController.text,
+                                                                platmobil: _platMobilUpdateController.text,
+                                                                id: dataJson[index].id,
                                                               );
                                                               setState(() {
-                                                                dataJson[index]
-                                                                        .merek =
-                                                                    updateMobil
-                                                                        .merek;
-                                                                dataJson[index]
-                                                                        .platmobil =
-                                                                    updateMobil
-                                                                        .platmobil;
+                                                                dataJson[index].merek = updateMobil.merek;
+                                                                dataJson[index].platmobil = updateMobil.platmobil;
                                                               });
-                                                              writeToFileSync(
-                                                                  dataJson);
+                                                              writeToFileSync(dataJson);
+                                                              _merekUpdateController.text = '';
+                                                              _platMobilUpdateController.text = '';
                                                             }
                                                           },
                                                         ),
@@ -280,8 +266,7 @@ class _ListMobilState extends State<ListMobil> {
                                       var newMobil = DataMobil(
                                           merek: _merekController.text,
                                           platmobil: _platMobilController.text,
-                                          id: DateTime.now()
-                                              .millisecondsSinceEpoch);
+                                          id: DateTime.now().millisecondsSinceEpoch.toString());
                                       setState(() {
                                         dataMobil.add(newMobil);
                                       });

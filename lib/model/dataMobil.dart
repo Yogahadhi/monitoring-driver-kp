@@ -1,7 +1,7 @@
 class DataMobil {
   String? merek;
   String? platmobil;
-  int? id;
+  String? id;
 
   DataMobil({this.merek, this.platmobil, required this.id});
 
