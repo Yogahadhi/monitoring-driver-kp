@@ -191,8 +191,7 @@ class _ListDriverState extends State<ListDriver> {
                                 Padding(
                                     padding: const EdgeInsets.only(
                                         top: 15, left: 50, right: 10),
-                                    child: Image.file(
-                                      profilePicture('assets/profile/${dataJson[index].photodir.toString()}'),
+                                    child: Image.file(profilePicture('assets/profile/${dataJson[index].photodir.toString()}'),
                                       width: 150,
                                       height: 200,
                                     )),
@@ -339,11 +338,9 @@ class _ListDriverState extends State<ListDriver> {
                                                                       .all(8.0),
                                                                   child:
                                                                   TextFormField(
-                                                                    controller:
-                                                                    _namaUpdateController,
-                                                                    validator:
-                                                                        (text) {
-                                                                          final regexp = RegExp(r"^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z ]*)*$");
+                                                                    controller: _namaUpdateController,
+                                                                    validator: (text) {
+                                                                      final regexp = RegExp(r"^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z ]*)*$");
                                                                       if (text == null || text.isEmpty) {
                                                                         return 'Nama kosong';
                                                                       }
@@ -551,7 +548,7 @@ class _ListDriverState extends State<ListDriver> {
                                                               text: 'Update',
                                                               buttonAction: () {
                                                                 if (_formKey.currentState!.validate()) {
-                                                                  if(dataJson[index].photoDir.toString() != _filenameUpdateController.text){
+                                                                  if(dataJson[index].photodir.toString() != _filenameUpdateController.text){
                                                                     File('assets/profile/${dataJson[index].photodir.toString()}').deleteSync(recursive: true);
                                                                   }
                                                                   var updateDriver = DataDriver(

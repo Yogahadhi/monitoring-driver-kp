@@ -29,6 +29,15 @@ class _ListTampilDataState extends State<ListTampilData> {
     return list.map((e) => DataDriver.fromJson(e)).toList();
   }
 
+  File profilePicture(String filename){
+    if(File(filename).existsSync()){
+      return File(filename);
+    }
+    else{
+      return File('assets/images/default.jpg');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     List dataJson = readJsonSync('assets/data/driver.json');
@@ -56,8 +65,7 @@ class _ListTampilDataState extends State<ListTampilData> {
                         padding: const EdgeInsets.only(
                             left: 15, top: 15, right: 10),
                         child: Image.file(
-                          File(
-                              'assets/images/${dataJson[index].photodir.toString()}'),
+                          profilePicture('assets/profile/${dataJson[index].photodir.toString()}'),
                           width: 270,
                           height: 360,
                         )),
@@ -84,12 +92,12 @@ class _ListTampilDataState extends State<ListTampilData> {
                             child: Text(
                                 style: TextStyle(
                                     fontFamily: 'poppins', fontSize: 15),
-                                'Tujuan : '),
+                                'Catatan : '),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(left: 5),
                             child: Text(
-                              dataJson[index].tujuan.toString(),
+                              dataJson[index].catatan.toString(),
                               style: const TextStyle(
                                   fontFamily: 'rubiksemi', fontSize: 16),
                             ),
