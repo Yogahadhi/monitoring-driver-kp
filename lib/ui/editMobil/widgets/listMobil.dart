@@ -167,33 +167,19 @@ class _ListMobilState extends State<ListMobil> {
                                                         child: Button(
                                                           text: 'Update',
                                                           buttonAction: () {
-                                                            if (_formKey
-                                                                .currentState!
-                                                                .validate()) {
-                                                              var updateMobil =
-                                                                  DataMobil(
-                                                                merek:
-                                                                    _merekUpdateController
-                                                                        .text,
-                                                                platmobil:
-                                                                    _platMobilUpdateController
-                                                                        .text,
-                                                                id: dataJson[
-                                                                        index]
-                                                                    .id,
+                                                            if (_formKey.currentState!.validate()) {
+                                                              var updateMobil = DataMobil(
+                                                                merek: _merekUpdateController.text,
+                                                                platmobil: _platMobilUpdateController.text,
+                                                                id: dataJson[index].id,
                                                               );
                                                               setState(() {
-                                                                dataJson[index]
-                                                                        .merek =
-                                                                    updateMobil
-                                                                        .merek;
-                                                                dataJson[index]
-                                                                        .platmobil =
-                                                                    updateMobil
-                                                                        .platmobil;
+                                                                dataJson[index].merek = updateMobil.merek;
+                                                                dataJson[index].platmobil = updateMobil.platmobil;
                                                               });
-                                                              writeToFileSync(
-                                                                  dataJson);
+                                                              writeToFileSync(dataJson);
+                                                              _merekUpdateController.text = '';
+                                                              _platMobilUpdateController.text = '';
                                                             }
                                                           },
                                                         ),

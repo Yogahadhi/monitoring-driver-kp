@@ -343,12 +343,14 @@ class _ListDriverState extends State<ListDriver> {
                                                                     _namaUpdateController,
                                                                     validator:
                                                                         (text) {
-                                                                      if (text ==
-                                                                          null ||
-                                                                          text
-                                                                              .isEmpty) {
-                                                                        return 'Text is empty';
-                                                                      } else {
+                                                                          final regexp = RegExp(r"^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z ]*)*$");
+                                                                      if (text == null || text.isEmpty) {
+                                                                        return 'Nama kosong';
+                                                                      }
+                                                                      else if(!regexp.hasMatch(text)){
+                                                                        return 'Nama hanya menerima huruf dan simbol berikut(\',.- )';
+                                                                      }
+                                                                      else {
                                                                         return null;
                                                                       }
                                                                     },
@@ -400,83 +402,39 @@ class _ListDriverState extends State<ListDriver> {
                                                                       .all(8.0),
                                                                   child: ToggleButtons(
                                                                     isSelected: selectedButton,
-                                                                    borderRadius: BorderRadius
-                                                                        .circular(
-                                                                        10),
-                                                                    color: Colors
-                                                                        .blue,
-                                                                    selectedColor: Colors
-                                                                        .white,
-                                                                    fillColor: Colors
-                                                                        .lightBlue
-                                                                        .shade900,
-                                                                    onPressed: (
-                                                                        int index) {
+                                                                    borderRadius: BorderRadius.circular(10),
+                                                                    color: Colors.blue,
+                                                                    selectedColor: Colors.white,
+                                                                    fillColor: Colors.lightBlue.shade900,
+                                                                    onPressed: (int index) {
                                                                       setState(() {
-                                                                        if (index ==
-                                                                            0) {
-                                                                          toggleButtonValue =
-                                                                          'Standby';
-                                                                          print(
-                                                                              toggleButtonValue);
+                                                                        if (index == 0) {
+                                                                          toggleButtonValue = 'Standby';
                                                                           selectedButton =
-                                                                          [
-                                                                            true,
-                                                                            false,
-                                                                            false
-                                                                          ];
+                                                                          [true, false, false];
                                                                         }
-                                                                        else
-                                                                        if (index ==
-                                                                            1) {
-                                                                          toggleButtonValue =
-                                                                          'Terpakai';
-                                                                          print(
-                                                                              toggleButtonValue);
-                                                                          selectedButton =
-                                                                          [
-                                                                            false,
-                                                                            true,
-                                                                            false
-                                                                          ];
+                                                                        else if (index == 1) {
+                                                                          toggleButtonValue = 'Terpakai';
+                                                                          selectedButton = [false, true, false];
                                                                         }
-                                                                        else
-                                                                        if (index ==
-                                                                            2) {
-                                                                          toggleButtonValue =
-                                                                          'Izin/Sakit';
-                                                                          print(
-                                                                              toggleButtonValue);
-                                                                          selectedButton =
-                                                                          [
-                                                                            false,
-                                                                            false,
-                                                                            true
-                                                                          ];
+                                                                        else if (index == 2) {
+                                                                          toggleButtonValue = 'Izin/Sakit';
+                                                                          selectedButton = [false, false, true];
                                                                         }
                                                                       });
                                                                     },
                                                                     children: const [
                                                                       Padding(
-                                                                        padding: EdgeInsets
-                                                                            .symmetric(
-                                                                            horizontal: 12),
-                                                                        child: Text(
-                                                                            "Standby"),
+                                                                        padding: EdgeInsets.symmetric(horizontal: 12),
+                                                                        child: Text("Standby"),
                                                                       ),
                                                                       Padding(
-                                                                        padding: EdgeInsets
-                                                                            .symmetric(
-                                                                            horizontal: 12),
-                                                                        child: Text(
-                                                                            "Terpakai"),
+                                                                        padding: EdgeInsets.symmetric(horizontal: 12),
+                                                                        child: Text("Terpakai"),
                                                                       ),
                                                                       Padding(
-                                                                        padding: EdgeInsets
-                                                                            .symmetric(
-                                                                            horizontal: 12),
-                                                                        child: Text(
-                                                                            "Izin/Sakit"),
+                                                                        padding: EdgeInsets.symmetric(horizontal: 12),
+                                                                        child: Text("Izin/Sakit"),
                                                                       )
                                                                     ],
                                                                   ),
@@ -487,21 +445,17 @@ class _ListDriverState extends State<ListDriver> {
                                                           Row(
                                                             children: [
                                                               const Padding(
-                                                                padding:
-                                                                EdgeInsets.all(
-                                                                    8.0),
-                                                                child: Text(
-                                                                    'Mobil* :'),
+                                                                padding: EdgeInsets.all(8.0),
+                                                                child: Text('Mobil* :'),
                                                               ),
                                                               SizedBox(
                                                                 width: 300,
                                                                 child: Padding(
-                                                                    padding:
-                                                                    const EdgeInsets
-                                                                        .all(
-                                                                        8.0),
-                                                                    child: dropDownMenu(dataDropdown, dropdownUpdateValue, selectedUpdateValue)
-                                                                    ),
+                                                                    padding: const EdgeInsets.all(8.0),
+                                                                    child: dropDownMenu(
+                                                                        dataDropdown, dropdownUpdateValue, selectedUpdateValue
+                                                                    )
+                                                                ),
                                                               )
                                                             ],
                                                           ),
@@ -523,16 +477,12 @@ class _ListDriverState extends State<ListDriver> {
                                                                   child:
                                                                   TextFormField(
                                                                     enabled: false,
-                                                                    controller:
-                                                                    _tanggalUpdateController,
-                                                                    validator:
-                                                                        (text) {
-                                                                      if (text ==
-                                                                          null ||
-                                                                          text
-                                                                              .isEmpty) {
+                                                                    controller: _tanggalUpdateController,
+                                                                    validator: (text) {
+                                                                      if (text == null || text.isEmpty) {
                                                                         return 'Text is empty';
-                                                                      } else {
+                                                                      }
+                                                                      else {
                                                                         return null;
                                                                       }
                                                                     },
@@ -542,37 +492,18 @@ class _ListDriverState extends State<ListDriver> {
                                                               SizedBox(
                                                                 width: 150,
                                                                 child: Button(
-                                                                  buttonAction:
-                                                                      () async {
-                                                                    DateTime? newDate = await showDatePicker(
-                                                                        context:
-                                                                        context,
-                                                                        initialDate:
-                                                                        DateTime
-                                                                            .now(),
-                                                                        firstDate:
-                                                                        DateTime(
-                                                                            1899),
-                                                                        lastDate:
-                                                                        DateTime(
-                                                                            2099));
-                                                                    if (newDate ==
-                                                                        null) {
+                                                                  buttonAction: () async {
+                                                                    DateTime? newDate = await showDatePicker(context: context, initialDate: DateTime.now(),
+                                                                        firstDate: DateTime(1899),
+                                                                        lastDate: DateTime(2099));
+                                                                    if (newDate == null) {
                                                                       return;
                                                                     } else {
-                                                                      String
-                                                                      formattedDate =
-                                                                      DateFormat(
-                                                                          'yyyy-MM-dd')
-                                                                          .format(
-                                                                          newDate);
-                                                                      _tanggalUpdateController
-                                                                          .text =
-                                                                          formattedDate;
+                                                                      String formattedDate = DateFormat('yyyy-MM-dd').format(newDate);
+                                                                      _tanggalUpdateController.text = formattedDate;
                                                                     }
                                                                   },
-                                                                  text:
-                                                                  'Select date',
+                                                                  text: 'Pilh tanggal',
                                                                 ),
                                                               ),
                                                             ],
@@ -583,8 +514,7 @@ class _ListDriverState extends State<ListDriver> {
                                                                 padding:
                                                                 EdgeInsets.all(
                                                                     8.0),
-                                                                child: Text(
-                                                                    'Foto:'),
+                                                                child: Text('Foto:'),
                                                               ),
                                                               SizedBox(
                                                                 width: 150,
@@ -620,9 +550,7 @@ class _ListDriverState extends State<ListDriver> {
                                                             child: Button(
                                                               text: 'Update',
                                                               buttonAction: () {
-                                                                if (_formKey
-                                                                    .currentState!
-                                                                    .validate()) {
+                                                                if (_formKey.currentState!.validate()) {
                                                                   if(dataJson[index].photoDir.toString() != _filenameUpdateController.text){
                                                                     File('assets/profile/${dataJson[index].photodir.toString()}').deleteSync(recursive: true);
                                                                   }
@@ -634,61 +562,28 @@ class _ListDriverState extends State<ListDriver> {
                                                                     mobil: selectedUpdateValue,
                                                                     photodir: _filenameUpdateController.text,
                                                                     id: dataJson[index].id,
-
                                                                   );
                                                                   setState(() {
-                                                                    dataJson[index]
-                                                                        .nama =
-                                                                        updateDriver
-                                                                            .nama;
-                                                                    dataJson[index]
-                                                                        .catatan =
-                                                                        updateDriver
-                                                                            .catatan;
-                                                                    dataJson[index]
-                                                                        .status =
-                                                                        updateDriver
-                                                                            .status;
-                                                                    dataJson[index]
-                                                                        .tanggal =
-                                                                        updateDriver
-                                                                            .tanggal;
-                                                                    dataJson[index]
-                                                                        .mobil =
-                                                                        updateDriver
-                                                                            .mobil;
-                                                                    dataJson[index]
-                                                                        .photodir =
-                                                                        updateDriver
-                                                                            .photodir;
+                                                                    dataJson[index].nama = updateDriver.nama;
+                                                                    dataJson[index].catatan = updateDriver.catatan;
+                                                                    dataJson[index].status = updateDriver.status;
+                                                                    dataJson[index].tanggal = updateDriver.tanggal;
+                                                                    dataJson[index].mobil = updateDriver.mobil;
+                                                                    dataJson[index].photodir = updateDriver.photodir;
                                                                   });
-                                                                  writeToFileSync(
-                                                                      dataJson);
-                                                                  tempUpdateFileNames
-                                                                      .remove(
-                                                                      _filenameUpdateController
-                                                                          .text);
+                                                                  writeToFileSync(dataJson);
+                                                                  tempUpdateFileNames.remove(_filenameUpdateController.text);
                                                                   for (var element in tempUpdateFileNames) {
                                                                     final dir =
                                                                     File('assets/profile/$element');
                                                                     dir.deleteSync(recursive: true);
                                                                   }
-                                                                  tempUpdateFileNames =
-                                                                  [];
-                                                                  selectedUpdateValue =
-                                                                  '';
-                                                                  _namaUpdateController
-                                                                      .text =
-                                                                  '';
-                                                                  _catatanUpdateController
-                                                                      .text =
-                                                                  '';
-                                                                  _tanggalUpdateController
-                                                                      .text =
-                                                                  '';
-                                                                  _filenameUpdateController
-                                                                      .text =
-                                                                  '';
+                                                                  tempUpdateFileNames = [];
+                                                                  selectedUpdateValue = '';
+                                                                  _namaUpdateController.text = '';
+                                                                  _catatanUpdateController.text = '';
+                                                                  _tanggalUpdateController.text = '';
+                                                                  _filenameUpdateController.text = '';
                                                                 }
                                                               },
                                                             ),
@@ -751,9 +646,14 @@ class _ListDriverState extends State<ListDriver> {
                                         child: TextFormField(
                                           controller: _namaController,
                                           validator: (text) {
+                                            final regexp = RegExp(r"^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z ]*)*$");
                                             if (text == null || text.isEmpty) {
                                               return 'Text is empty';
-                                            } else {
+                                            }
+                                            else if(!regexp.hasMatch(text)){
+                                              return 'Nama hanya menerima huruf dan simbol berikut(\',.- )';
+                                            }
+                                            else {
                                               return null;
                                             }
                                           },
