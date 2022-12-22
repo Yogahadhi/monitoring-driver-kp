@@ -38,6 +38,37 @@ class _ListTampilDataState extends State<ListTampilData> {
     }
   }
 
+  Widget statusWidget(String status){
+    MaterialColor containerColor;
+    switch(status){
+      case 'standby':
+        containerColor = Colors.green;
+        break;
+      case 'Terpakai':
+        containerColor = Colors.yellow;
+        break;
+      case 'Izin/Sakit':
+        containerColor = Colors.red;
+        break;
+      default:
+        containerColor = Colors.grey;
+        break;
+    }
+    return Container(
+      height: 35,
+      width: 70,
+      child: Card(
+        color: containerColor,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(status),
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     List dataJson = readJsonSync('assets/data/driver.json');
@@ -88,26 +119,7 @@ class _ListTampilDataState extends State<ListTampilData> {
                       Row(
                         children: [
                           const Padding(
-                            padding: EdgeInsets.only(left: 10),
-                            child: Text(
-                                style: TextStyle(
-                                    fontFamily: 'poppins', fontSize: 15),
-                                'Catatan : '),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 5),
-                            child: Text(
-                              dataJson[index].catatan.toString(),
-                              style: const TextStyle(
-                                  fontFamily: 'rubiksemi', fontSize: 16),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          const Padding(
-                            padding: EdgeInsets.only(left: 10, top: 10),
+                            padding: EdgeInsets.only(left: 10, bottom: 10),
                             child: Text(
                                 style: TextStyle(
                                     fontFamily: 'poppins', fontSize: 15),
@@ -115,7 +127,7 @@ class _ListTampilDataState extends State<ListTampilData> {
                           ),
                           Padding(
                             padding:
-                            const EdgeInsets.only(left: 5),
+                            const EdgeInsets.only(left: 25, bottom: 10),
                             child: Text(
                               dataJson[index].tanggal.toString(),
                               style: const TextStyle(
@@ -127,17 +139,47 @@ class _ListTampilDataState extends State<ListTampilData> {
                       Row(
                         children: [
                           const Padding(
-                            padding: EdgeInsets.only(left: 10, top: 5),
+                            padding: EdgeInsets.only(left: 10, bottom: 10),
                             child: Text(
                                 style: TextStyle(
                                     fontFamily: 'poppins', fontSize: 15),
                                 'Merek Mobil : '),
                           ),
                           Padding(
-                            padding:
-                            const EdgeInsets.only(left: 5),
+                            padding: const EdgeInsets.only(left: 5, bottom: 10),
                             child: Text(
                               dataJson[index].mobil.toString(),
+                              style: const TextStyle(
+                                  fontFamily: 'rubiksemi', fontSize: 16),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.only(left: 10),
+                            child: Text(
+                                style: TextStyle(
+                                    fontFamily: 'poppins', fontSize: 15),
+                                'Status : '),
+                          ),
+                          statusWidget(dataJson[index].status.toString())
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.only(left: 10, top: 10),
+                            child: Text(
+                                style: TextStyle(
+                                    fontFamily: 'poppins', fontSize: 15),
+                                'Catatan : '),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 5, top: 10),
+                            child: Text(
+                              dataJson[index].catatan.toString(),
                               style: const TextStyle(
                                   fontFamily: 'rubiksemi', fontSize: 16),
                             ),
