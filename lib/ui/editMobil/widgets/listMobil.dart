@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import '../../../globalWidgets/ButtonIcon.dart';
 import '../../../globalWidgets/button.dart';
+import '../../../model/dataDriver.dart';
 import '../../../model/dataMobil.dart';
 
 class ListMobil extends StatefulWidget {
@@ -48,16 +49,32 @@ class _ListMobilState extends State<ListMobil> {
     return list.map((e) => DataMobil.fromJson(e)).toList();
   }
 
+  List readJsonSyncDriver(String filename) {
+    final File file = File(filename);
+    final list = json.decode(file.readAsStringSync());
+
+    return list.map((e) => DataDriver.fromJson(e)).toList();
+  }
+
   void writeToFileSync(List<dynamic> content) {
     final File file = File('assets/data/mobil.json');
     content.map(
-      (DataMobil) => DataMobil.toJson(),
+          (DataMobil) => DataMobil.toJson(),
+    );
+    file.writeAsStringSync(json.encode(content));
+  }
+
+  void writeToFileSyncDriver(List<dynamic> content) {
+    final File file = File('assets/data/driver.json');
+    content.map(
+          (DataDriver) => DataDriver.toJson(),
     );
     file.writeAsStringSync(json.encode(content));
   }
 
   @override
   Widget build(BuildContext context) {
+    List dataDriver = readJsonSyncDriver('assets/data/driver.json');
     List dataJson = readJsonSync('assets/data/mobil.json');
     return Column(children: [
       Expanded(
@@ -103,33 +120,25 @@ class _ListMobilState extends State<ListMobil> {
                                       context: context,
                                       builder: (BuildContext context) {
                                         _merekUpdateController.text = dataJson[index].merek.toString();
-                                        _platMobilUpdateController.text =
-                                            dataJson[index].platmobil.toString();
+                                        _platMobilUpdateController.text = dataJson[index].platmobil.toString();
                                         return AlertDialog(
                                           content: Stack(
                                             children: [
                                               Form(
                                                   key: _formKey,
                                                   child: Column(
-                                                    mainAxisSize:
-                                                        MainAxisSize.min,
+                                                    mainAxisSize: MainAxisSize.min,
                                                     children: [
                                                       const Padding(
-                                                        padding:
-                                                            EdgeInsets.all(8.0),
-                                                        child: Text(
-                                                            'Merek Mobil*'),
+                                                        padding: EdgeInsets.all(8.0),
+                                                        child: Text('Merek Mobil*'),
                                                       ),
                                                       Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .all(8.0),
+                                                        padding: const EdgeInsets.all(8.0),
                                                         child: TextFormField(
-                                                          controller:
-                                                              _merekUpdateController,
+                                                          controller: _merekUpdateController,
                                                           validator: (text) {
-                                                            if (text == null ||
-                                                                text.isEmpty) {
+                                                            if (text == null || text.isEmpty) {
                                                               return 'Text is empty';
                                                             } else {
                                                               return null;
@@ -138,21 +147,15 @@ class _ListMobilState extends State<ListMobil> {
                                                         ),
                                                       ),
                                                       const Padding(
-                                                        padding:
-                                                            EdgeInsets.all(8.0),
-                                                        child:
-                                                            Text('Plat Mobil*'),
+                                                        padding: EdgeInsets.all(8.0),
+                                                        child: Text('Plat Mobil*'),
                                                       ),
                                                       Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .all(8.0),
+                                                        padding: const EdgeInsets.all(8.0),
                                                         child: TextFormField(
-                                                          controller:
-                                                              _platMobilUpdateController,
+                                                          controller: _platMobilUpdateController,
                                                           validator: (text) {
-                                                            if (text == null ||
-                                                                text.isEmpty) {
+                                                            if (text == null || text.isEmpty) {
                                                               return 'Text is empty';
                                                             } else {
                                                               return null;
@@ -195,8 +198,13 @@ class _ListMobilState extends State<ListMobil> {
                             IconButton(
                                 onPressed: () {
                                   setState(() {
+                                    dataDriver.removeWhere((element) =>
+                                      element.mobil.toString() == "${dataJson[index].merek.toString()}(${dataJson[index].platmobil.toString()}),");
+                                  });
+                                  writeToFileSyncDriver(dataDriver);
+                                  setState(() {
                                     dataMobil.removeWhere((element) =>
-                                        element.id.toString() == id);
+                                      element.id.toString() == id);
                                   });
                                   writeToFileSync(dataMobil);
                                 },
