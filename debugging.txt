@@ -4,3 +4,5 @@ Pada menu edit driver fungsi update tidak dapat dijalankan
 Pada menu edit driver pada fungsi submit tulisan pilih foto tidak dapat ditampilkan
 Kenapa itu menu tampilkan data hilangki drawernya
 Pada menu tampilkan data pixel gambar yang ditampilkan terpotong dikarenakan gambar yang terlalu besar
+Setelah update merek mobil tidak muncul pada menu edit driver
+Setelah hapus pada menu edit mobil maka error akan muncul pada data di menu edit driver

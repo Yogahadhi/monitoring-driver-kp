@@ -798,7 +798,7 @@ class _ListDriverState extends State<ListDriver> {
                                   children: [
                                     const Padding(
                                       padding: EdgeInsets.all(8.0),
-                                      child: Text('Nama*  :'),
+                                      child: Text('Nama  :'),
                                     ),
                                     SizedBox(
                                       width: 300,
@@ -826,7 +826,7 @@ class _ListDriverState extends State<ListDriver> {
                                   children: [
                                     const Padding(
                                       padding: EdgeInsets.all(8.0),
-                                      child: Text('Mobil* :'),
+                                      child: Text('Mobil :'),
                                     ),
                                     SizedBox(
                                       width: 300,
@@ -864,7 +864,7 @@ class _ListDriverState extends State<ListDriver> {
                                   children: [
                                     const Padding(
                                       padding: EdgeInsets.all(8.0),
-                                      child: Text('Tanggal* :'),
+                                      child: Text('Tanggal :'),
                                     ),
                                     SizedBox(
                                       width: 150,
@@ -926,10 +926,13 @@ class _ListDriverState extends State<ListDriver> {
                                     ),
                                     SizedBox(
                                       width: 150,
-                                      child: Button(buttonAction: () {
-                                        _openImage(
-                                            _filenameController, tempFileNames);
-                                      }),
+                                      child: Button(
+                                        buttonAction: () {
+                                          _openImage(_filenameController,
+                                              tempFileNames);
+                                        },
+                                        text: 'Pilih Foto',
+                                      ),
                                     )
                                   ],
                                 ),

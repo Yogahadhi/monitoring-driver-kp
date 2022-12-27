@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import '../../../model/dataDriver.dart';
 
-
 class ListTampilData extends StatefulWidget {
   final List<DataDriver> data;
 
@@ -17,7 +16,7 @@ class _ListTampilDataState extends State<ListTampilData> {
   late List<DataDriver> dataDriver;
 
   @override
-  void initState(){
+  void initState() {
     dataDriver = widget.data;
     super.initState();
   }
@@ -29,18 +28,17 @@ class _ListTampilDataState extends State<ListTampilData> {
     return list.map((e) => DataDriver.fromJson(e)).toList();
   }
 
-  File profilePicture(String filename){
-    if(File(filename).existsSync()){
+  File profilePicture(String filename) {
+    if (File(filename).existsSync()) {
       return File(filename);
-    }
-    else{
+    } else {
       return File('assets/images/default.jpg');
     }
   }
 
-  Widget statusWidget(String status){
+  Widget statusWidget(String status) {
     MaterialColor containerColor;
-    switch(status){
+    switch (status) {
       case 'standby':
         containerColor = Colors.green;
         break;
@@ -78,7 +76,7 @@ class _ListTampilDataState extends State<ListTampilData> {
           crossAxisCount: 2,
         ),
         itemCount: dataJson.length,
-        itemBuilder: (context, index){
+        itemBuilder: (context, index) {
           return Container(
             decoration: BoxDecoration(
               color: Colors.white,
@@ -93,16 +91,17 @@ class _ListTampilDataState extends State<ListTampilData> {
                 Column(
                   children: [
                     Padding(
-                        padding: const EdgeInsets.only(
-                            left: 15, top: 15, right: 10),
+                        padding:
+                            const EdgeInsets.only(left: 15, top: 15, right: 10),
                         child: Image.file(
-                          profilePicture('assets/profile/${dataJson[index].photodir.toString()}'),
+                          profilePicture(
+                              'assets/profile/${dataJson[index].photodir.toString()}'),
                           width: 270,
-                          height: 360,
+                          height: 250,
                         )),
                     Padding(
-                      padding: const EdgeInsets.only(
-                          left: 15, top: 5, bottom: 5),
+                      padding:
+                          const EdgeInsets.only(left: 15, top: 5, bottom: 5),
                       child: Text(
                         dataJson[index].nama.toString(),
                         style: const TextStyle(
@@ -127,7 +126,7 @@ class _ListTampilDataState extends State<ListTampilData> {
                           ),
                           Padding(
                             padding:
-                            const EdgeInsets.only(left: 25, bottom: 10),
+                                const EdgeInsets.only(left: 25, bottom: 10),
                             child: Text(
                               dataJson[index].tanggal.toString(),
                               style: const TextStyle(
@@ -194,5 +193,4 @@ class _ListTampilDataState extends State<ListTampilData> {
           );
         });
   }
-
 }

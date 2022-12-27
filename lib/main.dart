@@ -15,13 +15,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if(!File('assets/data/mobil.json').existsSync()){
+    if (!File('assets/data/mobil.json').existsSync()) {
       File('assets/data/mobil.json').createSync();
       File('assets/data/mobil.json').writeAsStringSync('[]');
-
-
     }
-    if(!File('assets/data/driver.json').existsSync()){
+    if (!File('assets/data/driver.json').existsSync()) {
       File('assets/data/driver.json').createSync();
       File('assets/data/driver.json').writeAsStringSync('[]');
     }
@@ -84,8 +82,8 @@ class AppNav extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
         child: Container(
-            height: 300,
-            width: 300,
+            height: 350,
+            width: 350,
             decoration: BoxDecoration(
               color: const Color.fromARGB(255, 142, 195, 220),
               border: Border.all(
