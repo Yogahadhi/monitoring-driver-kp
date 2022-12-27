@@ -82,7 +82,7 @@ class _ListTampilDataState extends State<ListTampilData> {
               color: Colors.white,
               border: Border.all(
                 color: Colors.black,
-                width: 5,
+                width: 2,
               ),
             ),
             margin: const EdgeInsets.fromLTRB(10, 10, 10, 10),
@@ -101,7 +101,7 @@ class _ListTampilDataState extends State<ListTampilData> {
                         )),
                     Padding(
                       padding:
-                          const EdgeInsets.only(left: 15, top: 5, bottom: 5),
+                          const EdgeInsets.only(left: 15, top: 20, bottom: 5),
                       child: Text(
                         dataJson[index].nama.toString(),
                         style: const TextStyle(
@@ -122,11 +122,10 @@ class _ListTampilDataState extends State<ListTampilData> {
                             child: Text(
                                 style: TextStyle(
                                     fontFamily: 'poppins', fontSize: 15),
-                                'Tanggal : '),
+                                'Tanggal                   : '),
                           ),
                           Padding(
-                            padding:
-                                const EdgeInsets.only(left: 25, bottom: 10),
+                            padding: const EdgeInsets.only(left: 5, bottom: 10),
                             child: Text(
                               dataJson[index].tanggal.toString(),
                               style: const TextStyle(
@@ -142,7 +141,7 @@ class _ListTampilDataState extends State<ListTampilData> {
                             child: Text(
                                 style: TextStyle(
                                     fontFamily: 'poppins', fontSize: 15),
-                                'Merek Mobil : '),
+                                'Merek Mobil       : '),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(left: 5, bottom: 10),
@@ -161,7 +160,7 @@ class _ListTampilDataState extends State<ListTampilData> {
                             child: Text(
                                 style: TextStyle(
                                     fontFamily: 'poppins', fontSize: 15),
-                                'Status : '),
+                                'Status                        : '),
                           ),
                           statusWidget(dataJson[index].status.toString())
                         ],
@@ -173,7 +172,7 @@ class _ListTampilDataState extends State<ListTampilData> {
                             child: Text(
                                 style: TextStyle(
                                     fontFamily: 'poppins', fontSize: 15),
-                                'Catatan : '),
+                                'Catatan                   : '),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(left: 5, top: 10),

@@ -84,19 +84,22 @@ class _ListDriverState extends State<ListDriver> {
     }
   }
 
-  Widget dropDownMenu(List dataDropdown, String dropdownUpdateValue, String selectedUpdateValue) {
+  Widget dropDownMenu(List dataDropdown, String dropdownUpdateValue,
+      String selectedUpdateValue) {
     List<DropdownMenuItem> menuItems = [];
     for (var i = 0; i < dataDropdown.length; i++) {
-      if ("${dataDropdown[i].merek.toString()}(${dataDropdown[i].platmobil.toString()})," != dropdownUpdateValue) {
+      if ("${dataDropdown[i].merek.toString()}(${dataDropdown[i].platmobil.toString()})," !=
+          dropdownUpdateValue) {
         menuItems.add(DropdownMenuItem(
-          value: "${dataDropdown[i].merek.toString()}(${dataDropdown[i].platmobil.toString()}),",
-          child: Text("${dataDropdown[i].merek.toString()}(${dataDropdown[i].platmobil.toString()}),"),
+          value:
+              "${dataDropdown[i].merek.toString()}(${dataDropdown[i].platmobil.toString()}),",
+          child: Text(
+              "${dataDropdown[i].merek.toString()}(${dataDropdown[i].platmobil.toString()}),"),
         ));
       }
     }
     menuItems.add(DropdownMenuItem(
-        value: dropdownUpdateValue,
-        child: Text(dropdownUpdateValue)));
+        value: dropdownUpdateValue, child: Text(dropdownUpdateValue)));
     return DropdownButtonFormField(
         items: menuItems,
         value: dropdownUpdateValue,
@@ -105,14 +108,13 @@ class _ListDriverState extends State<ListDriver> {
             selectedUpdateValue = dropdownUpdateValue;
           });
         },
-        validator: (dropdownUpdateValue){
-          if(dropdownUpdateValue == null){
+        validator: (dropdownUpdateValue) {
+          if (dropdownUpdateValue == null) {
             return 'Select an item';
-          }
-          else{
+          } else {
             return null;
           }
-    });
+        });
   }
 
   Widget statusWidget(String status) {
@@ -177,7 +179,8 @@ class _ListDriverState extends State<ListDriver> {
                   final String id = dataJson[index].id.toString();
                   final String filename = dataJson[index].photodir.toString();
                   List tempUpdateFileNames = [];
-                  String dropdownUpdateValue = "${dataDropdown[index].merek.toString()}(${dataDropdown[index].platmobil.toString()})";
+                  String dropdownUpdateValue =
+                      "${dataDropdown[index].merek.toString()}(${dataDropdown[index].platmobil.toString()})";
                   String selectedUpdateValue = dataJson[index].mobil.toString();
                   String toggleButtonValue = dataJson[index].status.toString();
                   return Card(
@@ -191,18 +194,21 @@ class _ListDriverState extends State<ListDriver> {
                             Column(
                               children: [
                                 Padding(
-                                    padding: const EdgeInsets.only(top: 15, left: 50, right: 10),
+                                    padding: const EdgeInsets.only(
+                                        top: 15, left: 50, right: 10),
                                     child: Image.file(
-                                      profilePicture('assets/profile/${dataJson[index].photodir.toString()}'),
+                                      profilePicture(
+                                          'assets/profile/${dataJson[index].photodir.toString()}'),
                                       width: 150,
                                       height: 200,
                                     )),
                                 Padding(
-                                  padding: const EdgeInsets.only(top: 5, left: 35, bottom: 5),
-                                  child: Text(dataJson[index].nama.toString(),
+                                  padding: const EdgeInsets.only(
+                                      top: 10, left: 35, bottom: 10),
+                                  child: Text(
+                                    dataJson[index].nama.toString(),
                                     style: const TextStyle(
-                                        fontFamily: 'rubiksemi',
-                                        fontSize: 16),
+                                        fontFamily: 'rubiksemi', fontSize: 16),
                                   ),
                                 ),
                               ],
@@ -220,7 +226,7 @@ class _ListDriverState extends State<ListDriver> {
                                           style: TextStyle(
                                               fontFamily: 'poppins',
                                               fontSize: 15),
-                                          'Tanggal : '),
+                                          'Tanggal                 : '),
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.only(
@@ -243,7 +249,7 @@ class _ListDriverState extends State<ListDriver> {
                                           style: TextStyle(
                                               fontFamily: 'poppins',
                                               fontSize: 15),
-                                          'Merek Mobil : '),
+                                          'Merek Mobil    : '),
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.only(
@@ -265,7 +271,7 @@ class _ListDriverState extends State<ListDriver> {
                                           style: TextStyle(
                                               fontFamily: 'poppins',
                                               fontSize: 15),
-                                          'Status : '),
+                                          'Status                     : '),
                                     ),
                                     statusWidget(
                                         dataJson[index].status.toString())
@@ -279,7 +285,7 @@ class _ListDriverState extends State<ListDriver> {
                                           style: TextStyle(
                                               fontFamily: 'poppins',
                                               fontSize: 15),
-                                          'Catatan : '),
+                                          'Catatan                : '),
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.only(left: 8),
@@ -303,22 +309,43 @@ class _ListDriverState extends State<ListDriver> {
                                   showDialog(
                                       context: context,
                                       builder: (BuildContext context) {
-                                        _namaUpdateController.text = dataJson[index].nama.toString();
-                                        _catatanUpdateController.text = dataJson[index].catatan.toString();
-                                        _tanggalUpdateController.text = dataJson[index].tanggal.toString();
-                                        _filenameUpdateController.text = dataJson[index].photodir.toString();
-                                        switch (dataJson[index].status.toString()) {
+                                        _namaUpdateController.text =
+                                            dataJson[index].nama.toString();
+                                        _catatanUpdateController.text =
+                                            dataJson[index].catatan.toString();
+                                        _tanggalUpdateController.text =
+                                            dataJson[index].tanggal.toString();
+                                        _filenameUpdateController.text =
+                                            dataJson[index].photodir.toString();
+                                        switch (
+                                            dataJson[index].status.toString()) {
                                           case 'standby':
-                                            selectedButton = [true, false, false];
+                                            selectedButton = [
+                                              true,
+                                              false,
+                                              false
+                                            ];
                                             break;
                                           case 'Terpakai':
-                                            selectedButton = [false, true, false];
+                                            selectedButton = [
+                                              false,
+                                              true,
+                                              false
+                                            ];
                                             break;
                                           case 'Izin/Sakit':
-                                            selectedButton = [false, false, true];
+                                            selectedButton = [
+                                              false,
+                                              false,
+                                              true
+                                            ];
                                             break;
                                           default:
-                                            selectedButton = [false, false, false];
+                                            selectedButton = [
+                                              false,
+                                              false,
+                                              false
+                                            ];
                                             break;
                                         }
                                         return StatefulBuilder(
@@ -419,24 +446,54 @@ class _ListDriverState extends State<ListDriver> {
                                                                         8.0),
                                                                 child:
                                                                     ToggleButtons(
-                                                                  isSelected: selectedButton,
+                                                                  isSelected:
+                                                                      selectedButton,
                                                                   borderRadius:
-                                                                  BorderRadius.circular(10),
-                                                                  color: Colors.blue,
-                                                                  selectedColor: Colors.white,
-                                                                  fillColor: Colors.lightBlue.shade900,
-                                                                  onPressed: (int index) {
-                                                                    setState(() {
-                                                                      if (index == 0) {
-                                                                        toggleButtonValue = 'Standby';
-                                                                        selectedButton = [true, false, false];
-                                                                      } else if (index == 1) {
-                                                                        toggleButtonValue = 'Terpakai';
-                                                                        selectedButton = [false, true, false];
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              10),
+                                                                  color: Colors
+                                                                      .blue,
+                                                                  selectedColor:
+                                                                      Colors
+                                                                          .white,
+                                                                  fillColor: Colors
+                                                                      .lightBlue
+                                                                      .shade900,
+                                                                  onPressed: (int
+                                                                      index) {
+                                                                    setState(
+                                                                        () {
+                                                                      if (index ==
+                                                                          0) {
+                                                                        toggleButtonValue =
+                                                                            'Standby';
+                                                                        selectedButton =
+                                                                            [
+                                                                          true,
+                                                                          false,
+                                                                          false
+                                                                        ];
+                                                                      } else if (index ==
+                                                                          1) {
+                                                                        toggleButtonValue =
+                                                                            'Terpakai';
+                                                                        selectedButton =
+                                                                            [
+                                                                          false,
+                                                                          true,
+                                                                          false
+                                                                        ];
                                                                       } else if (index ==
                                                                           2) {
-                                                                        toggleButtonValue = 'Izin/Sakit';
-                                                                        selectedButton = [false, false, true];
+                                                                        toggleButtonValue =
+                                                                            'Izin/Sakit';
+                                                                        selectedButton =
+                                                                            [
+                                                                          false,
+                                                                          false,
+                                                                          true
+                                                                        ];
                                                                       }
                                                                     });
                                                                   },
@@ -480,8 +537,14 @@ class _ListDriverState extends State<ListDriver> {
                                                             SizedBox(
                                                               width: 300,
                                                               child: Padding(
-                                                                  padding: const EdgeInsets.all(8.0),
-                                                                  child: dropDownMenu(dataDropdown, dropdownUpdateValue, selectedUpdateValue)),
+                                                                  padding:
+                                                                      const EdgeInsets
+                                                                              .all(
+                                                                          8.0),
+                                                                  child: dropDownMenu(
+                                                                      dataDropdown,
+                                                                      dropdownUpdateValue,
+                                                                      selectedUpdateValue)),
                                                             )
                                                           ],
                                                         ),
@@ -559,27 +622,39 @@ class _ListDriverState extends State<ListDriver> {
                                                         Row(
                                                           children: [
                                                             const Padding(
-                                                              padding: EdgeInsets.all(8.0),
-                                                              child: Text('Foto:'),
+                                                              padding:
+                                                                  EdgeInsets
+                                                                      .all(8.0),
+                                                              child:
+                                                                  Text('Foto:'),
                                                             ),
                                                             SizedBox(
                                                               width: 150,
                                                               child: Padding(
-                                                                padding: const EdgeInsets.all(8.0),
-                                                                child: TextField(
-                                                                  enabled: false,
-                                                                  controller: _filenameUpdateController,
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                            .all(
+                                                                        8.0),
+                                                                child:
+                                                                    TextField(
+                                                                  enabled:
+                                                                      false,
+                                                                  controller:
+                                                                      _filenameUpdateController,
                                                                 ),
                                                               ),
                                                             ),
                                                             SizedBox(
                                                               width: 150,
                                                               child: Button(
-                                                                  buttonAction: () {
-                                                                    _openImage(_filenameUpdateController, tempUpdateFileNames);
+                                                                  buttonAction:
+                                                                      () {
+                                                                    _openImage(
+                                                                        _filenameUpdateController,
+                                                                        tempUpdateFileNames);
                                                                   },
-                                                                  text: "Pilih foto"
-                                                              ),
+                                                                  text:
+                                                                      "Pilih foto"),
                                                             ),
                                                           ],
                                                         ),
@@ -590,43 +665,98 @@ class _ListDriverState extends State<ListDriver> {
                                                           child: Button(
                                                             text: 'Update',
                                                             buttonAction: () {
-                                                              print(selectedUpdateValue);
-                                                              /*
-                                                              if (_formKey.currentState!.validate()) {
-                                                                if (dataJson[index].photodir.toString() != _filenameUpdateController.text) {
-                                                                  File('assets/profile/${dataJson[index].photodir.toString()}').deleteSync(recursive: true);
+                                                              print(
+                                                                  selectedUpdateValue);
+
+                                                              if (_formKey
+                                                                  .currentState!
+                                                                  .validate()) {
+                                                                if (dataJson[
+                                                                            index]
+                                                                        .photodir
+                                                                        .toString() !=
+                                                                    _filenameUpdateController
+                                                                        .text) {
+                                                                  File('assets/profile/${dataJson[index].photodir.toString()}')
+                                                                      .deleteSync(
+                                                                          recursive:
+                                                                              true);
                                                                 }
-                                                                var updateDriver = DataDriver(
-                                                                  nama: _namaUpdateController.text,
-                                                                  catatan: _catatanUpdateController.text,
-                                                                  status: toggleButtonValue,
-                                                                  tanggal: _tanggalUpdateController.text,
-                                                                  mobil: selectedUpdateValue,
-                                                                  photodir: _filenameUpdateController.text,
-                                                                  id: dataJson[index].id,
+                                                                var updateDriver =
+                                                                    DataDriver(
+                                                                  nama:
+                                                                      _namaUpdateController
+                                                                          .text,
+                                                                  catatan:
+                                                                      _catatanUpdateController
+                                                                          .text,
+                                                                  status:
+                                                                      toggleButtonValue,
+                                                                  tanggal:
+                                                                      _tanggalUpdateController
+                                                                          .text,
+                                                                  mobil:
+                                                                      selectedUpdateValue,
+                                                                  photodir:
+                                                                      _filenameUpdateController
+                                                                          .text,
+                                                                  id: dataJson[
+                                                                          index]
+                                                                      .id,
                                                                 );
                                                                 setState(() {
-                                                                  dataJson[index].nama = updateDriver.nama;
-                                                                  dataJson[index].catatan = updateDriver.catatan;
-                                                                  dataJson[index].status = updateDriver.status;
-                                                                  dataJson[index].tanggal = updateDriver.tanggal;
-                                                                  dataJson[index].mobil = updateDriver.mobil;
-                                                                  dataJson[index].photodir = updateDriver.photodir;
+                                                                  dataJson[index]
+                                                                          .nama =
+                                                                      updateDriver
+                                                                          .nama;
+                                                                  dataJson[index]
+                                                                          .catatan =
+                                                                      updateDriver
+                                                                          .catatan;
+                                                                  dataJson[index]
+                                                                          .status =
+                                                                      updateDriver
+                                                                          .status;
+                                                                  dataJson[index]
+                                                                          .tanggal =
+                                                                      updateDriver
+                                                                          .tanggal;
+                                                                  dataJson[index]
+                                                                          .mobil =
+                                                                      updateDriver
+                                                                          .mobil;
+                                                                  dataJson[index]
+                                                                          .photodir =
+                                                                      updateDriver
+                                                                          .photodir;
                                                                 });
-                                                                writeToFileSync(dataJson);
-                                                                tempUpdateFileNames.remove(_filenameUpdateController.text);
-                                                                for (var element in tempUpdateFileNames) {
-                                                                  final dir = File('assets/profile/$element');
-                                                                  dir.deleteSync(recursive: true);
+                                                                writeToFileSync(
+                                                                    dataJson);
+                                                                tempUpdateFileNames
+                                                                    .remove(
+                                                                        _filenameUpdateController
+                                                                            .text);
+                                                                for (var element
+                                                                    in tempUpdateFileNames) {
+                                                                  final dir = File(
+                                                                      'assets/profile/$element');
+                                                                  dir.deleteSync(
+                                                                      recursive:
+                                                                          true);
                                                                 }
-                                                                tempUpdateFileNames = [];
-                                                                selectedUpdateValue = '';
-                                                                _namaUpdateController.text = '';
-                                                                _catatanUpdateController.text = '';
-                                                                _tanggalUpdateController.text = '';
-                                                                _filenameUpdateController.text = '';
+                                                                tempUpdateFileNames =
+                                                                    [];
+                                                                selectedUpdateValue =
+                                                                    '';
+                                                                _namaUpdateController
+                                                                    .text = '';
+                                                                _catatanUpdateController
+                                                                    .text = '';
+                                                                _tanggalUpdateController
+                                                                    .text = '';
+                                                                _filenameUpdateController
+                                                                    .text = '';
                                                               }
-                                                              */
                                                             },
                                                           ),
                                                         ),
@@ -646,7 +776,8 @@ class _ListDriverState extends State<ListDriver> {
                                     dataDriver.removeWhere((element) =>
                                         element.id.toString() == id);
                                   });
-                                  File('assets/profile/$filename').deleteSync(recursive: true);
+                                  File('assets/profile/$filename')
+                                      .deleteSync(recursive: true);
                                   writeToFileSync(dataDriver);
                                 },
                                 icon: const Icon(Icons.delete))
@@ -713,10 +844,14 @@ class _ListDriverState extends State<ListDriver> {
                                           padding: const EdgeInsets.all(8.0),
                                           child: DropdownButtonFormField(
                                               items: [
-                                                for (var i = 0; i < dataDropdown.length; i++)
+                                                for (var i = 0;
+                                                    i < dataDropdown.length;
+                                                    i++)
                                                   DropdownMenuItem(
-                                                    value: "${dataDropdown[i].merek.toString()}(${dataDropdown[i].platmobil.toString()}),",
-                                                    child: Text("${dataDropdown[i].merek.toString()}(${dataDropdown[i].platmobil.toString()}),"),
+                                                    value:
+                                                        "${dataDropdown[i].merek.toString()}(${dataDropdown[i].platmobil.toString()}),",
+                                                    child: Text(
+                                                        "${dataDropdown[i].merek.toString()}(${dataDropdown[i].platmobil.toString()}),"),
                                                   )
                                               ],
                                               value: dropdownValue,
@@ -823,8 +958,11 @@ class _ListDriverState extends State<ListDriver> {
                                               catatan: '',
                                               tanggal: _tanggalController.text,
                                               mobil: selectedValue,
-                                              id: DateTime.now().millisecondsSinceEpoch.toString(),
-                                              photodir: _filenameController.text,
+                                              id: DateTime.now()
+                                                  .millisecondsSinceEpoch
+                                                  .toString(),
+                                              photodir:
+                                                  _filenameController.text,
                                               status: 'standby');
                                           dataDriver.add(newDriver);
                                           writeToFileSync(dataDriver);

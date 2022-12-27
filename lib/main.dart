@@ -39,8 +39,8 @@ class MyApp extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
                 child: const Image(
-                    height: 100,
-                    width: 70,
+                    height: 75,
+                    width: 50,
                     fit: BoxFit.fitWidth,
                     image: AssetImage('assets/images/pln.png')),
               ),

@@ -1,6 +1,3 @@
 Debugging
 
-Kenapa itu menu tampilkan data hilangki drawernya
-Pada menu tampilkan data pixel gambar yang ditampilkan terpotong dikarenakan gambar yang terlalu besar
-Setelah update merek mobil tidak muncul pada menu edit driver
 File profile picture tidak hilang setelah menghapus data mobil
