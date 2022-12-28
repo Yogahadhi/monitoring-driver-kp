@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'ui/editDriver/editDriver.dart';
 import 'globalWidgets/button.dart';
 import 'ui/editMobil/editMobil.dart';
@@ -39,8 +38,8 @@ class MyApp extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
                 child: const Image(
-                    height: 75,
-                    width: 50,
+                    height: 100,
+                    width: 70,
                     fit: BoxFit.fitWidth,
                     image: AssetImage('assets/images/pln.png')),
               ),

@@ -2,8 +2,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../main.dart';
-import '../editDriver/editDriver.dart';
-import '../editMobil/editMobil.dart';
 import '../../model/dataDriver.dart';
 import 'widgets/listTampilData.dart';
 import 'package:fullscreen_window/fullscreen_window.dart';
@@ -27,6 +25,7 @@ class _TampilDataState extends State<TampilData> {
     FullScreenWindow.setFullScreen(isFullScreen);
   }
 
+  @override
   void initState() {
     setFullscreen(true);
     super.initState();

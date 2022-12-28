@@ -1,3 +1,1 @@
 Debugging
-
-File profile picture tidak hilang setelah menghapus data mobil
