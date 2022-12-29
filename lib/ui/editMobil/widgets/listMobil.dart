@@ -183,6 +183,7 @@ class _ListMobilState extends State<ListMobil> {
                                                               writeToFileSync(dataJson);
                                                               _merekUpdateController.text = '';
                                                               _platMobilUpdateController.text = '';
+                                                              Navigator.pop(context, true);
                                                             }
                                                           },
                                                         ),
@@ -287,6 +288,7 @@ class _ListMobilState extends State<ListMobil> {
                                       writeToFileSync(dataMobil);
                                       _merekController.text = '';
                                       _platMobilController.text = '';
+                                      Navigator.pop(context, true);
                                     }
                                   },
                                 ),

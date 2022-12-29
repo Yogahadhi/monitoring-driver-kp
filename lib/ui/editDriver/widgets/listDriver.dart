@@ -553,6 +553,7 @@ class _ListDriverState extends State<ListDriver> {
                                                                 _catatanUpdateController.text = '';
                                                                 _tanggalUpdateController.text = '';
                                                                 _filenameUpdateController.text = '';
+                                                                Navigator.pop(context, true);
                                                               },
                                                           ),
                                                         ),
@@ -760,6 +761,7 @@ class _ListDriverState extends State<ListDriver> {
                                           _namaController.text = '';
                                           _tanggalController.text = '';
                                           _filenameController.text = '';
+                                          Navigator.pop(context, true);
                                         });
                                       }
                                     },

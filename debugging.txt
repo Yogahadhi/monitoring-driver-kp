@@ -1,1 +1,7 @@
 Debugging
+
+ubah mobil di driver jika mobil diedit di data mobil
+
+fitur kurang
+-validasi text field
+-validasi profile pic agar tidak duplikat
