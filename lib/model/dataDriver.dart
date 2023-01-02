@@ -12,7 +12,7 @@ class DataDriver {
     this.catatan,
     this.tanggal,
     this.mobil,
-    required this.id,
+    this.id,
     this.photodir,
     this.status
   });

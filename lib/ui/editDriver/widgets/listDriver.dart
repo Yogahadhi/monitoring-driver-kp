@@ -642,8 +642,8 @@ class _ListDriverState extends State<ListDriver> {
                                               items: [
                                                 for (var i = 0; i < dataDropdown.length; i++)
                                                   DropdownMenuItem(
-                                                    value: "${dataDropdown[i].merek.toString()}(${dataDropdown[i].platmobil.toString()}),",
-                                                    child: Text("${dataDropdown[i].merek.toString()}(${dataDropdown[i].platmobil.toString()}),"),
+                                                    value: "${dataDropdown[i].merek.toString()}(${dataDropdown[i].platmobil.toString()})",
+                                                    child: Text("${dataDropdown[i].merek.toString()}(${dataDropdown[i].platmobil.toString()})"),
                                                   )
                                               ],
                                               value: dropdownValue,

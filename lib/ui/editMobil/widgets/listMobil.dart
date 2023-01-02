@@ -164,9 +164,7 @@ class _ListMobilState extends State<ListMobil> {
                                                         ),
                                                       ),
                                                       Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .all(8.0),
+                                                        padding: const EdgeInsets.all(8.0),
                                                         child: Button(
                                                           text: 'Update',
                                                           buttonAction: () {
@@ -176,10 +174,19 @@ class _ListMobilState extends State<ListMobil> {
                                                                 platmobil: _platMobilUpdateController.text,
                                                                 id: dataJson[index].id,
                                                               );
+                                                              var updateDriver = DataDriver(
+                                                                mobil: "${_merekUpdateController.text}(${_platMobilUpdateController.text})"
+                                                              );
+                                                              var updateResult = dataDriver.where((element) =>
+                                                                element.mobil.toString() == "${dataJson[index].merek.toString()}(${dataJson[index].platmobil.toString()})");
+                                                              for (var element in updateResult){
+                                                                element.mobil = updateDriver.mobil;
+                                                              }
                                                               setState(() {
                                                                 dataJson[index].merek = updateMobil.merek;
                                                                 dataJson[index].platmobil = updateMobil.platmobil;
                                                               });
+                                                              writeToFileSyncDriver(dataDriver);
                                                               writeToFileSync(dataJson);
                                                               _merekUpdateController.text = '';
                                                               _platMobilUpdateController.text = '';
@@ -199,14 +206,14 @@ class _ListMobilState extends State<ListMobil> {
                             IconButton(
                                 onPressed: () {
                                   var result = dataDriver.where((element) =>
-                                  element.mobil.toString() == "${dataJson[index].merek.toString()}(${dataJson[index].platmobil.toString()}),");
+                                    element.mobil.toString() == "${dataJson[index].merek.toString()}(${dataJson[index].platmobil.toString()})");
                                   for (var element in result) {
                                     final dir = File('assets/profile/${element.photodir.toString()}');
                                     dir.deleteSync(recursive: true);
                                   }
                                   setState(() {
                                     dataDriver.removeWhere((element) =>
-                                    element.mobil.toString() == "${dataJson[index].merek.toString()}(${dataJson[index].platmobil.toString()}),");
+                                    element.mobil.toString() == "${dataJson[index].merek.toString()}(${dataJson[index].platmobil.toString()})");
                                   });
                                   writeToFileSyncDriver(dataDriver);
                                   setState(() {
