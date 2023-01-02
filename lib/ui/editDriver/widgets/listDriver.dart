@@ -458,7 +458,7 @@ class _ListDriverState extends State<ListDriver> {
                                                                   controller: _tanggalUpdateController,
                                                                   validator: (text) {
                                                                     if (text == null || text.isEmpty) {
-                                                                      return 'Text is empty';
+                                                                      return 'Input kosong';
                                                                     } else {
                                                                       return null;
                                                                     }
@@ -613,10 +613,9 @@ class _ListDriverState extends State<ListDriver> {
                                         child: TextFormField(
                                           controller: _namaController,
                                           validator: (text) {
-                                            final regexp = RegExp(
-                                                r"^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z ]*)*$");
+                                            final regexp = RegExp(r"^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z ]*)*$");
                                             if (text == null || text.isEmpty) {
-                                              return 'Text is empty';
+                                              return 'Input kosong';
                                             } else if (!regexp.hasMatch(text)) {
                                               return 'Nama hanya menerima huruf dan simbol berikut(\',.- )';
                                             } else {
@@ -654,7 +653,7 @@ class _ListDriverState extends State<ListDriver> {
                                               },
                                               validator: (dropdownValue) {
                                                 if (dropdownValue == null) {
-                                                  return 'Select an item';
+                                                  return 'Pilih item';
                                                 } else {
                                                   return null;
                                                 }
@@ -677,7 +676,7 @@ class _ListDriverState extends State<ListDriver> {
                                           controller: _tanggalController,
                                           validator: (text) {
                                             if (text == null || text.isEmpty) {
-                                              return 'Text is empty';
+                                              return 'Input kosong';
                                             } else {
                                               return null;
                                             }

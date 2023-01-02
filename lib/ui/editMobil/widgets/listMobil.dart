@@ -139,7 +139,7 @@ class _ListMobilState extends State<ListMobil> {
                                                           controller: _merekUpdateController,
                                                           validator: (text) {
                                                             if (text == null || text.isEmpty) {
-                                                              return 'Text is empty';
+                                                              return 'Input kosong';
                                                             } else {
                                                               return null;
                                                             }
@@ -155,9 +155,14 @@ class _ListMobilState extends State<ListMobil> {
                                                         child: TextFormField(
                                                           controller: _platMobilUpdateController,
                                                           validator: (text) {
+                                                            final regexp = RegExp(r"^[A-Za-z]{1,2}[0-9]{1,4}[A-Za-z]{1,3}$");
                                                             if (text == null || text.isEmpty) {
-                                                              return 'Text is empty';
-                                                            } else {
+                                                              return 'Input kosong';
+                                                            }
+                                                            else if(!regexp.hasMatch(text)){
+                                                              return 'Input salah';
+                                                            }
+                                                            else {
                                                               return null;
                                                             }
                                                           },
@@ -171,11 +176,11 @@ class _ListMobilState extends State<ListMobil> {
                                                             if (_formKey.currentState!.validate()) {
                                                               var updateMobil = DataMobil(
                                                                 merek: _merekUpdateController.text,
-                                                                platmobil: _platMobilUpdateController.text,
+                                                                platmobil: _platMobilUpdateController.text.toUpperCase(),
                                                                 id: dataJson[index].id,
                                                               );
                                                               var updateDriver = DataDriver(
-                                                                mobil: "${_merekUpdateController.text}(${_platMobilUpdateController.text})"
+                                                                mobil: "${_merekUpdateController.text}(${_platMobilUpdateController.text.toUpperCase()})"
                                                               );
                                                               var updateResult = dataDriver.where((element) =>
                                                                 element.mobil.toString() == "${dataJson[index].merek.toString()}(${dataJson[index].platmobil.toString()})");
@@ -237,6 +242,8 @@ class _ListMobilState extends State<ListMobil> {
           showDialog(
               context: context,
               builder: (BuildContext context) {
+                _merekController.text = '';
+                _platMobilController.text = '';
                 return AlertDialog(
                   content: Stack(
                     children: [
@@ -255,7 +262,7 @@ class _ListMobilState extends State<ListMobil> {
                                   controller: _merekController,
                                   validator: (text) {
                                     if (text == null || text.isEmpty) {
-                                      return 'Text is empty';
+                                      return 'Input kosong';
                                     } else {
                                       return null;
                                     }
@@ -271,8 +278,11 @@ class _ListMobilState extends State<ListMobil> {
                                 child: TextFormField(
                                   controller: _platMobilController,
                                   validator: (text) {
+                                    final regexp = RegExp(r"^[A-Za-z]{1,2}[0-9]{1,4}[A-Za-z]{1,3}$");
                                     if (text == null || text.isEmpty) {
-                                      return 'Text is empty';
+                                      return 'Input kosong';
+                                    } else if(!regexp.hasMatch(text)){
+                                      return 'Input salah';
                                     } else {
                                       return null;
                                     }
@@ -287,7 +297,7 @@ class _ListMobilState extends State<ListMobil> {
                                     if (_formKey.currentState!.validate()) {
                                       var newMobil = DataMobil(
                                           merek: _merekController.text,
-                                          platmobil: _platMobilController.text,
+                                          platmobil: _platMobilController.text.toUpperCase(),
                                           id: DateTime.now().millisecondsSinceEpoch.toString());
                                       setState(() {
                                         dataMobil.add(newMobil);
