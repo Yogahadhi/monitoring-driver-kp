@@ -22,11 +22,11 @@ class _ListDriverState extends State<ListDriver> {
   late List<DataDriver> dataDriver;
   List<bool> selectedButton = [false, false, false];
   late final TextEditingController _namaController;
-  late final TextEditingController _tanggalController;
   late final TextEditingController _filenameController;
   late final TextEditingController _namaUpdateController;
   late final TextEditingController _catatanUpdateController;
-  late final TextEditingController _tanggalUpdateController;
+  late final TextEditingController _tanggalAwalUpdateController;
+  late final TextEditingController _tanggalAkhirUpdateController;
   late final TextEditingController _filenameUpdateController;
 
   @override
@@ -34,22 +34,22 @@ class _ListDriverState extends State<ListDriver> {
     dataDriver = widget.data;
     super.initState();
     _namaController = TextEditingController();
-    _tanggalController = TextEditingController();
     _filenameController = TextEditingController();
     _namaUpdateController = TextEditingController();
     _catatanUpdateController = TextEditingController();
-    _tanggalUpdateController = TextEditingController();
+    _tanggalAwalUpdateController = TextEditingController();
+    _tanggalAkhirUpdateController = TextEditingController();
     _filenameUpdateController = TextEditingController();
   }
 
   @override
   void dispose() {
     _namaController.dispose();
-    _tanggalController.dispose();
     _filenameController.dispose();
     _namaUpdateController.dispose();
     _catatanUpdateController.dispose();
-    _tanggalUpdateController.dispose();
+    _tanggalAwalUpdateController.dispose();
+    _tanggalAkhirUpdateController.dispose();
     _filenameController.dispose();
     super.dispose();
   }
@@ -198,7 +198,7 @@ class _ListDriverState extends State<ListDriver> {
                                       height: 200,
                                     )),
                                 Padding(
-                                  padding: const EdgeInsets.only(top: 5, left: 35, bottom: 5),
+                                  padding: const EdgeInsets.only(left: 35, bottom: 5),
                                   child: Text(dataJson[index].nama.toString(),
                                     style: const TextStyle(
                                         fontFamily: 'rubiksemi',
@@ -214,19 +214,33 @@ class _ListDriverState extends State<ListDriver> {
                                 Row(
                                   children: [
                                     const Padding(
+                                      padding: EdgeInsets.only(left: 30),
+                                      child: Text(
+                                          style: TextStyle(
+                                              fontFamily: 'poppins',
+                                              fontSize: 15),
+                                          'Status : '),
+                                    ),
+                                    statusWidget(
+                                        dataJson[index].status.toString())
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    const Padding(
                                       padding:
                                           EdgeInsets.only(left: 30, top: 10),
                                       child: Text(
                                           style: TextStyle(
                                               fontFamily: 'poppins',
                                               fontSize: 15),
-                                          'Tanggal : '),
+                                          'Lama pakai : '),
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.only(
                                           left: 8, top: 10),
                                       child: Text(
-                                        dataJson[index].tanggal.toString(),
+                                        '${dataJson[index].tanggalawal.toString()} s/d ${dataJson[index].tanggalakhir.toString()}',
                                         style: const TextStyle(
                                             fontFamily: 'rubiksemi',
                                             fontSize: 16),
@@ -260,21 +274,7 @@ class _ListDriverState extends State<ListDriver> {
                                 Row(
                                   children: [
                                     const Padding(
-                                      padding: EdgeInsets.only(left: 30),
-                                      child: Text(
-                                          style: TextStyle(
-                                              fontFamily: 'poppins',
-                                              fontSize: 15),
-                                          'Status : '),
-                                    ),
-                                    statusWidget(
-                                        dataJson[index].status.toString())
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    const Padding(
-                                      padding: EdgeInsets.only(left: 30),
+                                      padding: EdgeInsets.only(left: 30, top: 10),
                                       child: Text(
                                           style: TextStyle(
                                               fontFamily: 'poppins',
@@ -282,7 +282,7 @@ class _ListDriverState extends State<ListDriver> {
                                           'Catatan : '),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.only(left: 8),
+                                      padding: const EdgeInsets.only(left: 8, top: 10),
                                       child: Text(
                                         dataJson[index].catatan.toString(),
                                         style: const TextStyle(
@@ -305,7 +305,8 @@ class _ListDriverState extends State<ListDriver> {
                                       builder: (BuildContext context) {
                                         _namaUpdateController.text = dataJson[index].nama.toString();
                                         _catatanUpdateController.text = dataJson[index].catatan.toString();
-                                        _tanggalUpdateController.text = dataJson[index].tanggal.toString();
+                                        _tanggalAwalUpdateController.text = dataJson[index].tanggalawal.toString();
+                                        _tanggalAkhirUpdateController.text = dataJson[index].tanggalakhir.toString();
                                         _filenameUpdateController.text = dataJson[index].photodir.toString();
                                         switch (dataJson[index].status.toString()) {
                                           case 'standby':
@@ -450,12 +451,12 @@ class _ListDriverState extends State<ListDriver> {
                                                                   'Tanggal:'),
                                                             ),
                                                             SizedBox(
-                                                              width: 150,
+                                                              width: 100,
                                                               child: Padding(
                                                                 padding: const EdgeInsets.all(8.0),
                                                                 child: TextFormField(
                                                                   enabled: false,
-                                                                  controller: _tanggalUpdateController,
+                                                                  controller: _tanggalAwalUpdateController,
                                                                   validator: (text) {
                                                                     if (text == null || text.isEmpty) {
                                                                       return 'Input kosong';
@@ -467,7 +468,7 @@ class _ListDriverState extends State<ListDriver> {
                                                               ),
                                                             ),
                                                             SizedBox(
-                                                              width: 150,
+                                                              width: 35,
                                                               child: Button(
                                                                 buttonAction: () async {
                                                                   DateTime? newDate = await showDatePicker(
@@ -480,14 +481,51 @@ class _ListDriverState extends State<ListDriver> {
                                                                   if (newDate == null) {
                                                                     return;
                                                                   } else {
-                                                                    String formattedDate = DateFormat('yyyy-MM-dd').format(newDate);
-                                                                    _tanggalUpdateController.text = formattedDate;
+                                                                    String formattedDate = DateFormat('dd-MM-yyyy').format(newDate);
+                                                                    _tanggalAwalUpdateController.text = formattedDate;
                                                                   }
                                                                 },
-                                                                text:
-                                                                    'Pilh tanggal',
+                                                                text: '..',
                                                               ),
                                                             ),
+                                                            SizedBox(
+                                                              width: 100,
+                                                              child: Padding(
+                                                                padding: const EdgeInsets.all(8.0),
+                                                                child: TextFormField(
+                                                                  enabled: false,
+                                                                  controller: _tanggalAkhirUpdateController,
+                                                                  validator: (text) {
+                                                                    if (text == null || text.isEmpty) {
+                                                                      return 'Input kosong';
+                                                                    } else {
+                                                                      return null;
+                                                                    }
+                                                                  },
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            SizedBox(
+                                                              width: 35,
+                                                              child: Button(
+                                                                buttonAction: () async {
+                                                                  DateTime? newDate = await showDatePicker(
+                                                                      context: context,
+                                                                      initialDate: DateTime.now(),
+                                                                      firstDate:
+                                                                      DateTime(1899),
+                                                                      lastDate:
+                                                                      DateTime(2099));
+                                                                  if (newDate == null) {
+                                                                    return;
+                                                                  } else {
+                                                                    String formattedDate = DateFormat('dd-MM-yyyy').format(newDate);
+                                                                    _tanggalAkhirUpdateController.text = formattedDate;
+                                                                  }
+                                                                },
+                                                                text: '..',
+                                                              ),
+                                                            )
                                                           ],
                                                         ),
                                                         Row(
@@ -528,7 +566,8 @@ class _ListDriverState extends State<ListDriver> {
                                                                   nama: _namaUpdateController.text,
                                                                   catatan: _catatanUpdateController.text,
                                                                   status: toggleButtonValue,
-                                                                  tanggal: _tanggalUpdateController.text,
+                                                                  tanggalawal: _tanggalAwalUpdateController.text,
+                                                                  tanggalakhir: _tanggalAkhirUpdateController.text,
                                                                   mobil: selectedUpdateValue,
                                                                   photodir: _filenameUpdateController.text,
                                                                   id: dataJson[index].id,
@@ -537,7 +576,8 @@ class _ListDriverState extends State<ListDriver> {
                                                                   dataJson[index].nama = updateDriver.nama;
                                                                   dataJson[index].catatan = updateDriver.catatan;
                                                                   dataJson[index].status = updateDriver.status;
-                                                                  dataJson[index].tanggal = updateDriver.tanggal;
+                                                                  dataJson[index].tanggalawal = updateDriver.tanggalawal;
+                                                                  dataJson[index].tanggalakhir = updateDriver.tanggalakhir;
                                                                   dataJson[index].mobil = updateDriver.mobil;
                                                                   dataJson[index].photodir = updateDriver.photodir;
                                                                 });
@@ -551,7 +591,8 @@ class _ListDriverState extends State<ListDriver> {
                                                                 selectedUpdateValue = '';
                                                                 _namaUpdateController.text = '';
                                                                 _catatanUpdateController.text = '';
-                                                                _tanggalUpdateController.text = '';
+                                                                _tanggalAwalUpdateController.text = '';
+                                                                _tanggalAkhirUpdateController.text = '';
                                                                 _filenameUpdateController.text = '';
                                                                 Navigator.pop(context, true);
                                                               },
@@ -665,51 +706,6 @@ class _ListDriverState extends State<ListDriver> {
                                   children: [
                                     const Padding(
                                       padding: EdgeInsets.all(8.0),
-                                      child: Text('Tanggal :'),
-                                    ),
-                                    SizedBox(
-                                      width: 150,
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: TextFormField(
-                                          enabled: false,
-                                          controller: _tanggalController,
-                                          validator: (text) {
-                                            if (text == null || text.isEmpty) {
-                                              return 'Input kosong';
-                                            } else {
-                                              return null;
-                                            }
-                                          },
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: 150,
-                                      child: Button(
-                                        buttonAction: () async {
-                                          DateTime? newDate =
-                                              await showDatePicker(
-                                                  context: context,
-                                                  initialDate: DateTime.now(),
-                                                  firstDate: DateTime(1899),
-                                                  lastDate: DateTime(2099));
-                                          if (newDate == null) {
-                                            return;
-                                          } else {
-                                            String formattedDate = DateFormat('yyyy-MM-dd').format(newDate);
-                                            _tanggalController.text = formattedDate;
-                                          }
-                                        },
-                                        text: 'Pilih Tanggal',
-                                      ),
-                                    )
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    const Padding(
-                                      padding: EdgeInsets.all(8.0),
                                       child: Text('Foto :'),
                                     ),
                                     SizedBox(
@@ -743,8 +739,9 @@ class _ListDriverState extends State<ListDriver> {
                                           var newDriver = DataDriver(
                                               nama: _namaController.text,
                                               catatan: '',
-                                              tanggal: _tanggalController.text,
                                               mobil: selectedValue,
+                                              tanggalawal: '',
+                                              tanggalakhir: '',
                                               id: DateTime.now().millisecondsSinceEpoch.toString(),
                                               photodir: _filenameController.text,
                                               status: 'standby');
@@ -758,7 +755,6 @@ class _ListDriverState extends State<ListDriver> {
                                           tempFileNames = [];
                                           selectedValue = null;
                                           _namaController.text = '';
-                                          _tanggalController.text = '';
                                           _filenameController.text = '';
                                           Navigator.pop(context, true);
                                         });

@@ -109,17 +109,29 @@ class _ListTampilDataState extends State<ListTampilData> {
                 Row(
                   children: [
                     const Padding(
+                      padding: EdgeInsets.only(left: 10),
+                      child: Text(
+                          style: TextStyle(
+                              fontFamily: 'poppins', fontSize: 15),
+                          'Status : '),
+                    ),
+                    statusWidget(dataJson[index].status.toString())
+                  ],
+                ),
+                Row(
+                  children: [
+                    const Padding(
                       padding: EdgeInsets.only(left: 10, bottom: 10),
                       child: Text(
                           style: TextStyle(
                               fontFamily: 'poppins', fontSize: 15),
-                          'Tanggal : '),
+                          'Lama pakai : '),
                     ),
                     Padding(
                       padding:
                       const EdgeInsets.only(left: 25, bottom: 10),
                       child: Text(
-                        dataJson[index].tanggal.toString(),
+                        '${dataJson[index].tanggalawal.toString()} s/d ${dataJson[index].tanggalakhir.toString()}',
                         style: const TextStyle(
                             fontFamily: 'rubiksemi', fontSize: 16),
                       ),
@@ -143,18 +155,6 @@ class _ListTampilDataState extends State<ListTampilData> {
                             fontFamily: 'rubiksemi', fontSize: 16),
                       ),
                     ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    const Padding(
-                      padding: EdgeInsets.only(left: 10),
-                      child: Text(
-                          style: TextStyle(
-                              fontFamily: 'poppins', fontSize: 15),
-                          'Status : '),
-                    ),
-                    statusWidget(dataJson[index].status.toString())
                   ],
                 ),
                 Row(
