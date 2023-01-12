@@ -67,6 +67,19 @@ class _ListTampilDataState extends State<ListTampilData> {
     );
   }
 
+  Widget textTanggal(String tanggal1, String tanggal2){
+    if(tanggal1 == '' && tanggal2 == ''){
+      return const Text('');
+    }
+    else{
+      return Text('$tanggal1 s/d $tanggal2',
+        style: const TextStyle(
+            fontFamily: 'rubiksemi',
+            fontSize: 16),
+      );
+    }
+  }
+
   Widget contentCard(List dataJson, int index){
     return Container(
       decoration: BoxDecoration(
@@ -130,11 +143,7 @@ class _ListTampilDataState extends State<ListTampilData> {
                     Padding(
                       padding:
                       const EdgeInsets.only(left: 25, bottom: 10),
-                      child: Text(
-                        '${dataJson[index].tanggalawal.toString()} s/d ${dataJson[index].tanggalakhir.toString()}',
-                        style: const TextStyle(
-                            fontFamily: 'rubiksemi', fontSize: 16),
-                      ),
+                      child: textTanggal(dataJson[index].tanggalawal.toString(), dataJson[index].tanggalakhir.toString())
                     ),
                   ],
                 ),

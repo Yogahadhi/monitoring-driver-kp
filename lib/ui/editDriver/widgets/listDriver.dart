@@ -84,8 +84,9 @@ class _ListDriverState extends State<ListDriver> {
     }
   }
 
-  Widget dropDownMenu(List dataDropdown, String dropdownUpdateValue, String selectedUpdateValue) {
+  Widget dropDownMenu(List dataDropdown, String dropdownUpdateValue, String selectedUpdateValue, List mobilTelahTerpakai) {
     List<DropdownMenuItem> menuItems = [];
+
     for (var i = 0; i < dataDropdown.length; i++) {
       if ("${dataDropdown[i].merek.toString()}(${dataDropdown[i].platmobil.toString()})," != dropdownUpdateValue) {
         menuItems.add(DropdownMenuItem(
@@ -108,8 +109,9 @@ class _ListDriverState extends State<ListDriver> {
         validator: (dropdownUpdateValue){
           if(dropdownUpdateValue == null){
             return 'Select an item';
-          }
-          else{
+          }else if(mobilTelahTerpakai.contains(dropdownUpdateValue)){
+            return 'Mobil sudah terpakai';
+          } else{
             return null;
           }
     });
@@ -146,6 +148,19 @@ class _ListDriverState extends State<ListDriver> {
     );
   }
 
+  Widget textTanggal(String tanggal1, String tanggal2){
+    if(tanggal1 == '' && tanggal2 == ''){
+      return const Text('');
+    }
+    else{
+      return Text('$tanggal1 s/d $tanggal2',
+            style: const TextStyle(
+              fontFamily: 'rubiksemi',
+              fontSize: 16),
+      );
+    }
+  }
+
   void _openImage(
       TextEditingController textEditingController, List tempList) async {
     const XTypeGroup typeGroup = XTypeGroup(
@@ -168,6 +183,11 @@ class _ListDriverState extends State<ListDriver> {
   Widget build(BuildContext context) {
     List dataJson = readJsonSync('assets/data/driver.json');
     List dataDropdown = readJsonSyncDropdown('assets/data/mobil.json');
+    List dataMobilTerpakai = [];
+    for(var data in dataDropdown){
+      dataMobilTerpakai.add("${data.merek.toString()}(${data.platmobil.toString()})");
+    }
+    print(dataMobilTerpakai);
     return Column(
       children: [
         Expanded(
@@ -239,12 +259,7 @@ class _ListDriverState extends State<ListDriver> {
                                     Padding(
                                       padding: const EdgeInsets.only(
                                           left: 8, top: 10),
-                                      child: Text(
-                                        '${dataJson[index].tanggalawal.toString()} s/d ${dataJson[index].tanggalakhir.toString()}',
-                                        style: const TextStyle(
-                                            fontFamily: 'rubiksemi',
-                                            fontSize: 16),
-                                      ),
+                                      child: textTanggal(dataJson[index].tanggalawal.toString(), dataJson[index].tanggalakhir.toString())
                                     ),
                                   ],
                                 ),
@@ -439,7 +454,7 @@ class _ListDriverState extends State<ListDriver> {
                                                               width: 300,
                                                               child: Padding(
                                                                   padding: const EdgeInsets.all(8.0),
-                                                                  child: dropDownMenu(dataDropdown, dropdownUpdateValue, selectedUpdateValue)),
+                                                                  child: dropDownMenu(dataDropdown, dropdownUpdateValue, selectedUpdateValue, dataMobilTerpakai)),
                                                             )
                                                           ],
                                                         ),
@@ -695,7 +710,10 @@ class _ListDriverState extends State<ListDriver> {
                                               validator: (dropdownValue) {
                                                 if (dropdownValue == null) {
                                                   return 'Pilih item';
-                                                } else {
+                                                }else if(dataMobilTerpakai.contains(dropdownValue)){
+                                                  return 'Mobil sudah terpakai';
+                                                }
+                                                else {
                                                   return null;
                                                 }
                                               })),
