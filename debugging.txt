@@ -1,5 +1,2 @@
 Debugging
 
-fitur kurang
--validasi text field
--validasi profile pic agar tidak duplikat

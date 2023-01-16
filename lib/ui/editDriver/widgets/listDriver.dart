@@ -86,6 +86,10 @@ class _ListDriverState extends State<ListDriver> {
 
   Widget dropDownMenu(List dataDropdown, String dropdownUpdateValue, String selectedUpdateValue, List mobilTelahTerpakai) {
     List<DropdownMenuItem> menuItems = [];
+    menuItems.add(DropdownMenuItem(
+        value: dropdownUpdateValue,
+        child: const Text('Select item')
+    ));
 
     for (var i = 0; i < dataDropdown.length; i++) {
       if ("${dataDropdown[i].merek.toString()}(${dataDropdown[i].platmobil.toString()})," != dropdownUpdateValue) {
@@ -95,9 +99,7 @@ class _ListDriverState extends State<ListDriver> {
         ));
       }
     }
-    menuItems.add(DropdownMenuItem(
-        value: dropdownUpdateValue,
-        child: Text(dropdownUpdateValue)));
+
     return DropdownButtonFormField(
         items: menuItems,
         value: dropdownUpdateValue,
@@ -576,7 +578,6 @@ class _ListDriverState extends State<ListDriver> {
                                                             text: 'Update',
                                                             buttonAction: () {
                                                               if (_formKey.currentState!.validate()) {
-                                                                }
                                                                 var updateDriver = DataDriver(
                                                                   nama: _namaUpdateController.text,
                                                                   catatan: _catatanUpdateController.text,
@@ -610,6 +611,7 @@ class _ListDriverState extends State<ListDriver> {
                                                                 _tanggalAkhirUpdateController.text = '';
                                                                 _filenameUpdateController.text = '';
                                                                 Navigator.pop(context, true);
+                                                                }
                                                               },
                                                           ),
                                                         ),

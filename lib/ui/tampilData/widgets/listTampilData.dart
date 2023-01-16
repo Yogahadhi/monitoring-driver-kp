@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
@@ -14,11 +15,32 @@ class ListTampilData extends StatefulWidget {
 
 class _ListTampilDataState extends State<ListTampilData> {
   late List<DataDriver> dataDriver;
+  int currentPage = 0;
+  late Timer timer;
+  final PageController pageController = PageController(initialPage: 0);
 
   @override
   void initState() {
     dataDriver = widget.data;
     super.initState();
+    timer = Timer.periodic(Duration(seconds: 5), (Timer timer) {
+      if(currentPage < 2){
+        currentPage++;
+      } else {
+        currentPage = 0;
+      }
+
+      pageController.animateToPage(
+          currentPage,
+          duration: Duration(milliseconds: 350),
+          curve: Curves.easeIn);
+    });
+  }
+
+  @override
+  void dispose(){
+    super.dispose();
+    timer.cancel();
   }
 
   List readJsonSync(String filename) {
@@ -89,7 +111,7 @@ class _ListTampilDataState extends State<ListTampilData> {
           width: 5,
         ),
       ),
-      margin: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+      margin: const EdgeInsets.fromLTRB(0, 10, 0, 10),
       child: Row(
         children: [
           Column(
@@ -100,8 +122,8 @@ class _ListTampilDataState extends State<ListTampilData> {
                   child: Image.file(
                     profilePicture(
                         'assets/profile/${dataJson[index].photodir.toString()}'),
-                    width: 270,
-                    height: 250,
+                    width: 220,
+                    height: 200,
                   )),
               Padding(
                 padding:
@@ -193,16 +215,62 @@ class _ListTampilDataState extends State<ListTampilData> {
     );
   }
 
+  List<Widget> pageGenerator(List dataJson, int data, int multiplier){
+    List<Widget> generatedPage = [];
+    if (data == 0){
+      for(var i = multiplier*4 ; i < (multiplier+1)*4; i++){
+        generatedPage.add(contentCard(dataJson, i));
+      }
+    }
+    else{
+      for(var i = multiplier*4; i < (multiplier*4)+data; i++){
+        generatedPage.add(contentCard(dataJson, i));
+      }
+    }
+    return generatedPage;
+  }
+
+  List<Widget> contentPages(List dataJson, int jumlahPage, int dataSisa){
+    List<Widget> contentPage = [];
+    int multiplier = 0;
+    var size = MediaQuery.of(context).size;
+    if (jumlahPage != 0){
+      for(var i = 0; i<jumlahPage;i++){
+        contentPage.add(
+            GridView.count(
+              childAspectRatio: (size.height/0.58)/(size.width/2),
+              crossAxisSpacing: 10,
+              crossAxisCount: 2,
+              children: pageGenerator(dataJson, 4, i),
+            )
+        );
+        multiplier++;
+      }
+    }
+    if (dataSisa != 0){
+      contentPage.add(
+          GridView.count(
+            childAspectRatio: (size.height/0.58)/(size.width/2),
+            //(size.height/0.58)/((size.width/2)),
+            crossAxisSpacing: 10,
+            crossAxisCount: 2,
+            children: pageGenerator(dataJson, dataSisa, multiplier),
+          )
+      );
+    }
+    return contentPage;
+  }
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context){
     List dataJson = readJsonSync('assets/data/driver.json');
-    return GridView.builder(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          childAspectRatio: 2,
-          crossAxisCount: 2,
-        ),
-        itemCount: dataJson.length,
-        itemBuilder: (context, index)  => contentCard(dataJson, index)
+    int jumlahData = dataJson.length;
+    int jumlahPage = jumlahData~/4;
+    int dataSisa = jumlahData%4;
+
+    return PageView(
+      controller: pageController,
+      children: contentPages(dataJson, jumlahPage, dataSisa)
     );
   }
 }
