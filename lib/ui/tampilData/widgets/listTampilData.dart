@@ -23,7 +23,7 @@ class _ListTampilDataState extends State<ListTampilData> {
   void initState() {
     dataDriver = widget.data;
     super.initState();
-    timer = Timer.periodic(Duration(seconds: 5), (Timer timer) {
+    timer = Timer.periodic(const Duration(seconds: 5), (Timer timer) {
       if(currentPage < 2){
         currentPage++;
       } else {
@@ -32,7 +32,7 @@ class _ListTampilDataState extends State<ListTampilData> {
 
       pageController.animateToPage(
           currentPage,
-          duration: Duration(milliseconds: 350),
+          duration: const Duration(milliseconds: 350),
           curve: Curves.easeIn);
     });
   }

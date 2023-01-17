@@ -111,9 +111,10 @@ class _ListDriverState extends State<ListDriver> {
         validator: (dropdownUpdateValue){
           if(dropdownUpdateValue == null){
             return 'Select an item';
-          }else if(mobilTelahTerpakai.contains(dropdownUpdateValue)){
+          }else if(mobilTelahTerpakai.contains(dropdownUpdateValue)) {
             return 'Mobil sudah terpakai';
-          } else{
+          }
+            else{
             return null;
           }
     });
@@ -186,10 +187,9 @@ class _ListDriverState extends State<ListDriver> {
     List dataJson = readJsonSync('assets/data/driver.json');
     List dataDropdown = readJsonSyncDropdown('assets/data/mobil.json');
     List dataMobilTerpakai = [];
-    for(var data in dataDropdown){
-      dataMobilTerpakai.add("${data.merek.toString()}(${data.platmobil.toString()})");
+    for(var data in dataJson){
+      dataMobilTerpakai.add(data.mobil.toString());
     }
-    print(dataMobilTerpakai);
     return Column(
       children: [
         Expanded(
