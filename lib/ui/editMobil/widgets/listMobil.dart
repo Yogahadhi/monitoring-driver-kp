@@ -299,10 +299,10 @@ class _ListMobilState extends State<ListMobil> {
                                           merek: _merekController.text,
                                           platmobil: _platMobilController.text.toUpperCase(),
                                           id: DateTime.now().millisecondsSinceEpoch.toString());
+                                      dataMobil.add(newMobil);
                                       setState(() {
-                                        dataMobil.add(newMobil);
+                                        writeToFileSync(dataMobil);
                                       });
-                                      writeToFileSync(dataMobil);
                                       _merekController.text = '';
                                       _platMobilController.text = '';
                                       Navigator.pop(context, true);

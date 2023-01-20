@@ -101,7 +101,8 @@ class AppNav extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const EditDriver()));
+                              builder: (context) => const EditDriver())).then((_){
+                      });
                     }),
                 Button(
                     text: 'Edit Mobil',

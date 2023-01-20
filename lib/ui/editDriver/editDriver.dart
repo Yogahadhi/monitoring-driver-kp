@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../main.dart';
-import '../editMobil/editMobil.dart';
 import '../tampilData/tampilData.dart';
 import 'widgets/listDriver.dart';
 import '../../model/dataDriver.dart';
@@ -51,40 +50,6 @@ class _EditDriverState extends State<EditDriver> {
             ),
             const SizedBox(
               height: 10,
-            ),
-            ListTile(
-              onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const MyApp()));
-              },
-              leading: const Icon(
-                Icons.home,
-                size: 33,
-              ),
-              title: const Text(
-                'Menu Utama',
-                style: TextStyle(
-                    fontFamily: 'rubiksemi',
-                    fontSize: 15,
-                    color: Color.fromARGB(255, 16, 16, 15)),
-              ),
-            ),
-            ListTile(
-              onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const EditMobil()));
-              },
-              leading: const Icon(
-                Icons.airport_shuttle,
-                size: 33,
-              ),
-              title: const Text(
-                'Edit Mobil',
-                style: TextStyle(
-                    fontFamily: 'rubiksemi',
-                    fontSize: 15,
-                    color: Color.fromARGB(255, 16, 16, 15)),
-              ),
             ),
             ListTile(
               onTap: () {

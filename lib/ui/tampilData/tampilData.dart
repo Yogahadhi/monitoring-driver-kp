@@ -14,6 +14,7 @@ class TampilData extends StatefulWidget {
 }
 
 class _TampilDataState extends State<TampilData> {
+
   Future<List<DataDriver>> readJson() async {
     final data = await rootBundle.loadString('assets/data/driver.json');
     final list = json.decode(data) as List<dynamic>;
