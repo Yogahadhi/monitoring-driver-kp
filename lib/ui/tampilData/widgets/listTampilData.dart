@@ -117,8 +117,7 @@ class _ListTampilDataState extends State<ListTampilData> {
           Column(
             children: [
               Padding(
-                  padding:
-                  const EdgeInsets.only(left: 15, top: 15, right: 10),
+                  padding: const EdgeInsets.only(left: 15, top: 15, right: 10),
                   child: Image.file(
                     profilePicture(
                         'assets/profile/${dataJson[index].photodir.toString()}'),
@@ -128,10 +127,10 @@ class _ListTampilDataState extends State<ListTampilData> {
               Padding(
                 padding:
                 const EdgeInsets.only(left: 15, top: 5, bottom: 5),
-                child: Text(
-                  dataJson[index].nama.toString(),
+                child: Text(dataJson[index].nama.toString(),
                   style: const TextStyle(
-                      fontFamily: 'rubiksemi', fontSize: 16),
+                      fontFamily: 'rubiksemi',
+                      fontSize: 16),
                 ),
               ),
             ],

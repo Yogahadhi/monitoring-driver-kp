@@ -71,7 +71,7 @@ class _ListDriverState extends State<ListDriver> {
   void writeToFileSync(List<dynamic> content) {
     final File file = File('assets/data/driver.json');
     content.map(
-      (DataDriver) => DataDriver.toJson(),
+          (DataDriver) => DataDriver.toJson(),
     );
     file.writeAsStringSync(json.encode(content));
   }
@@ -84,7 +84,7 @@ class _ListDriverState extends State<ListDriver> {
     }
   }
 
-  Widget dropDownMenu(List dataDropdown, String dropdownUpdateValue, String selectedUpdateValue, List mobilTelahTerpakai) {
+  Widget dropDownMenu(List dataDropdown, String dropdownUpdateValue, String selectedUpdateValue) {
     List<DropdownMenuItem> menuItems = [];
     menuItems.add(DropdownMenuItem(
         value: dropdownUpdateValue,
@@ -111,13 +111,10 @@ class _ListDriverState extends State<ListDriver> {
         validator: (dropdownUpdateValue){
           if(dropdownUpdateValue == null){
             return 'Select an item';
-          }else if(mobilTelahTerpakai.contains(dropdownUpdateValue)) {
-            return 'Mobil sudah terpakai';
-          }
-            else{
+          } else{
             return null;
           }
-    });
+        });
   }
 
   Widget statusWidget(String status) {
@@ -157,9 +154,9 @@ class _ListDriverState extends State<ListDriver> {
     }
     else{
       return Text('$tanggal1 s/d $tanggal2',
-            style: const TextStyle(
-              fontFamily: 'rubiksemi',
-              fontSize: 16),
+        style: const TextStyle(
+            fontFamily: 'rubiksemi',
+            fontSize: 16),
       );
     }
   }
@@ -171,7 +168,7 @@ class _ListDriverState extends State<ListDriver> {
       extensions: <String>['jpg', 'png', 'jpeg'],
     );
     final XFile? file =
-        await openFile(acceptedTypeGroups: <XTypeGroup>[typeGroup]);
+    await openFile(acceptedTypeGroups: <XTypeGroup>[typeGroup]);
     if (file == null) {
       return;
     }
@@ -186,10 +183,6 @@ class _ListDriverState extends State<ListDriver> {
   Widget build(BuildContext context) {
     List dataJson = readJsonSync('assets/data/driver.json');
     List dataDropdown = readJsonSyncDropdown('assets/data/mobil.json');
-    List dataMobilTerpakai = [];
-    for(var data in dataJson){
-      dataMobilTerpakai.add(data.mobil.toString());
-    }
     return Column(
       children: [
         Expanded(
@@ -199,7 +192,7 @@ class _ListDriverState extends State<ListDriver> {
                   final String id = dataJson[index].id.toString();
                   final String filename = dataJson[index].photodir.toString();
                   List tempUpdateFileNames = [];
-                  String dropdownUpdateValue = "${dataDropdown[index].merek.toString()}(${dataDropdown[index].platmobil.toString()})";
+                  String dropdownUpdateValue = dataJson[index].mobil.toString();
                   String selectedUpdateValue = dataJson[index].mobil.toString();
                   String toggleButtonValue = dataJson[index].status.toString();
                   return Card(
@@ -251,7 +244,7 @@ class _ListDriverState extends State<ListDriver> {
                                   children: [
                                     const Padding(
                                       padding:
-                                          EdgeInsets.only(left: 30, top: 10),
+                                      EdgeInsets.only(left: 30, top: 10),
                                       child: Text(
                                           style: TextStyle(
                                               fontFamily: 'poppins',
@@ -259,9 +252,9 @@ class _ListDriverState extends State<ListDriver> {
                                           'Lama pakai : '),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 8, top: 10),
-                                      child: textTanggal(dataJson[index].tanggalawal.toString(), dataJson[index].tanggalakhir.toString())
+                                        padding: const EdgeInsets.only(
+                                            left: 8, top: 10),
+                                        child: textTanggal(dataJson[index].tanggalawal.toString(), dataJson[index].tanggalakhir.toString())
                                     ),
                                   ],
                                 ),
@@ -269,7 +262,7 @@ class _ListDriverState extends State<ListDriver> {
                                   children: [
                                     const Padding(
                                       padding:
-                                          EdgeInsets.only(left: 30, top: 10),
+                                      EdgeInsets.only(left: 30, top: 10),
                                       child: Text(
                                           style: TextStyle(
                                               fontFamily: 'poppins',
@@ -341,286 +334,286 @@ class _ListDriverState extends State<ListDriver> {
                                         }
                                         return StatefulBuilder(
                                             builder: (context, setState) {
-                                          return AlertDialog(
-                                            content: Stack(
-                                              children: [
-                                                Form(
-                                                    key: _formKey,
-                                                    child: Column(
-                                                      mainAxisSize: MainAxisSize.min,
-                                                      children: [
-                                                        Row(
+                                              return AlertDialog(
+                                                content: Stack(
+                                                  children: [
+                                                    Form(
+                                                        key: _formKey,
+                                                        child: Column(
+                                                          mainAxisSize: MainAxisSize.min,
                                                           children: [
-                                                            const Padding(
-                                                              padding: EdgeInsets.all(8.0),
-                                                              child: Text('Nama :'),
-                                                            ),
-                                                            SizedBox(
-                                                              width: 300,
-                                                              child: Padding(
-                                                                padding: const EdgeInsets.all(8.0),
-                                                                child: TextFormField(
-                                                                  controller: _namaUpdateController,
-                                                                  validator: (text) {
-                                                                    final regexp = RegExp(r"^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z ]*)*$");
-                                                                    if (text == null || text.isEmpty) {
-                                                                      return 'Nama kosong';
-                                                                    } else if (!regexp.hasMatch(text)) {
-                                                                      return 'Nama hanya menerima huruf dan simbol berikut(\',.- )';
-                                                                    } else {
-                                                                      return null;
-                                                                    }
-                                                                  },
+                                                            Row(
+                                                              children: [
+                                                                const Padding(
+                                                                  padding: EdgeInsets.all(8.0),
+                                                                  child: Text('Nama :'),
                                                                 ),
-                                                              ),
-                                                            )
-                                                          ],
-                                                        ),
-                                                        Row(
-                                                          children: [
-                                                            const Padding(
-                                                              padding: EdgeInsets.all(8.0),
-                                                              child: Text('Catatan : '),
-                                                            ),
-                                                            SizedBox(
-                                                              width: 300,
-                                                              child: Padding(
-                                                                padding: const EdgeInsets.all(8.0),
-                                                                child: TextFormField(
-                                                                  controller: _catatanUpdateController,
-                                                                ),
-                                                              ),
-                                                            )
-                                                          ],
-                                                        ),
-                                                        Row(
-                                                          children: [
-                                                            const Padding(
-                                                              padding: EdgeInsets.all(8.0),
-                                                              child: Text(
-                                                                  'Status :'),
-                                                            ),
-                                                            SizedBox(
-                                                              width: 300,
-                                                              child: Padding(
-                                                                padding: const EdgeInsets.all(8.0),
-                                                                child: ToggleButtons(
-                                                                  isSelected: selectedButton,
-                                                                  borderRadius:
-                                                                  BorderRadius.circular(10),
-                                                                  color: Colors.blue,
-                                                                  selectedColor: Colors.white,
-                                                                  fillColor: Colors.lightBlue.shade900,
-                                                                  onPressed: (int index) {
-                                                                    setState(() {
-                                                                      if (index == 0) {
-                                                                        toggleButtonValue = 'Standby';
-                                                                        selectedButton = [true, false, false];
-                                                                      } else if (index == 1) {
-                                                                        toggleButtonValue = 'Terpakai';
-                                                                        selectedButton = [false, true, false];
-                                                                      } else if (index ==
-                                                                          2) {
-                                                                        toggleButtonValue = 'Izin/Sakit';
-                                                                        selectedButton = [false, false, true];
-                                                                      }
-                                                                    });
-                                                                  },
-                                                                  children: const [
-                                                                    Padding(
-                                                                      padding: EdgeInsets.symmetric(horizontal: 12),
-                                                                      child: Text("Standby"),
+                                                                SizedBox(
+                                                                  width: 300,
+                                                                  child: Padding(
+                                                                    padding: const EdgeInsets.all(8.0),
+                                                                    child: TextFormField(
+                                                                      controller: _namaUpdateController,
+                                                                      validator: (text) {
+                                                                        final regexp = RegExp(r"^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z ]*)*$");
+                                                                        if (text == null || text.isEmpty) {
+                                                                          return 'Nama kosong';
+                                                                        } else if (!regexp.hasMatch(text)) {
+                                                                          return 'Nama hanya menerima huruf dan simbol berikut(\',.- )';
+                                                                        } else {
+                                                                          return null;
+                                                                        }
+                                                                      },
                                                                     ),
-                                                                    Padding(
-                                                                      padding: EdgeInsets.symmetric(horizontal: 12),
-                                                                      child: Text("Terpakai"),
+                                                                  ),
+                                                                )
+                                                              ],
+                                                            ),
+                                                            Row(
+                                                              children: [
+                                                                const Padding(
+                                                                  padding: EdgeInsets.all(8.0),
+                                                                  child: Text('Catatan : '),
+                                                                ),
+                                                                SizedBox(
+                                                                  width: 300,
+                                                                  child: Padding(
+                                                                    padding: const EdgeInsets.all(8.0),
+                                                                    child: TextFormField(
+                                                                      controller: _catatanUpdateController,
                                                                     ),
-                                                                    Padding(
-                                                                      padding: EdgeInsets.symmetric(horizontal: 12),
-                                                                      child: Text("Izin/Sakit"),
-                                                                    )
-                                                                  ],
+                                                                  ),
+                                                                )
+                                                              ],
+                                                            ),
+                                                            Row(
+                                                              children: [
+                                                                const Padding(
+                                                                  padding: EdgeInsets.all(8.0),
+                                                                  child: Text(
+                                                                      'Status :'),
                                                                 ),
-                                                              ),
-                                                            )
-                                                          ],
-                                                        ),
-                                                        Row(
-                                                          children: [
-                                                            const Padding(
-                                                              padding: EdgeInsets.all(8.0),
-                                                              child: Text(
-                                                                  'Mobil* :'),
+                                                                SizedBox(
+                                                                  width: 300,
+                                                                  child: Padding(
+                                                                    padding: const EdgeInsets.all(8.0),
+                                                                    child: ToggleButtons(
+                                                                      isSelected: selectedButton,
+                                                                      borderRadius:
+                                                                      BorderRadius.circular(10),
+                                                                      color: Colors.blue,
+                                                                      selectedColor: Colors.white,
+                                                                      fillColor: Colors.lightBlue.shade900,
+                                                                      onPressed: (int index) {
+                                                                        setState(() {
+                                                                          if (index == 0) {
+                                                                            toggleButtonValue = 'Standby';
+                                                                            selectedButton = [true, false, false];
+                                                                          } else if (index == 1) {
+                                                                            toggleButtonValue = 'Terpakai';
+                                                                            selectedButton = [false, true, false];
+                                                                          } else if (index ==
+                                                                              2) {
+                                                                            toggleButtonValue = 'Izin/Sakit';
+                                                                            selectedButton = [false, false, true];
+                                                                          }
+                                                                        });
+                                                                      },
+                                                                      children: const [
+                                                                        Padding(
+                                                                          padding: EdgeInsets.symmetric(horizontal: 12),
+                                                                          child: Text("Standby"),
+                                                                        ),
+                                                                        Padding(
+                                                                          padding: EdgeInsets.symmetric(horizontal: 12),
+                                                                          child: Text("Terpakai"),
+                                                                        ),
+                                                                        Padding(
+                                                                          padding: EdgeInsets.symmetric(horizontal: 12),
+                                                                          child: Text("Izin/Sakit"),
+                                                                        )
+                                                                      ],
+                                                                    ),
+                                                                  ),
+                                                                )
+                                                              ],
                                                             ),
-                                                            SizedBox(
-                                                              width: 300,
-                                                              child: Padding(
-                                                                  padding: const EdgeInsets.all(8.0),
-                                                                  child: dropDownMenu(dataDropdown, dropdownUpdateValue, selectedUpdateValue, dataMobilTerpakai)),
-                                                            )
-                                                          ],
-                                                        ),
-                                                        Row(
-                                                          children: [
-                                                            const Padding(
-                                                              padding: EdgeInsets.all(8.0),
-                                                              child: Text(
-                                                                  'Tanggal:'),
-                                                            ),
-                                                            SizedBox(
-                                                              width: 100,
-                                                              child: Padding(
-                                                                padding: const EdgeInsets.all(8.0),
-                                                                child: TextFormField(
-                                                                  enabled: false,
-                                                                  controller: _tanggalAwalUpdateController,
-                                                                  validator: (text) {
-                                                                    if (text == null || text.isEmpty) {
-                                                                      return 'Input kosong';
-                                                                    } else {
-                                                                      return null;
-                                                                    }
-                                                                  },
+                                                            Row(
+                                                              children: [
+                                                                const Padding(
+                                                                  padding: EdgeInsets.all(8.0),
+                                                                  child: Text(
+                                                                      'Mobil* :'),
                                                                 ),
-                                                              ),
+                                                                SizedBox(
+                                                                  width: 300,
+                                                                  child: Padding(
+                                                                      padding: const EdgeInsets.all(8.0),
+                                                                      child: dropDownMenu(dataDropdown, dropdownUpdateValue, selectedUpdateValue)),
+                                                                )
+                                                              ],
                                                             ),
-                                                            SizedBox(
-                                                              width: 35,
-                                                              child: Button(
-                                                                buttonAction: () async {
-                                                                  DateTime? newDate = await showDatePicker(
-                                                                      context: context,
-                                                                      initialDate: DateTime.now(),
-                                                                      firstDate:
+                                                            Row(
+                                                              children: [
+                                                                const Padding(
+                                                                  padding: EdgeInsets.all(8.0),
+                                                                  child: Text(
+                                                                      'Tanggal:'),
+                                                                ),
+                                                                SizedBox(
+                                                                  width: 100,
+                                                                  child: Padding(
+                                                                    padding: const EdgeInsets.all(8.0),
+                                                                    child: TextFormField(
+                                                                      enabled: false,
+                                                                      controller: _tanggalAwalUpdateController,
+                                                                      validator: (text) {
+                                                                        if (text == null || text.isEmpty) {
+                                                                          return 'Input kosong';
+                                                                        } else {
+                                                                          return null;
+                                                                        }
+                                                                      },
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                                SizedBox(
+                                                                  width: 35,
+                                                                  child: Button(
+                                                                    buttonAction: () async {
+                                                                      DateTime? newDate = await showDatePicker(
+                                                                          context: context,
+                                                                          initialDate: DateTime.now(),
+                                                                          firstDate:
                                                                           DateTime(1899),
-                                                                      lastDate:
+                                                                          lastDate:
                                                                           DateTime(2099));
-                                                                  if (newDate == null) {
-                                                                    return;
-                                                                  } else {
-                                                                    String formattedDate = DateFormat('dd-MM-yyyy').format(newDate);
-                                                                    _tanggalAwalUpdateController.text = formattedDate;
-                                                                  }
-                                                                },
-                                                                text: '..',
-                                                              ),
+                                                                      if (newDate == null) {
+                                                                        return;
+                                                                      } else {
+                                                                        String formattedDate = DateFormat('dd-MM-yyyy').format(newDate);
+                                                                        _tanggalAwalUpdateController.text = formattedDate;
+                                                                      }
+                                                                    },
+                                                                    text: '..',
+                                                                  ),
+                                                                ),
+                                                                SizedBox(
+                                                                  width: 100,
+                                                                  child: Padding(
+                                                                    padding: const EdgeInsets.all(8.0),
+                                                                    child: TextFormField(
+                                                                      enabled: false,
+                                                                      controller: _tanggalAkhirUpdateController,
+                                                                      validator: (text) {
+                                                                        if (text == null || text.isEmpty) {
+                                                                          return 'Input kosong';
+                                                                        } else {
+                                                                          return null;
+                                                                        }
+                                                                      },
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                                SizedBox(
+                                                                  width: 35,
+                                                                  child: Button(
+                                                                    buttonAction: () async {
+                                                                      DateTime? newDate = await showDatePicker(
+                                                                          context: context,
+                                                                          initialDate: DateTime.now(),
+                                                                          firstDate:
+                                                                          DateTime(1899),
+                                                                          lastDate:
+                                                                          DateTime(2099));
+                                                                      if (newDate == null) {
+                                                                        return;
+                                                                      } else {
+                                                                        String formattedDate = DateFormat('dd-MM-yyyy').format(newDate);
+                                                                        _tanggalAkhirUpdateController.text = formattedDate;
+                                                                      }
+                                                                    },
+                                                                    text: '..',
+                                                                  ),
+                                                                )
+                                                              ],
                                                             ),
-                                                            SizedBox(
-                                                              width: 100,
-                                                              child: Padding(
-                                                                padding: const EdgeInsets.all(8.0),
-                                                                child: TextFormField(
-                                                                  enabled: false,
-                                                                  controller: _tanggalAkhirUpdateController,
-                                                                  validator: (text) {
-                                                                    if (text == null || text.isEmpty) {
-                                                                      return 'Input kosong';
-                                                                    } else {
-                                                                      return null;
+                                                            Row(
+                                                              children: [
+                                                                const Padding(
+                                                                  padding: EdgeInsets.all(8.0),
+                                                                  child: Text('Foto:'),
+                                                                ),
+                                                                SizedBox(
+                                                                  width: 150,
+                                                                  child: Padding(
+                                                                    padding: const EdgeInsets.all(8.0),
+                                                                    child: TextField(
+                                                                      enabled: false,
+                                                                      controller: _filenameUpdateController,
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                                SizedBox(
+                                                                  width: 150,
+                                                                  child: Button(
+                                                                      buttonAction: () {
+                                                                        _openImage(_filenameUpdateController, tempUpdateFileNames);
+                                                                      },
+                                                                      text: "Pilih foto"
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                            Padding(
+                                                              padding: const EdgeInsets.all(8.0),
+                                                              child: Button(
+                                                                text: 'Update',
+                                                                buttonAction: () {
+                                                                  if (_formKey.currentState!.validate()) {
+                                                                    var updateDriver = DataDriver(
+                                                                      nama: _namaUpdateController.text,
+                                                                      catatan: _catatanUpdateController.text,
+                                                                      status: toggleButtonValue,
+                                                                      tanggalawal: _tanggalAwalUpdateController.text,
+                                                                      tanggalakhir: _tanggalAkhirUpdateController.text,
+                                                                      mobil: selectedUpdateValue,
+                                                                      photodir: _filenameUpdateController.text,
+                                                                      id: dataJson[index].id,
+                                                                    );
+                                                                    setState(() {
+                                                                      dataJson[index].nama = updateDriver.nama;
+                                                                      dataJson[index].catatan = updateDriver.catatan;
+                                                                      dataJson[index].status = updateDriver.status;
+                                                                      dataJson[index].tanggalawal = updateDriver.tanggalawal;
+                                                                      dataJson[index].tanggalakhir = updateDriver.tanggalakhir;
+                                                                      dataJson[index].mobil = updateDriver.mobil;
+                                                                      dataJson[index].photodir = updateDriver.photodir;
+                                                                    });
+                                                                    writeToFileSync(dataJson);
+                                                                    tempUpdateFileNames.remove(_filenameUpdateController.text);
+                                                                    for (var element in tempUpdateFileNames) {
+                                                                      final dir = File('assets/profile/$element');
+                                                                      dir.deleteSync(recursive: true);
                                                                     }
-                                                                  },
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            SizedBox(
-                                                              width: 35,
-                                                              child: Button(
-                                                                buttonAction: () async {
-                                                                  DateTime? newDate = await showDatePicker(
-                                                                      context: context,
-                                                                      initialDate: DateTime.now(),
-                                                                      firstDate:
-                                                                      DateTime(1899),
-                                                                      lastDate:
-                                                                      DateTime(2099));
-                                                                  if (newDate == null) {
-                                                                    return;
-                                                                  } else {
-                                                                    String formattedDate = DateFormat('dd-MM-yyyy').format(newDate);
-                                                                    _tanggalAkhirUpdateController.text = formattedDate;
+                                                                    tempUpdateFileNames = [];
+                                                                    selectedUpdateValue = '';
+                                                                    _namaUpdateController.text = '';
+                                                                    _catatanUpdateController.text = '';
+                                                                    _tanggalAwalUpdateController.text = '';
+                                                                    _tanggalAkhirUpdateController.text = '';
+                                                                    _filenameUpdateController.text = '';
+                                                                    Navigator.pop(context, true);
                                                                   }
                                                                 },
-                                                                text: '..',
-                                                              ),
-                                                            )
-                                                          ],
-                                                        ),
-                                                        Row(
-                                                          children: [
-                                                            const Padding(
-                                                              padding: EdgeInsets.all(8.0),
-                                                              child: Text('Foto:'),
-                                                            ),
-                                                            SizedBox(
-                                                              width: 150,
-                                                              child: Padding(
-                                                                padding: const EdgeInsets.all(8.0),
-                                                                child: TextField(
-                                                                  enabled: false,
-                                                                  controller: _filenameUpdateController,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            SizedBox(
-                                                              width: 150,
-                                                              child: Button(
-                                                                  buttonAction: () {
-                                                                    _openImage(_filenameUpdateController, tempUpdateFileNames);
-                                                                  },
-                                                                  text: "Pilih foto"
                                                               ),
                                                             ),
                                                           ],
-                                                        ),
-                                                        Padding(
-                                                          padding: const EdgeInsets.all(8.0),
-                                                          child: Button(
-                                                            text: 'Update',
-                                                            buttonAction: () {
-                                                              if (_formKey.currentState!.validate()) {
-                                                                var updateDriver = DataDriver(
-                                                                  nama: _namaUpdateController.text,
-                                                                  catatan: _catatanUpdateController.text,
-                                                                  status: toggleButtonValue,
-                                                                  tanggalawal: _tanggalAwalUpdateController.text,
-                                                                  tanggalakhir: _tanggalAkhirUpdateController.text,
-                                                                  mobil: selectedUpdateValue,
-                                                                  photodir: _filenameUpdateController.text,
-                                                                  id: dataJson[index].id,
-                                                                );
-                                                                setState(() {
-                                                                  dataJson[index].nama = updateDriver.nama;
-                                                                  dataJson[index].catatan = updateDriver.catatan;
-                                                                  dataJson[index].status = updateDriver.status;
-                                                                  dataJson[index].tanggalawal = updateDriver.tanggalawal;
-                                                                  dataJson[index].tanggalakhir = updateDriver.tanggalakhir;
-                                                                  dataJson[index].mobil = updateDriver.mobil;
-                                                                  dataJson[index].photodir = updateDriver.photodir;
-                                                                });
-                                                                writeToFileSync(dataJson);
-                                                                tempUpdateFileNames.remove(_filenameUpdateController.text);
-                                                                for (var element in tempUpdateFileNames) {
-                                                                  final dir = File('assets/profile/$element');
-                                                                  dir.deleteSync(recursive: true);
-                                                                }
-                                                                tempUpdateFileNames = [];
-                                                                selectedUpdateValue = '';
-                                                                _namaUpdateController.text = '';
-                                                                _catatanUpdateController.text = '';
-                                                                _tanggalAwalUpdateController.text = '';
-                                                                _tanggalAkhirUpdateController.text = '';
-                                                                _filenameUpdateController.text = '';
-                                                                Navigator.pop(context, true);
-                                                                }
-                                                              },
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ))
-                                              ],
-                                            ),
-                                          );
-                                        });
+                                                        ))
+                                                  ],
+                                                ),
+                                              );
+                                            });
                                       });
                                 },
                                 icon: const Icon(Icons.edit)),
@@ -629,7 +622,7 @@ class _ListDriverState extends State<ListDriver> {
                                 onPressed: () {
                                   setState(() {
                                     dataDriver.removeWhere((element) =>
-                                        element.id.toString() == id);
+                                    element.id.toString() == id);
                                   });
                                   File('assets/profile/$filename').deleteSync(recursive: true);
                                   writeToFileSync(dataDriver);
@@ -712,10 +705,7 @@ class _ListDriverState extends State<ListDriver> {
                                               validator: (dropdownValue) {
                                                 if (dropdownValue == null) {
                                                   return 'Pilih item';
-                                                }else if(dataMobilTerpakai.contains(dropdownValue)){
-                                                  return 'Mobil sudah terpakai';
-                                                }
-                                                else {
+                                                } else {
                                                   return null;
                                                 }
                                               })),
