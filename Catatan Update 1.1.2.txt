@@ -1,0 +1,3 @@
+Update versi 1.1.1
+
+Pada halaman edit driver telah ditambahkan fitur untuk dapat menyimpan data riwayat perjalanan kendaraan dengan nomor kendaraan yang sama dengan riwayat-riwayat kendaraan sebelumnya.
